@@ -9,7 +9,7 @@ Back-end : Node.js, Express, GraphQl, Typeorm
 
 Database : PostgresSQL
 
-To run production script : 
+To run production scripts : 
 
 cd server / yarn or npm run start
 
