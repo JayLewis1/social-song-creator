@@ -1,0 +1,20 @@
+.results-container {
+  width: 80%; 
+  margin: 0 auto;
+  ul {
+    li {
+      list-style-type: none;
+      width: 90%;
+      height: 80px;
+      margin: 0 auto;
+      background-color: $white;
+      box-shadow: $divShadow;
+      margin-bottom: 25px;
+      border-radius: 21px;
+      padding: 25px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+  }
+}

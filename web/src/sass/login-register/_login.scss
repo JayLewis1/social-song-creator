@@ -1,0 +1,323 @@
+.login-container {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  h1 {
+    font-size: 1.5rem;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  }
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    .input-error {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $red;
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+    span {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      label,
+      .label-p {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $dark;
+        margin: 5px 15px;
+      }
+      input,
+      select {
+        background: none;
+        border: none;
+        outline: none;
+        font-family: $font;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: $dark;
+        padding: 7px 15px;
+        background-color: $white;
+        border: none;
+        box-shadow: 0 0 9px rgba(0, 0, 0, 0.16);
+        border-radius: 4px;
+      }
+      input::placeholder {
+        font-family: $font;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #a4a4af;
+        // color: $dark;
+        // opacity: 0.5;
+      }
+    }
+    input[type="submit"] {
+      background: none;
+      border: none;
+      outline: none;
+      background-color: $second;
+      padding: 8px 0;
+      border-radius: 25px;
+      font-family: $font;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $white;
+      margin-top: 30px;
+      margin-left: auto;
+      width: 35%;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+    input[type="submit"]:active {
+      transform: scale(0.9);
+    }
+    input[type="submit"]:disabled {
+      opacity: 0.5;
+    }
+    #register-submit {
+      width: 100%;
+    }
+    .login-link {
+      color: $blue;
+      text-decoration: none;
+    }
+    .forgotPassword {
+      margin-top: 15px;
+      margin-left: 15px;
+      text-decoration: none;
+      color: $second;
+      cursor: pointer;
+    }
+    .line-breaker {
+      width: 100%;
+      height: 2px;
+      background-color: $dark;
+      opacity: 0.4;
+      margin: 15px 0;
+    }
+
+    .login-p {
+      font-family: $font;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-left: 15px;
+      margin: 0 auto;
+      margin-top: 20px;
+      margin-bottom: 100px;
+    }
+
+    .no-account {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 15px 0;
+    }
+    .register-link {
+      background-color: $blue;
+      background-color: $bgBlue;
+      color: $white;
+      color: $blue;
+      width: 100%;
+      height: 45px;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 15px;
+      transition: 0.1s;
+      transition: 0.2s background-color;
+    }
+    .register-link:hover {
+      background-color: $blue;
+      color: $white;
+    }
+    .register-link:active {
+      transform: scale(0.9);
+    }
+    .name-wrapper {
+      flex-direction: row;
+      margin: 0;
+      .name-inputs {
+        width: 47%;
+        margin: 0;
+        label {
+          font-weight: 500;
+        }
+      }
+      .lastName-wrapper {
+        margin-left: auto;
+      }
+    }
+    .dob-wrapper {
+      flex-direction: row;
+      margin: 0;
+      .dob-inputs {
+        display: flex;
+        label {
+          font-weight: 500;
+        }
+        .dob-input {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .day-wrapper {
+        width: 15%;
+      }
+      .month-wrapper {
+        width: 49%;
+        margin: 0 auto;
+        #month {
+          padding-right: 15px;
+          color: $dark;
+        }
+        #month:required {
+          color: #a4a4af;
+        }
+        #month:valid {
+          color: $dark;
+        }
+      }
+      .year-wrapper {
+        width: 25%;
+      }
+    }
+  }
+}
+.welcome-and-validation {
+  margin-top: 50px;
+  margin-left: 100px;
+  h1 {
+    font-size: 2rem;
+  }
+  .welcome-message {
+    font-size: 1.2rem;
+    margin-top: 15px;
+  }
+  .password-validation {
+    margin-top: 50px;
+    .validation-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    ul {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+      li {
+        list-style-type: none;
+        display: flex;
+        margin: 5px 0;
+        align-items: center;
+
+        img {
+          margin-right: 15px;
+          width: 12px;
+        }
+        p {
+          font-size: 1.1rem;
+        }
+        .error {
+          color: $red;
+        }
+        .valid {
+          color: $second;
+        }
+      }
+    }
+  }
+}
+
+// .login-container {
+//   width: 400px;
+//   background: $white;
+//   box-shadow: $divShadow;
+//   padding: 30px 30px;
+//   border-radius: 21px;
+//   margin-top: 50px;
+//   display: flex;
+//   flex-direction: column;
+//   h4 {
+//     font-size: 1.3rem;
+//   }
+//   form {
+//     display: flex;
+//     flex-direction: column;
+//     margin-top: 30px;
+//     span {
+//       width: 100%;
+//       display: flex;
+//       flex-direction: column;
+//       margin-bottom: 20px;
+//       label {
+//         font-size: 1.1rem;
+//         font-weight: 600;
+//         color: $dark;
+//         margin: 5px 15px;
+//       }
+//       input {
+//         background: none;
+//         border: none;
+//         outline: none;
+//         font-family: $font;
+//         font-size: 1.2rem;
+//         font-weight: 600;
+//         color: $dark;
+//         padding: 10px 15px;
+//         background-color: $lightBlue;
+//         border-radius: 9px;
+//       }
+//       input::placeholder {
+//         font-family: $font;
+//         font-size: 1.2rem;
+//         font-weight: 600;
+//         color: $dark;
+//         opacity: 0.5;
+//       }
+//     }
+//     input[type="submit"] {
+//       background: none;
+//       border: none;
+//       outline: none;
+//       background-color: $second;
+//       padding: 5px 0;
+//       border-radius: 12px;
+//       font-family: $font;
+//       font-size: 1.2rem;
+//       font-weight: 600;
+//       color: $white;
+//       margin-top: 30px;
+//       cursor: pointer;
+//       transition: 0.1s;
+//     }
+//     input[type="submit"]:active {
+//       transform: scale(0.9);
+//     }
+//     input[type="submit"]:disabled {
+//       opacity: 0.5;
+//     }
+//     p {
+//       font-family: $font;
+//       font-size: 1rem;
+//       font-weight: 600;
+//       margin-left: 15px;
+//       margin-top: 20px;
+//     }
+//     a {
+//       color: $blue;
+//       text-decoration: none;
+//     }
+//   }
+// }

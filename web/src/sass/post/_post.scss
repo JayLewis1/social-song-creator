@@ -1,0 +1,387 @@
+.post {
+  width: 90%;
+  background-color: $white;
+  box-shadow: $divShadow;
+  border-radius: 21px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    // border: 1px solid $textLight;
+    margin-right: 15px;
+    img {
+      width: 100%;
+    }
+  }
+  .post-name-wrapper {
+    display: flex;
+    flex-direction: column;
+    a {
+      text-decoration: none;
+    }
+    a:hover {
+      color: $blue;
+      .shared-project-span {
+        color: $dark;
+      }
+    }
+    .post-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .post-user {
+      color: $dark;
+    }
+    .shared-project-span {
+      color: $dark;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+    .post-date {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: $textLight;
+    }
+  }
+  .post-top-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    // height: 30%;
+    .post-btn-wrapper {
+      display: flex;
+      margin-left: auto;
+      .likes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        p {
+          font-size: 0.9;
+          font-weight: 600;
+        }
+      }
+      .post-buttons {
+        background: none;
+        border: none;
+        outline: none;
+        border-radius: 25px;
+        width: 40px;
+        height: 40px;
+        margin-left: 15px;
+        cursor: pointer;
+        img {
+          width: 100%;
+        }
+      }
+      .post-buttons:active {
+        transform: scale(0.9);
+      }
+    }
+  }
+  .post-content {
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 5px;
+    p {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+  .post-project-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+    margin-top: 30px;
+    background-color: $dark;
+    border-radius: 50px;
+    padding: 10px 15px;
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+      margin-right: 15px;
+      transition: 0.2s;
+      img {
+        width: 100%;
+      }
+    }
+    button:active {
+      transform: scale(0.9);
+    }
+    .project-name {
+      font-size: 1rem;
+      font-weight: 500;
+      color: $white;
+      text-transform: capitalize;
+      text-decoration : none;
+      margin-right: 15px;
+    }
+    .project-name-link{
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: $lightGrey;
+      text-transform: capitalize;
+      text-decoration : none;
+      transition: 0.2s;
+    } 
+    .project-name-link:hover{
+      color: $textLight;
+    } 
+  }
+  .contributors {
+    display: flex;
+    align-items: center;
+    display: inline-block;
+    padding: 10px 20px;
+    // background-color: $bgBlue;
+    width: auto;
+    border-radius: 25px;
+    margin: 15px 5px 0 auto;
+    .flex-wrapper {
+      display: flex;
+      align-items: center;
+    p {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0;
+      color: $textLight;
+      margin-right: 10px;
+    }
+    .contributors-avatars {
+      display: flex;
+      margin-left: auto; 
+      margin: 0;
+      .contributor-avatar-link {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        position: relative;
+        img {
+          width: 100%;
+        }
+      }
+      .avatar-hover {
+          background-color: $dark;
+          position: absolute;
+          bottom: -30px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          padding: 1px 10px;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          p {
+            margin: auto;
+            color: $white;
+          }
+        }
+      } 
+    }
+  }
+  .post-bottom-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    .comment-button {
+      margin-left: 0px;
+      background: none;
+      border: none;
+      outline: none;
+      font-family: $font;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: $textLight;
+      padding: 5px 15px;
+      cursor: pointer;
+    }
+    .comments-length {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: $textLight;
+    }
+    .comment-button:hover {
+      color: $blue;
+    }
+    .likes {
+      margin-left: auto;
+      margin-right: 15px;
+      display: flex;
+      img {
+        width: 13px;
+        margin-right: 10px;
+        opacity: 0.5;
+      }
+      p {
+        font-size: 1rem;
+        font-weight: 500;
+        color: $textLight;
+      }
+    }
+    .post-creator-wrapper {
+      display: flex;
+      .post-avatar {
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 25px;
+        background-color: $light;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+      }
+      .creator-wrapper {
+        display: flex;
+        flex-direction: column;
+        .created-by {
+          font-size: 0.9rem;
+          font-weight: 400;
+          color: $textLight;
+        }
+        .post-creator {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: $second;
+        }
+      }
+    }
+    .post-date {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: $textLight;
+      margin-left: auto;
+      margin-top: auto;
+    }
+  }
+  .comments-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      label {
+        color: $lightGrey;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-left: 15px;
+        margin-bottom: 5px;
+      }
+      .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .input-span {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          align-items: center;
+          input {
+            color: $dark;
+            background-color: $bgBlue;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            width: 80%;
+            height: 40px;
+            font-family: $font;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0 15px;
+          }
+          input::placeholder {
+            color: $lightGrey;
+          }
+          input[type="submit"] {
+            background-color: $blue;
+            color: white;
+            border: none;
+            outline: none;
+            width: 15%;
+            height: 30px;
+            margin: 0;
+            margin-left: auto;
+            font-family: $font;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+          }
+          input[type="submit"]:disabled {
+            background-color: $textLight;
+            cursor: not-allowed;
+          }
+          input[type="submit"]:active {
+            transform: scale(0.9);
+          }
+        }
+      }
+    }
+    .comment {
+      list-style-type: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: 25px;
+      .comment-top {
+        display: flex;
+        .avatar {
+          width: 35px;
+          height: 35px;
+          margin-right: 10px;
+          img {
+            width: 100%;
+          }
+        }
+        .name-date-wrap {
+          display: flex;
+          flex-direction: column;
+          .name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: $dark;
+            text-decoration: none;
+          }
+          .date {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: $textLight;
+          }
+        }
+        .delete-comment {
+          width: 30px;
+          height: 30px;
+          background: none;
+          border: none;
+          outline: none;
+          margin-left: auto;
+          cursor: pointer;
+          transition: 0.2s;
+          img {
+            width: 100%;
+          }
+        }
+        .delete-comment:active {
+          transform: scale(0.9);
+        }
+      }
+      .comment-context {
+        margin-top: 15px;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+  }
+}

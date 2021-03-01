@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "social-songs",
+  "private_key_id": "7cf5fe9cbe9fe2e2407be7474196ef03a469fb7a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrixqvn4rFMUzg\nSBnZS3ZPi42mpbVIjJ42Gt0MXg8aMOxOrmdopKt4HZfR0moxStIMQ5NUUg3LtI0V\nJCWfXzhztnTXCJ7EgDMgAcKfyR9TkyPGrKoL3sFuo7Zixw8akFn5iIBbQ9YtjmvB\n7PgeKFKJAaZoLMCcD06/9CF4XSgv/J4nTbVV0dAppXRGruYKSN07wKd8HewE+ans\nuZcrFFrNB9K6e70h2wSiX6rP6iI2uC8rROHK8f2969CEWQYA0G9bDuIQE1JA2P1C\n4f9DXYqmifu62EzWPX9AkqYJ5YMq4w1DzMOp4xpeEzUzWNRm3tecFK+AFzS6z0q0\nGU97BK4LAgMBAAECggEAUIxnwnFiosdMdr/ES3EQo7c+kzKaFe/ZVkR06Rq9cqno\nO+XOrqcr0KHsqNxpeq3MRW/xnRVOXwlvea7Yb6Yxhrv0zwfALTqZRv0smwTATej4\nUpC+5AX7w+zhdi5MHEgNx4rd4nzO8+M9G/keZGLApo58ycvBwUW6z41drfvoI+dv\nrs5jJZUWVZ+4yjdELq1wjf13+G7ckHKzYlvJvDfj0NkZ9Ir6wivXNFNrBsd8bSMu\nqANQIR8d0Bdxfiz6aYdemqIn2KJ0Q4qVSH7rs70Qfnisu10Qapw+2X43YJT4t44f\nMk48eHy23chtje60vFyCbSxA6nd1nVi84bsuKJmiyQKBgQDoUG7Gc66UsRJ29/gN\nciZFj6rb0AU1B3amUD/yLKlW0OK0w5OnAlqKiCN/JaOl4L0QaVkGh9K/YUcA7y6b\nlIavfDMv9sw9/YVwETqYlaxWu44ozfnWBuCI0InpaAV20UDtNsqt5Q9DBQXduFfS\nn/kTK0QNxWSUVsd9wok609GgxwKBgQC9CIJ1sVQGGUviOs5zuAIfHkeTouwO/GLy\nIe9mHnDfMTiEv5pAY/qODM2TOftBZASwTgWC0+uRDyRcZreGlBrDReHn7r+fPWvR\nyIZ278WVFmQGmjrdZwM9Faf61+VPyah1QBEC2pJgTrNrRtM6+CkWGBh/qlbq2wWx\np0g45HZMnQKBgEngcinH1efRG6cbmhVkjIkoc9QtJcrEUdX3xS4VR9Ck4sNLQqQk\nmnhdbLRdWtpASr9yUO5DuSBFJhhE95RgOiiKHZkOKcs42PtXb0PgrQpz4HRXdDC8\nxSCc+I5yFvK+/p+xAekk46KTcVcd7Ue8ua9/3cdnU2Hc6tmySIOdopc3AoGBAKuf\nhzqtlfi3jNLHy1r6rEpuZlPfLmzorjjhoIXZi2bIPGUhxD1DyF6htx89HCYhVbRw\nEcbW+t/HnJ6bz3JLEwVJdDHr7GP6EuLzKUngpUWXf5cS/fC3rxQNjmZLD3HiR6S0\nVv19TjpMGc+DDRJT7pGVrOBz2df+pGvH0eV9Xv5tAoGBAKv5GuGhKYVzbMobnuoe\nOrKf778cf7/zCF+CROhTBzeUtM7VemZ3TEPeEGp99FyuISCGVb42ylL5buWUfJmA\n92xRyCqoX3U6016R9a6NgaKBjNC5VeLOaaJJMwzS9gIK6ivMe6212RknSn18NVDG\nZdJwqCDe2C/ifCT9NHKxhsmD\n-----END PRIVATE KEY-----\n",
+  "client_email": "social-songs@social-songs.iam.gserviceaccount.com",
+  "client_id": "103571715799895438051",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/social-songs%40social-songs.iam.gserviceaccount.com"
+}

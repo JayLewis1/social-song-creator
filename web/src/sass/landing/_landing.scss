@@ -1,0 +1,471 @@
+.landing {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  .dark-bg,  .blue-bg  {
+    width: 150vw;
+    height: 100%;
+    left: -50vw;
+    background-color: $dark;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+  }
+  .blue-bg {
+    background-color: $blue;
+  }
+  .landing-container {
+    width: 1100px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    header {
+      width: 100%;
+      background-color: $dark;
+      height: 80px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      z-index: 15;
+      .header-wrapper {
+        width: 1100px;
+        display: flex;
+        margin: auto;
+      }
+      .logo {
+        margin-left: 50px;
+        color: white;
+        font-size: 1.1rem;
+      }
+      .header-links {
+        margin-left: auto;
+        margin-right: 50px;
+        a {
+          color: $white;
+          text-decoration: none;
+          cursor: pointer;
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin: 0 15px;
+        }
+        .register-link {
+          background-color: $blue;
+          padding: 7px 15px;
+          border-radius: 9px;
+        }
+      }
+    }
+    .bg-container {
+      width: 100%;
+      // background-color: $dark;
+      display: flex;
+      flex-direction: column;
+      margin-top: 80px;
+      position: relative;
+      .intro-container {
+        // width: 1100px;
+        width: 100%;
+        height: 900px;
+        margin: 0 auto;
+        // padding-left: 10%;
+        left: 0;
+        display: flex;
+        .titles-container {
+          width: 60%;
+          padding-top: 50px;
+          h1 {
+            font-size: 3.8rem;
+            color: white;
+          }
+          h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: white;
+          }
+          .link-span {
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            a {
+              font-size: 1.2rem;
+              background-color: $blue;
+              color: white;
+              text-decoration: none;
+              padding: 10px 30px;
+              border-radius: 25px;
+              margin-right: 25px;
+            }
+            button {
+              background: none;
+              border: none;
+              outline: none;
+              font-size: 1.2rem;
+              color: white;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              margin-left: 15px;
+              .down-arrow {
+                width: 25px;
+                height: 25px;
+                border-radius: 25px;
+                background-color: $blue;
+                margin-left: 15px;
+              }
+            }
+          }
+        }
+        .graphic-container {
+          width: 40%;
+          padding-top: 100px;
+          img {
+            width: 150%;
+          }
+        }
+      }
+      .how-to-get-started {
+        // width: 1100px;
+        width: 100%;
+        height: 290px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        h3 {
+          font-size: 3rem;
+          color: white;
+          margin: 0 auto;
+        }
+        .instructions-container {
+          position: absolute;
+          bottom: -150px;
+          // margin-left: 50%;
+          // left: -40%;
+          width: 70%;
+          height: 350px;
+          margin: 0 auto;
+          margin-top: 50px;
+          background-color: $white;
+          border-radius: 21px;
+          box-shadow: $divShadow;
+        }
+      }
+    }
+    .project-showcasing {
+      // width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 250px;
+  
+      // padding: 0 10%;
+      h4 {
+        font-size: 3rem;
+      }
+      .flex-container {
+        display: flex;
+        .project-list {
+          margin-top: 50px;
+          width: 60%;
+          ul {
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            width: 90%;
+          }
+          li {
+            list-style-type: none;
+            width: 100%;
+            display: flex;
+            padding: 25px;
+            border-radius: 25px;
+            padding-left: 0;
+            cursor: pointer;
+            #record-icon {
+              width: 30px;
+              height: 30px;
+              margin: 0 30px;
+              margin-top: 5px;
+            }
+            img {
+              width: 40px;
+              height: 40px;
+              margin: 0 25px;
+            }
+            h5 {
+              font-size: 2rem;
+              font-weight: 700;
+              margin-bottom: 10px;
+            }
+            p {
+              font-size: 1.2rem;
+              font-weight: 500;
+            }
+          }
+          .selected {
+            background-color: $dark;
+            color: $white;
+          }
+        }
+        .project-demo {
+          margin-top: 50px;
+          width: 40%;
+          display: flex;
+          flex-direction: column;
+          h6 {
+            margin: 0 auto;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+          }
+          .record-container {
+            margin-top: 25px;
+            padding: 15px 35px;
+            margin: 0 auto;
+            background-color: $dark;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            button {
+              background: none;
+              border: none;
+              outline: none;
+              border-radius: 50%;
+              width: 40px;
+              height: 40px;
+              cursor: pointer;
+              img {
+                width: 100%;
+              }
+            }
+          }
+          ul {
+            margin-top: 25px;
+            li {
+              width: 100%;
+              box-shadow: $divShadow;
+              border-radius: 21px;
+              display: flex;
+              align-items: center;
+              padding: 20px 25px;
+              cursor: pointer;
+              span {
+                display: flex;
+                flex-direction: column;
+                .track-name {
+                  font-size: 1rem;
+                  font-weight: 600;
+                  color: $dark;
+                }
+                p {
+                  font-size: 0.9rem;
+                  font-weight: 600;
+                  color: $textLight;
+                }
+              }
+              .btn-container {
+                margin-left: auto;
+                button {
+                  background: none;
+                  border: none;
+                  outline: none;
+                  width: 35px;
+                  height: 35px;
+                  cursor: pointer;
+                  img {
+                    width: 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  
+      .want-to-get-started {
+        width: 100%;
+        height: 350px;
+        margin: 0 auto;
+        margin-top: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        h3 {
+          font-size: 3rem;
+          color: $white;
+          margin-bottom: 5px;
+          max-width: 90%;
+          text-align: center;
+        }
+        p {
+          font-size: 2rem;
+          font-weight: 600;
+          color: $dark;
+          max-width: 80%;
+          text-align: center;
+        }
+        a {
+          margin-top: 30px;
+          background-color: $dark;
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: $white;
+          padding: 10px 30px;
+          text-decoration: none;
+          border-radius: 21px;
+      }
+    }
+    .contact-container {
+      // width: 1100px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto;
+      margin-top: 100px;
+      margin-bottom: 200px;
+      h6 {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+      p {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: $blue;
+      }
+      form {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        .input-span {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 15px;
+          label {
+            font-family: $font;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: $blue;
+            margin-bottom: 10px;
+            margin-left: 25px;
+          }
+          input,
+          textarea {
+            background: none;
+            border: none;
+            outline: none;
+            padding: 15px 25px;
+            box-shadow: $divShadow;
+            border-radius: 12px;
+            font-family: $font;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: $dark;
+          }
+          textarea {
+            height: 200px;
+            resize: none;
+          }
+        }
+        .name-wrapper {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 25px;
+          .input-span {
+            width: 100%;
+          }
+        }
+        input[type="submit"] {
+          background: none;
+          border: none;
+          outline: none;
+          background-color: $blue;
+          font-family: $font;
+          font-size: 1.2rem;
+          color: white;
+          border-radius: 25px;
+          padding: 15px 25px;
+          margin-top: 25px;
+          margin-left: auto;
+        }
+      }
+    }
+    .footer {
+      width: 100%;
+      height: 300px;
+      position: relative;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .landing {
+    .landing-container {
+      width: 100%;
+      .bg-container {
+        .intro-container {
+          flex-direction: column;
+          height: auto;
+          padding: 0 10%;
+          .titles-container {
+            width: 100%;
+            h1 {
+              font-size: 3.5rem;
+            }
+            h2 {
+              width: 80%;
+            }
+            .link-span {
+            button { 
+              display: none;
+            }
+          }
+          }
+          
+          .graphic-container {
+            width: 100%;
+            img {
+              width: 100%;
+            }
+          }
+        }
+      }
+      .project-showcasing {
+          h4 {
+            text-align: center;
+          }
+        .flex-container {
+          .project-list {
+            width: 100%;
+            ul {
+              margin: 0 auto;
+              li {
+                margin-bottom: 5%;
+              }
+            }
+          }
+          .project-demo {
+            display: none;
+          }
+        }
+      }
+      .want-to-get-started {
+        height: 450px; 
+      }
+      .contact-container {
+        form {
+          width: 80%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+.active-friends-container {
+  margin-top: 87px;
+  width: 250px;
+  background-color: $white;
+  height: 100%;
+  box-shadow: $divShadow;
+  border-radius: 21px;
+  padding: 10px 20px;
+  .line-break { 
+    background-color: $light;
+    height: 2px;
+    width: 100%;
+    border-radius: 50px;
+    margin: 5px 0;
+    margin-bottom: 15px;
+  }
+.active-friends-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.active-friends {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+
+  .avatar {
+    width: 40px;
+    height: 40px; 
+    background-color: $light;
+    border-radius: 25px;
+    margin-right: 20px;
+  }
+  .friend-name {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .active-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 25px;
+    background-color: $second;
+    margin-left: auto;
+    margin-right: 15px;
+  }
+}
+}

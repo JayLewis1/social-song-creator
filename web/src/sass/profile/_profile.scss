@@ -1,0 +1,423 @@
+.add-mate,
+.remove-mate {
+  display: flex;
+  width: 150px;
+  height: 50px;
+  border-radius: 12px;
+  margin: auto 0;
+  margin-right: 80px;
+  background: none;
+  border: none;
+  outline: none;
+  background-color: $bgBlue;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  transition: 0.2s;
+  cursor: pointer;
+  position: relative;
+  p {
+    font-family: $font;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $blue;
+  }
+  img {
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+  }
+}
+.remove-mate {
+  background-color: $lightRed;
+  p {
+    color: $red;
+  }
+  img {
+    rotate: 90deg;
+  }
+}
+.add-mate:active {
+  transform: scale(0.9);
+}
+.add-mate:disabled {
+  transform: none;
+}
+
+.res-status {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 30px;
+  padding: 0 40px;
+  padding: 5px;
+  bottom: 35px;
+  right: 230px;
+  margin-right: 20px;
+  background-color: $blue;
+  color: white;
+  box-shadow: $divShadow;
+  border-radius: 30px;
+  overflow: none;
+  div {
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    margin-right: 15px;
+    border-radius: 50%;
+  }
+  p {
+    font-size: 14px;
+    font-weight: 500;
+    color: $white;
+  }
+}
+.profile-wrapper,
+.user-profile-wrapper {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 25px;
+  z-index: 5;
+  .info-wrappers,
+  .edit-form {
+    // width:100%;
+    width: 100%;
+    background-color: $white;
+    box-shadow: $divShadow;
+    padding: 25px;
+    border-radius: 21px;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    display: flex;
+    // flex-direction: column;
+    position: relative;
+    .my-profile-avatar {
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+      img {
+        width: 100%;
+      }
+    }
+    .name-dob-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+      margin-right: 15px;
+    }
+    .email-container {
+      width: 40%;
+      overflow-x: hidden;
+      .profile-info {
+        word-break: break-all;
+      }
+    }
+    .name-email-wrapper {
+      width: 100%;
+      display: flex;
+      margin-bottom: 15px;
+    }
+    .label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $second;
+      margin-bottom: 5px;
+    }
+    .profile-info {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .instruments {
+      text-transform: capitalize;
+    }
+    .email-container {
+      margin-left: auto;
+      margin-right: 50px;
+    }
+    .edit-profile {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      outline: none;
+      border: none;
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .edit-form {
+    flex-direction: column;
+    .bio-wrapper {
+      width: 100%;
+      textarea {
+        width: 100%;
+        height: 150px;
+        resize: none;
+        margin-bottom: 15px;
+      }
+    }
+    .instruments-wrapper {
+      width: 100%;
+      input {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+    span {
+      display: flex;
+      flex-direction: column;
+      .dob-span {
+        flex-direction: row;
+      }
+      input,
+      textarea {
+        background: none;
+        border: none;
+        outline: none;
+        font-family: $font;
+        font-size: 1.2rem; 
+        font-weight: 600;
+        color: $dark;
+        border-radius: 4px;
+        background-color: $lightBlue;
+        padding: 7px 15px;
+        width: 100px;
+        margin-right: 25px;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        opacity: 0.5;
+        color: $dark;
+      }
+    }
+    input[type="submit"] {
+      width: 100px;
+      margin-left: auto;
+      background-color: $second;
+      border: none;
+      outline: none;
+      color: white;
+      font-weight: 500;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      cursor: pointer;
+    }
+    .dob-wrapper {
+      flex-direction: row;
+      margin: 0;
+      width: 60%;
+
+      input,
+      select {
+        background: none;
+        border: none;
+        outline: none;
+        font-family: $font;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: $dark;
+        border-radius: 4px;
+        background-color: $lightBlue;
+        padding: 7px 15px;
+      }
+      .dob-inputs {
+        display: flex;
+        label {
+          font-size: 1rem;
+          font-weight: 600;
+          // color: #5fd396;
+          color: $blue;
+          margin-bottom: 5px;
+        }
+        input {
+          width: 100%;
+        }
+        .dob-input {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .day-wrapper {
+        width: 20%;
+      }
+     .month-wrapper {
+        width: 45%;
+        margin: 0 auto;
+        #month {
+          padding-right: 15px;
+          color: $dark;
+        }
+        #month:required {
+          color: #a4a4af;
+        }
+        #month:valid {
+          color: $dark;
+        }
+      }
+      .year-wrapper {
+        width: 23%;
+      }
+    }
+  }
+
+  .profile-components-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 50px;
+    li {
+      list-style-type: none;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      button {
+        background: none;
+        border: none;
+        outline: none;
+        padding: 10px 25px;
+        background-color: $white;
+        color: $second;
+        font-family: $font;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 9px;
+        box-shadow: $divShadow;
+        cursor: pointer;
+      }
+    }
+  }
+  .profile-display {
+    margin-top: 50px;
+    margin-bottom: 200px;
+  }
+}
+
+.user-profile-wrapper {
+  justify-content: flex-start;
+  .profile-top-wrapper {
+    width: 100%;
+    display: flex;
+    .info-wrappers {
+      width: 60%;
+      margin-left: 0;
+      margin-right: 0;
+      flex-direction: row;
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+        // border: 2px solid black;
+        border-radius: 50%;
+        img {
+          width: 100%;
+        }
+      }
+      .name-dob {
+        margin-left: 25px;
+      }
+    }
+    .user-instruments {
+      margin-left: auto;
+      width: 35%;
+    }
+  }
+}
+
+.create-profile-container {
+  width: 80%;
+  // height: 400px;
+  background-color: $white;
+  box-shadow: $divShadow;
+  margin: 0 auto;
+  border-radius: 21px;
+  padding: 25px;
+  h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    color: $second;
+  }
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    label {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      margin-left: 15px;
+    }
+    input,
+    textarea {
+      border: none;
+      outline: none;
+      background-color: $lightBlue;
+      padding: 5px 15px;
+      border-radius: 9px;
+      font-family: $font;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    input::placeholder,
+    textarea::placeholder {
+      opacity: 0.5;
+      color: $dark;
+    }
+    input[type="submit"] {
+      width: 100px;
+      margin-left: auto;
+      background-color: $second;
+      color: white;
+      font-weight: 600;
+      border-radius: 11px;
+      cursor: pointer;
+    }
+    .name-container {
+      display: flex;
+      width: 100%;
+      span {
+        display: flex;
+        flex-direction: column;
+        margin-right: 20px;
+      }
+    }
+    .dob-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 25px 0;
+      span {
+        display: flex;
+        input {
+          margin-right: 20px;
+        }
+      }
+    }
+    .bio-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+      margin-bottom: 25px;
+      textarea {
+        height: 100px;
+        resize: none;
+      }
+    }
+    .instruments {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+      margin-bottom: 25px;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+.feed-flex {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 25px;
+  width: 80%;
+}
+ul {
+  display: flex;
+  flex-direction: column-reverse;
+  li {
+    list-style-type: none;
+  }
+}
+.no-posts {
+  background-color: $white;
+  box-shadow: $divShadow;
+  border-radius: 21px;
+  width: 90%;
+  padding: 30px 20px;
+  margin: 0 auto;
+  display:  flex;
+  p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: $lightGrey;
+    text-align: center;
+    text-align: left;
+  }
+  a {
+    font-size: 1rem;
+    font-weight: 500;
+    color: $blue;
+    text-decoration: none;
+  }
+  button {
+    background: none;
+    border: none; 
+    outline: none;
+    font-family: $font;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $blue;
+    text-decoration: none;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+}

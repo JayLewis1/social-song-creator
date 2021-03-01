@@ -1,0 +1,70 @@
+.account-options-dropdown {
+  width: 200px;
+  background-color: $dark;
+  box-shadow: $divShadow;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 90px;
+  right: 0px;
+  z-index: 10;
+  overflow: hidden;
+  .top-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    img {
+      width: 40px;
+      height: 40px;
+      margin: 0 15px;
+    }
+    p {
+      color: $white;
+    }
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+    li {
+      list-style-type: none;
+      width: 100%;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+      a {
+        text-decoration: none;
+        color: $white;
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+      button {
+        background: none;
+        border: none;
+        outline: none;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        font-family: $font;
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: $white;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
+    li:hover {
+      background-color: $inputGrey;
+    }
+  }
+}

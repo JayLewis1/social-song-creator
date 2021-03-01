@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Group_618" data-name="Group 618" transform="translate(-1146 -20)">
+    <g id="Group_579" data-name="Group 579" transform="translate(1146 20)">
+      <path id="Path_974" data-name="Path 974" d="M14,0A14,14,0,1,1,0,14,14,14,0,0,1,14,0Z" fill="#3e424e"/>
+      <path id="Union_35" data-name="Union 35" d="M7.027,7H.737A.737.737,0,0,1,0,6.263,6.264,6.264,0,0,1,6.263,0H7.736A6.264,6.264,0,0,1,14,6.263.737.737,0,0,1,13.263,7Z" transform="translate(7 14)" fill="#fff"/>
+      <ellipse id="Ellipse_700" data-name="Ellipse 700" cx="5" cy="5.5" rx="5" ry="5.5" transform="translate(9 5)" fill="#3e424e"/>
+      <circle id="Ellipse_698" data-name="Ellipse 698" cx="4" cy="4" r="4" transform="translate(10 7)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
