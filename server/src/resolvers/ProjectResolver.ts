@@ -360,7 +360,7 @@ export class ProjectResolver {
       // Find lyric by its id and the related projectId
       const lyric = await Lyric.find({projectId, id : lyricId});
       await Lyric.remove(lyric);
-      // Return all lyrics related to the
+      // Return all lyrics related to the project
       return Lyric.find({projectId});
       } else {
         // If the user is not the project creator
@@ -372,7 +372,7 @@ export class ProjectResolver {
           // Find lyric by its id and the related projectId
           const lyric = await Lyric.find({projectId, id : lyricId});
           await Lyric.remove(lyric);
-          // Return all lyrics related to the
+          // Return all lyrics related to the project
           return Lyric.find({projectId});
         } else {
           // Return error as user is not authenticated to edit the project
@@ -404,7 +404,7 @@ export class ProjectResolver {
       // Find Tab by its id and the related projectId
       const tab = await Tab.find({projectId, id : tabId});
       await Tab.remove(tab);
-      // Return all lyrics related to the
+      // Return all tabs related to the project
       return Tab.find({projectId});
       } else {
         // If the user is not the project creator
@@ -413,10 +413,10 @@ export class ProjectResolver {
         // If the logged in user's id matches one of the contributors 
         // Allow them to insert the track
         if(userId === project.contributors[x]){
-          // Find lyric by its id and the related projectId
+          // Find tab by its id and the related projectId
           const tab = await Tab.find({projectId, id : tabId});
           await Tab.remove(tab);
-          // Return all lyrics related to the
+          // Return all tabs related to the project
           return Tab.find({projectId});
         } else {
           // Return error as user is not authenticated to edit the project
@@ -426,7 +426,50 @@ export class ProjectResolver {
       return Tab.find({projectId});
     }
   }
-
+  // MUTATION      DELETE Tab
+  // RETURN        Array of Tabs within that project
+  // USED          On /workspace/:projectId : The project's workspace
+  @Mutation(() => [Track])
+  @UseMiddleware(isAuth)
+  async deleteTrack(
+      @Arg("projectId") projectId: string,
+      @Arg("trackId") trackId: string,
+      @Ctx() { payload } : MyContext,
+    ) {
+      const userId = payload?.userId
+      // Find the current project
+      const project = await Project.findOne({ where : { id: projectId }})
+      if(!project) {
+        throw new Error("There is no project");
+      }
+      // Check if the user is the project creator
+      // To see if they are authorised to edit the project
+      if(userId === project.creatorId) {
+      // Find Track by its id and the related projectId and remove
+      const track = await Track.find({projectId, id : trackId});
+      await Track.remove(track);
+      // Return all tracks related to the project
+      return Track.find({projectId});
+      } else {
+        // If the user is not the project creator
+       // Loop through the project contributors
+       for(var x = 0; x < project.contributors.length; x ++) {
+        // If the logged in user's id matches one of the contributors 
+        // Allow them to insert the track
+        if(userId === project.contributors[x]){
+          // Find track by its id and the related projectId
+          const track = await Track.find({projectId, id : trackId});
+          await Track.remove(track);
+          // Return all tracks related to the project
+          return Track.find({projectId});
+        } else {
+          // Return error as user is not authenticated to edit the project
+          throw new Error("User is not authenticated to edit this project.")
+        }
+      }
+      return Track.find({projectId});
+    }
+  }
  // MUTATION      ADD Contributor to the project : ONLY CREATOR CAN PERFORM ACTION
  // RETURN        The Project
  // USED          On /projects : On the project component and also workspace

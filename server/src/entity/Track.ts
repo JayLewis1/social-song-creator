@@ -10,10 +10,6 @@ export class Track extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  // @Field()
-  // @Column("uuid")
-  // projectId: string
-
   @Field()
   @Column("text")
   name: string
