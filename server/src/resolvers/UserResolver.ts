@@ -19,6 +19,7 @@ import { verify } from "jsonwebtoken";
 // Entities
 import { Post } from "../entity/Post";
 import { User } from "../entity/User";
+import { Track } from "../entity/Track";
 import { Tab } from "../entity/Tab";
 import { Lyric } from "../entity/Lyric";
 import { Project } from "../entity/Project";
@@ -692,17 +693,19 @@ export class UserResolver {
         const comments = await Comment.find();
         const likes = await Likes.find()
         const posts = await Post.find();
+        const tracks = await Track.find();
         const tabs = await Tab.find();
         const lyrics = await Lyric.find();
         const projects = await Project.find();
-        const users = await User.find()
+        const users = await User.find();
+        await Track.remove(tracks);
+        await Tab.remove(tabs);
+        await Lyric.remove(lyrics);
+        await Project.remove(projects);
         await Notification.remove(notification);
         await Comment.remove(comments);
         await Likes.remove(likes);
         await Post.remove(posts);
-        await Tab.remove(tabs);
-        await Lyric.remove(lyrics);
-        await Project.remove(projects);
         await User.remove(users);
        return true;
   } 

@@ -226,6 +226,15 @@ mutation DeleteTab($projectId: String!, $tabId: Int!){
    	tab
   }
 }`
+// TRACKS
+export const CREATE_TRACK =  gql`
+mutation CreateTrack($name: String!, $projectId: String!) {
+  createTrack(name:$name, projectId:$projectId) {
+    id
+    name
+    projectId
+  } 
+}`
 // CONTRIBUTORS ON PROJECT
 export const ADD_CONTRIBUTOR = gql`
 mutation AddContributor($projectId: String!, $userId: Int!){

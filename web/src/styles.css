@@ -2821,6 +2821,7 @@ ul li {
       -ms-flex-direction: column;
           flex-direction: column;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .login-container form span label,
@@ -2874,6 +2875,32 @@ ul li {
   font-size: 1.2rem;
   font-weight: 600;
   color: #a4a4af;
+}
+
+.login-container form span #show-password {
+  width: 40px;
+  height: 40px;
+  background: none;
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.login-container form span #show-password img {
+  width: 60%;
+  opacity: 0.6;
 }
 
 .login-container form input[type="submit"] {
@@ -3119,6 +3146,49 @@ ul li {
 
 .welcome-and-validation .password-validation ul li .valid {
   color: #2767fa;
+}
+
+@media (max-width: 510px) {
+  .login-container {
+    width: 100%;
+    padding: 0 10%;
+  }
+  .login-container form span label {
+    margin-left: 5px;
+  }
+  .login-container form span .label-p {
+    margin-left: 5px;
+  }
+  .login-container form .name-wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .login-container form .name-wrapper .name-inputs {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .login-container form .dob-wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .login-container form .dob-wrapper .day-wrapper,
+  .login-container form .dob-wrapper .month-wrapper,
+  .login-container form .dob-wrapper .year-wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .login-container form input[type="submit"] {
+    width: 100%;
+  }
+  .login-container form .register-link {
+    text-align: center;
+    padding: 10px 0;
+    height: auto;
+  }
 }
 
 .add-mate,

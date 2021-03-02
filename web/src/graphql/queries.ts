@@ -275,6 +275,15 @@ query Tabs($projectId: String!){
     tab
   }
 }`
+// TRACKS
+export const GET_TRACKS = gql`
+query Tracks($projectId: String!){
+  tracks(projectId:$projectId ) {
+    id
+    name
+    projectId
+  }
+}`
 // CONTRIBUTORS
 export const GET_CONTRIBUTORS = gql`
 query Contributors($projectId: String!){

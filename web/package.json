@@ -15,6 +15,7 @@
     "apollo-boost": "^0.4.9",
     "apollo-link-token-refresh": "^0.3.2",
     "arraybuffer-to-string": "^1.0.2",
+    "axios": "^0.21.1",
     "graphql": "^15.4.0",
     "mic-recorder-to-mp3": "^2.2.2",
     "react": "^17.0.1",
@@ -65,6 +66,7 @@
     "@graphql-codegen/typescript": "1.20.0",
     "@graphql-codegen/typescript-operations": "1.17.13",
     "@graphql-codegen/typescript-react-apollo": "2.2.1",
+    "@types/axios": "^0.14.0",
     "@types/graphql": "^14.5.0",
     "@types/jwt-decode": "^3.1.0",
     "@types/react-redux": "^7.1.15",
@@ -73,5 +75,6 @@
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/redux-thunk": "^2.1.0",
     "@types/uuidv4": "^5.0.0"
-  }
+  },
+  "proxy": "http://localhost:3000"
 }

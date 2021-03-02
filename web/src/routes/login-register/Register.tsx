@@ -30,6 +30,8 @@ const Register = ({history}: ComponentProps) => {
         year: "",
         all: ""
     })
+    const [passwordType, setPasswordType] = useState("password")
+    const [showOrHide, setShowOrHide] = useState("show")
     const [register] = useMutation(REGISTER_USER);
     const [login] = useMutation(LOGIN_USER);
     const { data, loading } = useQuery(MY_ACCOUNT)
@@ -122,10 +124,10 @@ const Register = ({history}: ComponentProps) => {
         if(emailError === "" && email !== "" && password !== "" && firstName !== "" && lastName !== "" && dob !== "" ) {
             register({
                 variables: {
-                    email,
+                    email: email.toLowerCase(),
                     password,
-                    firstName,
-                    lastName,
+                    firstName: firstName.toLowerCase(),
+                    lastName: lastName.toLowerCase(),
                     dob
                 }
             })
@@ -145,7 +147,7 @@ const Register = ({history}: ComponentProps) => {
                 if(res.data.register.success === true)  {
                     const response = await login({
                         variables: {
-                            email,
+                            email: email.toLowerCase(),
                             password,
                         },
                         update: (cache, { data: { login } } )=> {
@@ -203,6 +205,17 @@ const Register = ({history}: ComponentProps) => {
         }
     }
 
+    const showPassword = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        if(passwordType === "password") {
+            setPasswordType("text")
+            setShowOrHide("hide")
+        } else {
+            setPasswordType("password")
+            setShowOrHide("show")
+        }
+    }
+
     return (
         <Fragment>
             <div className="login-container">
@@ -224,7 +237,7 @@ const Register = ({history}: ComponentProps) => {
                     <span>
                         <label htmlFor="password">Password</label>
                         <input 
-                            type="password" 
+                            type={passwordType} 
                             name="password" 
                             id='password'
                             value={formData.password} 
@@ -232,6 +245,9 @@ const Register = ({history}: ComponentProps) => {
                             style={ passwordErrors ? {border: "2px solid #F84061"} : {border: "none"} }
                             onChange={e => onChange(e)}/>
                              { passwordErrors && <p className="input-error">{passwordErrors}</p>}
+                             <button id="show-password" onClick={(e) => showPassword(e)}>
+                                <img src={`/assets/icons/validate/${showOrHide}-password.svg`} alt="Show/hide password"/>
+                            </button>
                     </span> 
                     <span>
                     <p className="label-p">Have you got a name?</p>

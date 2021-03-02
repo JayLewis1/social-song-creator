@@ -7,7 +7,7 @@ import { User } from "../entity/User";
 import { Project } from "../entity/Project";
 import { Lyric } from "../entity/Lyric";
 import { Tab } from "../entity/Tab";
-// import { Track } from "../entity/Track";
+import { Track } from "../entity/Track";
 
 @ObjectType()
 class ProjectResponse {
@@ -135,7 +135,7 @@ export class ProjectResolver {
     return Lyric.find({ projectId });
   }
 
-  // GET      Tabs by it's id
+  // GET      Tabs by projectId id
   // RETURN   Array of Tabs
   // USED     On /workspace/:projectId : The project's workspace
  @Query(() => [Tab])
@@ -146,6 +146,17 @@ export class ProjectResolver {
    return Tab.find({ projectId });
  }
 
+  // GET      Tabs by projectId id
+  // RETURN   Array of Tabs
+  // USED     On /workspace/:projectId : The project's workspace
+  @Query(() => [Track])
+  @UseMiddleware(isAuth)
+  async tracks(
+    @Arg("projectId") projectId : string
+  ) {
+    return Track.find({ projectId });
+  }
+ 
   // MUTATION      CREATE Lyric
   // RETURN        The Lyric
   // USED          On /workspace/:projectId : The project's workspace
@@ -273,10 +284,9 @@ export class ProjectResolver {
   // MUTATION      CREATE Tracks
   // RETURN        Array of tracks within that project
   // USED          On /workspace/:projectId : The project's workspace
- @Mutation(() => Boolean)
+ @Mutation(() => Track)
   @UseMiddleware(isAuth)
   async createTrack(
-    @Arg('buffer') buffer: string,
     @Arg('name') name: string,
     @Arg('projectId') projectId: string,
     @Ctx() { payload } : MyContext,
@@ -287,24 +297,23 @@ export class ProjectResolver {
     if(!project) {
       throw new Error("There is no project");
     }
-    // convert the string version of buffer back into a buffer
-    let newBuffer = Buffer.from(buffer, 'utf-8');
 
     // Check if the user is the project creator
     // To see if they are authorised to edit the project
     if(userId === project.creatorId) {
-      // Insert the track into the table 
-
-      // TODO : INSERT THE TRACK
-
-      console.log({
-        buffer,
-        newBuffer,
+      // Insert the track into the table
+     const response = await Track.insert({
         name,
-        projectId
-      })
-      return true;
-     }else {
+        project: project
+      });
+      try {
+        console.log(response.raw[0].id);
+        const newTrack = await Track.findOne({ where : { id : response.raw[0].id }})
+        return newTrack;
+      }catch(err) {
+        return err;
+      }
+     } else {
        // If the user is not the project creator
        // Loop through the project contributors
        for(var x = 0; x < project.contributors.length; x ++) {
@@ -312,21 +321,20 @@ export class ProjectResolver {
          // Allow them to insert the track
          if(userId === project.contributors[x]){
 
-          // TODO : INSERT THE TRACK
-
-          console.log({
-            buffer,
+          const response = await Track.insert({
             name,
-            projectId
-          })
-          return true;
-         } else {
-           // Return error as user is not authenticated to edit the project
-           throw new Error("User is not authenticated to edit this project")
-         }
+            project: project
+          });
+          try {
+            const newTrack = await Track.findOne({ where : { id : response.raw[0].id }})
+            return newTrack;
+          }catch(err) {
+            return err;
+          }
         }
+      }
      }
-     return true;
+    //  return true;
   }
 
   // MUTATION      DELETE Lyric

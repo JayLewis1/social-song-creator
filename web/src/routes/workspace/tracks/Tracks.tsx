@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
+import axios from "axios";
 // GraphQL
-import { useMutation } from "@apollo/client";
-// import {  } from "../../../graphql/mutations";
+import { useQuery, useMutation } from "@apollo/client"
+import { MY_ACCOUNT, GET_TRACKS } from "../../../graphql/queries";
+import { CREATE_TRACK } from "../../../graphql/mutations";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 
-var ab2str = require('arraybuffer-to-string')
-var str2ab = require('string-to-arraybuffer')
+// var ab2str = require('arraybuffer-to-string')
+// var str2ab = require('string-to-arraybuffer')
 
 const MicRecorder = require('mic-recorder-to-mp3');
 
@@ -14,10 +16,14 @@ interface ComponentProps {
   playbar: {
     data : object
   }
+  project: {
+    currentProject: string
+  }
 }
 
 const mapState = (state: ComponentProps) => ({
-  data: state.playbar.data
+  data: state.playbar.data,
+  currentProject: state.project.currentProject
 })
 
 const mapDispatch = {
@@ -31,7 +37,7 @@ type Props = PropsFromRedux
 
 var counter: number;
 // import RecorderComponent from "../RecorderComponent";
-const Tracks  = ({assignTrack} : Props) => {
+const Tracks  = ({assignTrack, currentProject} : Props) => {
   const [trackForm, setTrackForm] = useState({
     name: ""
   })
@@ -46,6 +52,13 @@ const Tracks  = ({assignTrack} : Props) => {
   const [isActive, setIsActive] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const { data: meData, loading:meLoading } = useQuery(MY_ACCOUNT);
+  const { data, loading } = useQuery(GET_TRACKS, {
+    variables : {
+      projectId: currentProject
+    }
+  });
+  const [ createTrack ] = useMutation(CREATE_TRACK);
 
   useEffect(() => {
     let interval: any = null;
@@ -102,93 +115,74 @@ const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
   setTrackForm({...trackForm, [e.target.name] : e.target.value })
 }
 
-const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   // Create Track name
   const trackName = trackForm.name;
   // Create New file
-  const newFile = new File(audioBuffer, trackName, {
+  const newAudioFile = new File(audioBuffer, trackName, {
     type: "audio/mp3",
-    lastModified: Date.now()
+    lastModified: Date.now(),
   });
-  console.log(newFile);
-  assignTrack(newFile);
+
+  var newFormData = new FormData();
+  newFormData.append("userId", meData.me.id);
+  newFormData.append("users-audio", newAudioFile);
+  newFormData.append("projectId", currentProject);
+
+  const response = await createTrack({
+    variables: {
+      name: trackName,
+      projectId: currentProject
+  }})
+  try {
+    if(response.data.createTrack) {
+      newFormData.append("trackId", response.data.createTrack.id);
+      axios({
+        method: "post",
+        url: 'http://localhost:4000/upload',
+        data: newFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then(function (response: any) {
+          //handle success
+          console.log(response);
+        })
+        .catch(function (response: any) {
+          //handle error
+          console.log(response);
+        });
+    }
+  } catch(err) {
+    console.log(err)
+  }
+
+  console.log(newAudioFile);
+  // assignTrack(newFile);
   const date = Date.now();
   const newDate = new Date(date);
   const created = newDate.toDateString();
   
     // Create audio url with the new file
-    const audioUrl = URL.createObjectURL(newFile);
-  const audioObject = {
-    name: trackName,
-    url: audioUrl,
-    created
-  }
+  // const audioUrl = URL.createObjectURL(newAudioFile);
+  // const audioObject = {
+  //   name: trackName,
+  //   url: audioUrl,
+  //   created
+  // }
+  // const player = new Audio(URL.createObjectURL(newAudioFile));
+  // player.play()
+  //     .then(() => console.log("Playing"))
+  //     .catch(err => console.log(err))
+
     // Push to state
-    setTracks([...tracks, audioObject])
-    // Handle Buffer with redux
+    // setTracks([...tracks, audioObject])
 
-
-
-    // const decode = (str: any):string => Buffer.from(str, 'base64').toString('binary');
-    // const encode = (str: any):string => Buffer.from(str, 'binary').toString('base64');
-
-    // const baseString = encode(audioBuffer)
-    // console.log(baseString)
-   var newArray: any = [];
-   var arrayBuffer: any = audioBuffer;
-
-    for(var x = 0; x < arrayBuffer.length; x ++) {
-      // newArray.push(ab2str(arrayBuffer[x])) //
-      newArray.push(arrayBuffer[x].toString())
-    }
-    var newBuffer: any = [];
-    var intArray: any =[];
-    for(var i = 0; i < newArray.length; i ++) {
-
-      var splitArray = newArray[i].split(",")
-      for(var j = 0 ; j <  newArray[i].length; j++) {
-        var num = parseInt(splitArray[j]);
-        intArray.push(num)
-      }
-      var arr = new Int8Array(intArray);
-      newBuffer.push(arr)
-    }
-    console.log(audioBuffer)
-    console.log(newBuffer)
-
-     var blob: any = new Blob(newBuffer, {
-      type: "audio/ogg; codecs=opus"
-    });
-    console.log(blob)
-    
-    const player = new Audio(URL.createObjectURL(blob));
-    player.play()
-      .then(() => console.log("Playing"))
-      .catch(err => console.log(err))
-    // var int8Array: any = [];
-    // for(var n = 0 ; n <  intArray.length; n++) {
-    //   // console.log(intArray)
-    //    var arr = new Int8Array(intArray);
-    //    int8Array.push(arr)
-    // }
-    // console.log(int8Array);
-  //  console.log(newBuffer);
-  
-    // var blob: any = new Blob(newBuffer, {
-    //   type: "audio/ogg; codecs=opus"
-    // });
-
-    // const player = new Audio(URL.createObjectURL(blob));
-    // player.play()
-
-    // assignTrack(audioBuffer);
     setTrackForm({ name: ""});
     setForm(false);
 }
 
 const sendAudioData = (data: any) => {
-  console.log(data);
   assignTrack(data);
 }
 
@@ -196,19 +190,41 @@ const sendAudioData = (data: any) => {
     <div className="track-list-container">
     <div className="track-list-header">
       <p>Track Name</p>
-      <p>Track Length</p>
+      <br />
       <p>Options</p>
     </div>
     <div className="track-list-scroll">
-      <div className="track-container">
+      {
+        !loading && data && data.tracks.length !== 0 ? data.tracks.map((track: any) =>
+        <li key={track.id} className="track-container">
+        <button className="play-audio" onClick={() => sendAudioData(track)}>  </button>
+          <div className="track-details">
+            <p className="track-name">{track.name}</p>
+            <p className="track-date">{track.created}</p>
+          </div>
+          <div className="track-options">
+            <button className="track-favourite">
+              <img src="/assets/icons/workspace/favourite.svg" alt="Favourite the track"/>
+            </button>
+            <button className="track-delete">
+              <img src="/assets/icons/workspace/delete.svg" alt="Delete the track"/>
+            </button>
+          </div>
+      </li> 
+        ): 
+        <li className="track-container">
+          <p>Record track</p>
+          <button onClick={() =>  startRecording()} className="recording-btns" id="record">
+            <img src="/assets/icons/workspace/record.svg" alt="Record"/>
+          </button>
+        </li> 
+      }
+
+      {/* <div className="track-container">
         <div className="track-details">
           <p className="track-name">Track One</p>
           <p className="track-date">Feb 1, 2019 at 4:23 PM</p>
         </div>
-        {/* <div className="track-scrub">
-          <div className="scrub"></div>
-          <p className="track-time">3:46</p>
-        </div> */}
         <div className="track-options">
           <button className="track-favourite">
             <img src="/assets/icons/workspace/favourite.svg" alt="Favourite the track"/>
@@ -217,8 +233,8 @@ const sendAudioData = (data: any) => {
             <img src="/assets/icons/workspace/delete.svg" alt="Delete the track"/>
           </button>
         </div>
-      </div>
-      { tracks && tracks.length > 1 ? tracks.map((track) => 
+      </div> */}
+      {/* { tracks && tracks.length > 1 ? tracks.map((track) => 
       { return track.url !== "" &&  (
       <li key={track.url}className="track-container">
       <button className="play-audio" onClick={() => sendAudioData(track)}>  </button>
@@ -226,10 +242,6 @@ const sendAudioData = (data: any) => {
           <p className="track-name">{track.name}</p>
           <p className="track-date">{track.created}</p>
         </div>
-        {/* <div className="track-scrub">
-          <div className="scrub"></div>
-          <p className="track-time">3:46</p>
-        </div> */}
         <div className="track-options">
           <button className="track-favourite">
             <img src="/assets/icons/workspace/favourite.svg" alt="Favourite the track"/>
@@ -243,7 +255,7 @@ const sendAudioData = (data: any) => {
         </audio>
     </li> )
     }
-      )  : null }
+      )  : null } */}
     </div> 
    <div className="recorder-container">
       <div className="center-wrapper">

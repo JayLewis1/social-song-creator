@@ -1,7 +1,7 @@
 
 import "dotenv/config";
 import "reflect-metadata";
-import express from "express";
+import express, { Request, Response } from "express";
 import { ApolloServer } from  "apollo-server-express";
 import { buildSchema } from "type-graphql" 
 import { UserResolver } from './resolvers/UserResolver'; 
@@ -15,19 +15,38 @@ import cors from "cors"
 import { User } from "./entity/User";
 import { createAccessToken , createRefreshToken} from "./auth/auth";
 import { sendRefreshToken } from "./auth/sendRefreshToken";
-// import Multer from 'multer';
-  
-// const gcsMiddlewares = require("./middleware/google-cloud-storage");
+import multer from 'multer';
+import { uploadToS3 } from "./s3/upload";
+import { getFileFromS3 } from "./s3/retrieve";
 
-// import { sendUploadToGCS } from "./middleware/google-cloud-storage";
-// const gcsMiddlewares = require('./middleware/google-cloud-storage')
 const PORT = process.env.port || 4000;
 
-// const multer: any = Multer({
-//     limits: {
-//       fileSize: 10 * 1024 * 1024, // Maximum file size is 10MB
+// const storage = multer.diskStorage({
+//     destination: function (_req, _file, cb) {
+//         cb(null, './uploads/')
 //     },
-//   });
+    
+//     filename: function (_req: any, file: any, cb: any) {
+//         cb(null, file.originalname)
+//     }
+// });
+
+// const fileFilter = (_req: any,file: any,cb: any) => {
+//     if(file.mimetype === "image/jpg"  || 
+//        file.mimetype ==="image/jpeg"  || 
+//        file.mimetype ===  "image/png"){
+     
+//     cb(null, true);
+//    }else{
+//       cb(new Error("Image uploaded is not of type jpg/jpeg or png"),false);
+//     }
+// }
+
+// const upload = multer({storage: storage, fileFilter: fileFilter});
+
+
+var upload = multer({ dest: 'uploads/'});
+var type = upload.single('users-audio');
 
 (async () => {
     const app = express();
@@ -39,17 +58,37 @@ const PORT = process.env.port || 4000;
     )
     app.use(cookieParser());
     app.get("/", (_req, res) => res.send("Hello"));
-    // app.post("/upload", 
-    // multer.single('image'),
-    // gcsMiddlewares.sendUploadToGCS,
-    // ({req, res} :any) => {
-    //     if(req.file && req.file.gcsUrl) {
-    //         console.log(req.file.gcsUrl)
-    //         return res.send(req.file.gcsUrl)
-    //     }
 
-    //     return res.status(500).send("Unable to upload")
-    // } )
+    app.get("/get/:projectId/:fileId", async (req: Request, res: Response) => {
+        const fileId = req.params.fileId
+        const projectId = req.params.projectId
+        console.log(fileId);
+        console.log(projectId);
+
+        const response = await getFileFromS3(projectId, fileId);
+        
+        try {
+            console.log(response)
+            return res.send(response);
+        } catch(err) {
+            console.log(err);
+            return res.send(err);
+        }
+    })
+
+    app.post("/upload", type, (req: Request, res: Response) => {
+        const uploadedAudio = {
+            userId : req.body.userId,
+            projectId: req.body.projectId,
+            trackId: req.body.trackId,
+            fileContent: req.file,
+
+        }
+        uploadToS3(uploadedAudio);
+        return res.send(uploadedAudio);
+    })
+
+
     app.post("/refresh_token", async (req, res) => {
         // Read the dsi cookie which should be the refresh token
         const token = req.cookies.dsi

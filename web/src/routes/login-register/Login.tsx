@@ -50,20 +50,20 @@ const Login = ({history, client, authenticateUser}: Props) => {
         if(email === "") {
             setEmailErrors("You must enter an email address");
         } 
-        else {
-            setEmailErrors("");
-        }
+        // else {
+        //     setEmailErrors("");
+        // }
         if(password === "") {
             setPasswordErrors("You must enter a password");
         } 
-        else {
-            setPasswordErrors("");
-        }
-        if(emailErrors === "" && passwordErrors === "") {
+        // else {
+        //     setPasswordErrors("");
+        // }
+        if(email !== "" && password !== "") {
           const response = await login({
                 variables: {
-                    email,
-                    password
+                    email: email.toLowerCase(),
+                    password: password.toLowerCase(),
                 },
                 update: (cache, { data: { login } } ) => {
                     if (!login) {
