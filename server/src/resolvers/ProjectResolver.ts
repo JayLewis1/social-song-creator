@@ -470,6 +470,74 @@ export class ProjectResolver {
       return Track.find({projectId});
     }
   }
+  // MUTATION      Assigning the main Track to Project
+  // RETURN        Array of Tabs within that project
+  // USED          On /workspace/:projectId : The project's workspace
+  @Mutation(() => Project)
+  @UseMiddleware(isAuth)
+  async assignTrackToProject(
+      @Arg("projectId") projectId: string,
+      @Arg("trackId") trackId: string,
+      @Ctx() { payload } : MyContext,
+    ) {
+      const userId = payload?.userId
+      // Find the current project
+      const project = await Project.findOne({ where : { id: projectId }})
+      if(!project) {
+        throw new Error("There is no project");
+      }
+      // Check if the user is the project creator
+      // To see if they are authorised to edit the project
+      if(userId === project.creatorId) {
+      // Find Track by its id and the related projectId and remove
+      const track = await Track.find({projectId, id : trackId});
+        
+      if(!track) {
+       return false;
+      }
+      
+      await getConnection()
+      .createQueryBuilder()
+      .update(Project)
+      .set({ mainTrack: trackId})
+      .where('id = :id', {
+        id : projectId,
+      })
+      .returning("*")
+      .execute();
+
+      return await Project.findOne({id: projectId })
+      } else {
+        // If the user is not the project creator
+       // Loop through the project contributors
+       for(var x = 0; x < project.contributors.length; x ++) {
+        // If the logged in user's id matches one of the contributors 
+        // Allow them to insert the track
+        if(userId === project.contributors[x]){
+          const track = await Track.find({projectId, id : trackId});
+            if(!track) {
+            return false;
+            }
+            
+            await getConnection()
+            .createQueryBuilder()
+            .update(Project)
+            .set({ mainTrack: trackId})
+            .where('id = :id', {
+              id : projectId,
+            })
+            .returning("*")
+            .execute();
+
+            return Project.find({id: projectId })
+        } else {
+          // Return error as user is not authenticated to edit the project
+          throw new Error("User is not authenticated to edit this project.")
+        }
+      }
+      return Project.find({id: projectId })
+    }
+  }
  // MUTATION      ADD Contributor to the project : ONLY CREATOR CAN PERFORM ACTION
  // RETURN        The Project
  // USED          On /projects : On the project component and also workspace
@@ -593,10 +661,12 @@ export class ProjectResolver {
       // Find the lyrics, tabs and tracks related to the project
       const lyrics = await Lyric.find({projectId : project!.id});
       const tabs = await Tab.find({projectId : project!.id});
+      const tracks = await Track.find({projectId : project!.id});
       // const tracks = await Track.find({projectId : project!.id});
       // Remove all the lyrics, tabs and tracks along the project too
       await Tab.remove(tabs)
       await Lyric.remove(lyrics);
+      await Track.remove(tracks);
       await Project.remove(project);
       // Find the user's projects and return them
       const projects = Project.find({creatorId:payload!.userId });
@@ -629,7 +699,8 @@ export class ProjectResolver {
         name,
         isPublic,
         tab: [],
-        contributors : [user!.id]
+        contributors : [user!.id],
+        mainTrack: "",
       });
       return {
        error: false,

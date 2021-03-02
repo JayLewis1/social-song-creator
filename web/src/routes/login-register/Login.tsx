@@ -30,6 +30,8 @@ const Login = ({history, client, authenticateUser}: Props) => {
     const [ emailErrors, setEmailErrors ] = useState("")
     const [ passwordErrors, setPasswordErrors ] = useState("")
     const [loggingIn, setLogging] = useState(false);
+    const [passwordType, setPasswordType] = useState("password")
+    const [showOrHide, setShowOrHide] = useState("show")
     const [login] = useMutation(LOGIN_USER);
     const { data, loading } = useQuery(MY_ACCOUNT);    
      
@@ -63,7 +65,7 @@ const Login = ({history, client, authenticateUser}: Props) => {
           const response = await login({
                 variables: {
                     email: email.toLowerCase(),
-                    password: password.toLowerCase(),
+                    password: password,
                 },
                 update: (cache, { data: { login } } ) => {
                     if (!login) {
@@ -125,6 +127,18 @@ const Login = ({history, client, authenticateUser}: Props) => {
         }
     }
 
+    const showPassword = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        if(passwordType === "password") {
+            setPasswordType("text")
+            setShowOrHide("hide")
+        } else {
+            setPasswordType("password")
+            setShowOrHide("show")
+        }
+    }
+
+
     return (
         <div className="login-container">
             <h1>SocialSongs</h1>
@@ -146,7 +160,7 @@ const Login = ({history, client, authenticateUser}: Props) => {
                 <span>
                     <label htmlFor="password">Password</label>
                     <input 
-                        type="password" 
+                        type={passwordType} 
                         name="password" 
                         value={password} 
                         placeholder="Enter password"
@@ -155,6 +169,9 @@ const Login = ({history, client, authenticateUser}: Props) => {
                         }}
                         style={passwordErrors ? {border: "2px solid #F84061"} : {border: "none"}}/>  
                         { passwordErrors && <p className="input-error">{passwordErrors}</p> }
+                        <button id="show-password" onClick={(e) => showPassword(e)}>
+                                <img src={`/assets/icons/validate/${showOrHide}-password.svg`} alt="Show/hide password"/>
+                        </button>
                     <Link to="/" className="forgotPassword">Forgot your password?</Link>
                 </span>
               

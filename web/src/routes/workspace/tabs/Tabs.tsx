@@ -38,7 +38,6 @@ type Props = PropsFromRedux
 
 
 const Tabs = ({initTabCreation, initTabDeletion, currentProject, tabs}: Props) => {
-  const [deleteTab, setDeleteTab] = useState(false);
   const [currentTab ,setCurrentTab] = useState(-1);
   const { data, loading } = useQuery(GET_TABS, {
     variables: {
@@ -58,9 +57,9 @@ const Tabs = ({initTabCreation, initTabDeletion, currentProject, tabs}: Props) =
     <div className="tabs-container">
       <div className="lyric-tab-header">
           <h5>Tabs</h5>
-          <button className="add-btn" onClick={() => createTabPanel()}>
+          {/* <button className="add-btn" onClick={() => createTabPanel()}>
             <img src="/assets/icons/workspace/add.svg" alt="Add Lyric"/>
-          </button>
+          </button> */}
         </div>
       {  tabs.create === true ? <CreateTabs></CreateTabs> : null}
         <div className="lyric-tab-scroll-container">

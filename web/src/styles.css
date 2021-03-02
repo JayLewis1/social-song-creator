@@ -1319,7 +1319,7 @@ ul li {
   padding: 25px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  z-index: 15;
+  z-index: 25;
 }
 
 .create-container .panel-top {
@@ -1757,7 +1757,7 @@ ul li {
 .workspace-create {
   width: 500px;
   left: -250px;
-  margin-top: 0px;
+  margin-top: -40px;
 }
 
 .create-component {
@@ -1801,7 +1801,8 @@ ul li {
   cursor: pointer;
 }
 
-.create-component .bottom ul li button, .create-component .bottom ul li a {
+.create-component .bottom ul li button,
+.create-component .bottom ul li a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1817,13 +1818,15 @@ ul li {
   cursor: pointer;
 }
 
-.create-component .bottom ul li button img, .create-component .bottom ul li a img {
+.create-component .bottom ul li button img,
+.create-component .bottom ul li a img {
   width: 25px;
   height: 25px;
   margin-right: 15px;
 }
 
-.create-component .bottom ul li button p, .create-component .bottom ul li a p {
+.create-component .bottom ul li button p,
+.create-component .bottom ul li a p {
   font-size: 1rem;
   font-weight: 500;
   color: #768392;
@@ -1835,7 +1838,8 @@ ul li {
   background-color: #eaf0ff;
 }
 
-.create-component .bottom ul li:hover button p, .create-component .bottom ul li:hover a p {
+.create-component .bottom ul li:hover button p,
+.create-component .bottom ul li:hover a p {
   color: #2767fa;
 }
 
@@ -1843,8 +1847,9 @@ ul li {
   background-color: #E6FFEF;
 }
 
-.create-component .bottom ul .create-post:hover button p, .create-component .bottom ul .create-post:hover a p {
-  color: #20BF55;
+.create-component .bottom ul .create-post:hover button p,
+.create-component .bottom ul .create-post:hover a p {
+  color: #20bf55;
 }
 
 .delete-popup {
@@ -1907,9 +1912,10 @@ ul li {
 }
 
 .workspace-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
   width: 100%;
   height: 50vh;
 }
@@ -1940,8 +1946,30 @@ ul li {
   margin: 0 10px;
 }
 
+.workspace-container .workspace-options {
+  display: none;
+  position: fixed;
+  top: 70px;
+  width: 100%;
+  height: 80px;
+  padding: 0 10%;
+  background-color: #1e212b;
+  z-index: 10;
+}
+
+.workspace-container .workspace-options button {
+  background: none;
+  border: none;
+  outline: none;
+  font-family: "Nunito", sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+}
+
 .workspace-container .track-list-container {
-  width: 40%;
+  width: 100%;
   height: 100%;
   position: relative;
 }
@@ -1960,127 +1988,6 @@ ul li {
   margin: auto 0;
   font-size: 1rem;
   font-weight: 700;
-}
-
-.workspace-container .track-list-container .recorder-container {
-  position: fixed;
-  bottom: 90px;
-  left: 0;
-  z-index: 15;
-  margin-left: 50%;
-  left: -50px;
-  width: 100px;
-  height: 60px;
-  background-color: #1e212b;
-  -webkit-box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
-          box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
-  border-radius: 22px 22px 0 0;
-  color: white;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.workspace-container .track-list-container .recorder-container .center-wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin: auto;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.workspace-container .track-list-container .recorder-container .center-wrapper .recording-btns {
-  background: none;
-  border: none;
-  outline: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin: 0;
-  cursor: pointer;
-}
-
-.workspace-container .track-list-container .recorder-container .center-wrapper .recording-btns img {
-  width: 100%;
-}
-
-.workspace-container .track-list-container .recorder-container .center-wrapper #record {
-  width: 40px;
-  height: 40px;
-}
-
-.workspace-container .track-list-container .recorder-container .track-popup {
-  width: 300px;
-  height: 150px;
-  background-color: #1e212b;
-  padding: 15px;
-  position: absolute;
-  margin-left: 50%;
-  left: -150px;
-  top: -160px;
-  z-index: 20;
-  border-radius: 18px;
-}
-
-.workspace-container .track-list-container .recorder-container .track-popup form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.workspace-container .track-list-container .recorder-container .track-popup form span {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin-bottom: 15px;
-}
-
-.workspace-container .track-list-container .recorder-container .track-popup form span label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: white;
-  margin-left: 15px;
-  margin-bottom: 5px;
-}
-
-.workspace-container .track-list-container .recorder-container .track-popup form span input {
-  padding: 5px 15px;
-  border: none;
-  outline: none;
-  background-color: #eaf0ff;
-  border-radius: 3px;
-  color: #1e212b;
-  font-family: "Nunito", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-.workspace-container .track-list-container .recorder-container .track-popup form input[type="submit"] {
-  cursor: pointer;
-  background-color: #2767fa;
-  border: none;
-  outline: none;
-  padding: 5px;
-  border-radius: 9px;
-  color: white;
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
 }
 
 .workspace-container .track-list-container .track-list-scroll {
@@ -2123,6 +2030,7 @@ ul li {
   background: none;
   border: none;
   outline: none;
+  z-index: 3;
 }
 
 .workspace-container .track-list-container .track-list-scroll .track-container .play-audio:hover {
@@ -2139,6 +2047,8 @@ ul li {
           flex-direction: column;
   -ms-flex-item-align: center;
       align-self: center;
+  position: relative;
+  z-index: 5;
 }
 
 .workspace-container .track-list-container .track-list-scroll .track-container .track-details .track-name {
@@ -2186,6 +2096,8 @@ ul li {
           justify-content: center;
   margin-left: auto;
   width: 120px;
+  position: relative;
+  z-index: 5;
 }
 
 .workspace-container .track-list-container .track-list-scroll .track-container .track-options button {
@@ -2203,9 +2115,17 @@ ul li {
   width: 100%;
 }
 
+.workspace-container .track-list-container .track-list-scroll .track-container .no-tracks-p {
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 60%;
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+
 .workspace-container .lyrics-container,
 .workspace-container .tabs-container {
-  width: 30%;
+  width: 100%;
   height: 100%;
   padding: 0 25px;
   position: relative;
@@ -2361,7 +2281,8 @@ ul li {
   overflow-x: auto;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container {
   list-style-type: none;
@@ -2378,20 +2299,23 @@ ul li {
   position: relative;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .lyric-content, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .lyric-content,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .lyric-content,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .lyric-content,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container .lyric-content,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container .lyric-content {
   margin: 10px 0;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .lyric-content p, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .lyric-content p,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .lyric-content p,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .lyric-content p,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container .lyric-content p,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container .lyric-content p {
   font-size: 1rem;
   font-weight: 400;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container .tab-grid {
   display: -ms-grid;
@@ -2406,7 +2330,8 @@ ul li {
   padding-bottom: 15px;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid .grid-lines, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid .grid-lines,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid .grid-lines,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid .grid-lines,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid .grid-lines,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container .tab-grid .grid-lines {
   width: 100%;
@@ -2423,7 +2348,8 @@ ul li {
   z-index: 5;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid .grid-lines .line, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid .grid-lines .line,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid .grid-lines .line,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid .grid-lines .line,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid .grid-lines .line,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container .tab-grid .grid-lines .line {
   height: 2px;
@@ -2432,13 +2358,15 @@ ul li {
   margin: auto 0;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid span, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid span,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid span,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid span,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid span,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container .tab-grid span {
   z-index: 6;
 }
 
-.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid span p, .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid span p,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid span p,
+.workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container .tab-grid span p,
 .workspace-container .tabs-container .lyric-tab-scroll-container .lyric-tab-container .tab-grid span p,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container .tab-grid span p {
   margin-bottom: 4.5px;
@@ -2452,6 +2380,177 @@ ul li {
 .workspace-container .lyrics-container .lyric-tab-scroll-container .tab-container,
 .workspace-container .tabs-container .lyric-tab-scroll-container .tab-container {
   min-height: 250px;
+}
+
+.recorder-container {
+  position: fixed;
+  bottom: 90px;
+  left: 0;
+  z-index: 15;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  padding: 30px;
+  width: auto;
+  height: 70px;
+  background-color: #1e212b;
+  -webkit-box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
+          box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 22px 22px 0 0;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.recorder-container .create-btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.recorder-container .create-btn-container .create-btns {
+  background: none;
+  border: none;
+  outline: none;
+  width: 40px;
+  height: 40px;
+  margin: 0 7px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.recorder-container .create-btn-container .create-btns img {
+  width: 100%;
+}
+
+.recorder-container .create-btn-container .create-btns:active {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+
+.recorder-container .repsonsive-ws-menu {
+  display: none;
+  margin-left: 15px;
+}
+
+.recorder-container .repsonsive-ws-menu button {
+  background: none;
+  border: none;
+  outline: none;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
+  opacity: 0.5;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.recorder-container .repsonsive-ws-menu .active-btn {
+  opacity: 1;
+}
+
+.recorder-container .track-popup {
+  width: 300px;
+  height: 150px;
+  background-color: #1e212b;
+  padding: 15px;
+  position: absolute;
+  margin-left: 50%;
+  left: -150px;
+  top: -160px;
+  z-index: 20;
+  border-radius: 18px;
+}
+
+.recorder-container .track-popup form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.recorder-container .track-popup form span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.recorder-container .track-popup form span label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+.recorder-container .track-popup form span input {
+  padding: 5px 15px;
+  border: none;
+  outline: none;
+  background-color: #eaf0ff;
+  border-radius: 3px;
+  color: #1e212b;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.recorder-container .track-popup form input[type="submit"] {
+  cursor: pointer;
+  background-color: #2767fa;
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 9px;
+  color: white;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.loading-save {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #1e212b;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .workspace-reszized {
@@ -2554,66 +2653,27 @@ ul li {
   width: 50%;
 }
 
-.recorder {
-  z-index: 11;
-}
-
-.recorder ._1ceqH {
-  width: 400px;
-  font-family: "Nunito", sans-serif;
-  color: #2767fa;
-}
-
-.recorder ._1ceqH ._2fG9h ._dt3-T {
-  border-radius: 35px;
-  overflow: hidden;
-  background-color: white;
-}
-
-.recorder ._1ceqH ._2fG9h ._dt3-T ._1lB9c {
-  background-color: white;
-}
-
-.recorder ._1ceqH ._2fG9h ._dt3-T ._1lB9c ._2N9dq {
-  color: #2767fa;
-  font-size: 1.2rem;
-  font-weight: 700;
-  font-family: "Nunito", sans-serif;
-}
-
-.recorder ._1ceqH ._2fG9h ._dt3-T ._3bC73 ._1Yplu {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.recorder ._1ceqH ._2fG9h ._dt3-T ._3bC73 ._1YOWG ._f2DT8 span {
-  color: #2767fa;
-}
-
-.recorder ._1ceqH ._2fG9h ._dt3-T ._3bC73 ._1YOWG ._eV_dK {
-  color: #2767fa;
-}
-
 @media (max-width: 610px) {
-  .workspace-reszized .track-list-container,
-  .workspace-reszized .tabs-container,
-  .workspace-reszized .lyrics-container {
-    width: 100%;
+  .workspace-container {
+    -ms-grid-columns: (1fr)[1];
+        grid-template-columns: repeat(1, 1fr);
+  }
+  .workspace-container .repsonsive-ws-menu {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
 }
 
-@media (min-width: 610px) and (max-width: 1000px) {
-  .workspace-reszized .track-list-container,
-  .workspace-reszized .tabs-container,
-  .workspace-reszized .lyrics-container {
-    width: 80%;
+@media (min-width: 611px) and (max-width: 1000px) {
+  .workspace-container {
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
+  }
+  .workspace-container .repsonsive-ws-menu {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
 }
 

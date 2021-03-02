@@ -19,6 +19,10 @@ export class Project extends BaseEntity {
   name: string;
 
   @Field()
+  @Column("text")
+  mainTrack: string;
+
+  @Field()
   @Column()
   isPublic: boolean;
 
@@ -50,7 +54,7 @@ export class Project extends BaseEntity {
   @OneToOne(() => Post, (post) => post.project)
   @JoinColumn({ name: "postId" })
   post: Post; 
-
+  
   @Field()
   @CreateDateColumn()
   created: Date

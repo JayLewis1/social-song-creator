@@ -5,6 +5,7 @@ import {
   INIT_AND_EXIT_LYRIC_CREATION,
   DELETE_LYRIC,
   DELETE_TAB,
+  DELETE_TRACK,
   INIT_AND_EXIT_TAB_CREATION,
 } from "../../actions/workspace/types"
 
@@ -18,6 +19,9 @@ const intialState: Workspace = {
     create: false,
     delete: false
   },
+  tracks :{
+    delete: false
+  }
 }
 
 export const workspace = (state: Workspace = intialState, action : WorkspaceTypes) => {
@@ -30,7 +34,10 @@ switch(type) {
       lyrics : {
         create : payload
       },
-      tabInit : false,
+      tabs :{
+        ...state.tabs,
+        create : false,
+      }
     }
  case INIT_AND_EXIT_TAB_CREATION : 
     return {
@@ -54,7 +61,11 @@ switch(type) {
       tabs : {
         ...state.tabs,
         delete : false
-      }
+      },
+      tracks : {
+        ...state.tracks,
+        delete : false
+      },
     }
   case DELETE_TAB :
     return {
@@ -66,16 +77,28 @@ switch(type) {
       tabs : {
         ...state.tabs,
         delete : payload
-      }
+      },
+      tracks : {
+        ...state.tracks,
+        delete : false
+      },
     }
-  // case SET_LYRIC_ID : 
-  //   return {
-  //     ...state,
-  //     lyrics : {
-  //       ...state.lyrics,
-  //       id : payload
-  //     }
-  //   }
+    case DELETE_TRACK :
+      return {
+        ...state,
+        lyrics : {
+          ...state.lyrics,
+          delete : false
+        },
+        tabs : {
+          ...state.tabs,
+          delete : false
+        },
+        tracks : {
+          ...state.tracks,
+          delete : payload
+        },
+      }
   default :
     return state;
 }

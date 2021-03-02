@@ -18,32 +18,9 @@ import { sendRefreshToken } from "./auth/sendRefreshToken";
 import multer from 'multer';
 import { uploadToS3 } from "./s3/upload";
 import { getFileFromS3 } from "./s3/retrieve";
+import { deleteFileFromS3 } from "./s3/delete";
 
 const PORT = process.env.port || 4000;
-
-// const storage = multer.diskStorage({
-//     destination: function (_req, _file, cb) {
-//         cb(null, './uploads/')
-//     },
-    
-//     filename: function (_req: any, file: any, cb: any) {
-//         cb(null, file.originalname)
-//     }
-// });
-
-// const fileFilter = (_req: any,file: any,cb: any) => {
-//     if(file.mimetype === "image/jpg"  || 
-//        file.mimetype ==="image/jpeg"  || 
-//        file.mimetype ===  "image/png"){
-     
-//     cb(null, true);
-//    }else{
-//       cb(new Error("Image uploaded is not of type jpg/jpeg or png"),false);
-//     }
-// }
-
-// const upload = multer({storage: storage, fileFilter: fileFilter});
-
 
 var upload = multer({ dest: 'uploads/'});
 var type = upload.single('users-audio');
@@ -58,7 +35,6 @@ var type = upload.single('users-audio');
     )
     app.use(cookieParser());
     app.get("/", (_req, res) => res.send("Hello"));
-
     app.get("/get/:projectId/:fileId", async (req: Request, res: Response) => {
         const fileId = req.params.fileId
         const projectId = req.params.projectId
@@ -71,6 +47,19 @@ var type = upload.single('users-audio');
             console.log(response)
             return res.send(response);
         } catch(err) {
+            console.log(err);
+            return res.send(err);
+        }
+    })
+
+    app.post("/delete", type ,async (req: Request, res: Response) => {
+        const fileId = req.body.fileId
+        const projectId = req.body.projectId
+        const response = await deleteFileFromS3(projectId, fileId);
+        try {
+            console.log(response)
+            return res.send(response);
+        }catch(err) {
             console.log(err);
             return res.send(err);
         }

@@ -235,6 +235,27 @@ mutation CreateTrack($name: String!, $projectId: String!) {
     projectId
   } 
 }`
+export const DELETE_TRACK = gql`
+mutation DeleteTrack($trackId: String!, $projectId: String!){
+  deleteTrack(trackId: $trackId, projectId: $projectId) {
+    id
+    name
+    projectId
+  }
+}`
+export const ASSIGN_MAIN_TRACK_TO_PROJECT = gql`
+mutation AssignTrackToProject($projectId: String!, $trackId : String!) {
+  assignTrackToProject(projectId: $projectId, trackId : $trackId) {
+    id
+		name
+		isPublic
+		creatorId
+    contributors
+    mainTrack
+    created
+  }
+}`
+
 // CONTRIBUTORS ON PROJECT
 export const ADD_CONTRIBUTOR = gql`
 mutation AddContributor($projectId: String!, $userId: Int!){

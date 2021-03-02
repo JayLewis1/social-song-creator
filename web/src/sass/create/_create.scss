@@ -12,7 +12,7 @@
   box-shadow: 5px 9px 60px rgba(0, 0, 0, 0.2);
   padding: 25px;
   transition: 0.5s;
-  z-index: 15;
+  z-index: 25;
   .panel-top {
     display: flex;
     align-items: center;
@@ -312,7 +312,7 @@
 .workspace-create {
   width: 500px;
   left: -250px;
-  margin-top: 0px;
+  margin-top: -40px;
 }
 
 .create-component {
@@ -336,7 +336,8 @@
         justify-content: center;
         transition: 0.2s;
         cursor: pointer;
-        button, a {
+        button,
+        a {
           display: flex;
           align-items: center;
           background: none;
@@ -355,23 +356,25 @@
             font-size: 1rem;
             font-weight: 500;
             color: $lightGrey;
-            transition:  0.2s;
+            transition: 0.2s;
           }
         }
       }
-      li:hover { 
+      li:hover {
         background-color: $lightBlue;
-        button, a {
-        p { 
-          color: $blue;
+        button,
+        a {
+          p {
+            color: $blue;
+          }
         }
-      }
       }
       .create-post:hover {
         background-color: $lightGreen;
-        button, a {
-          p { 
-            color: #20BF55;
+        button,
+        a {
+          p {
+            color: #20bf55;
           }
         }
       }

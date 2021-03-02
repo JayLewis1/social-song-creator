@@ -6,7 +6,6 @@ import { GET_LYRICS } from "../../../graphql/queries";
 import { connect , ConnectedProps } from "react-redux";
 // Components
 import CreateLyrics from "./CreatLyrics";
-import DeleteLyrics from "./DeleteLyrics";
 import DeleteWSItem from "../DeleteWSItem";
 
 interface ComponentProps {
@@ -56,9 +55,9 @@ function Lyrics({ initLyricCreation, initLyricDeletion, setLyricId , lyrics , cu
     <div className="lyrics-container">
     <div className="lyric-tab-header">
       <h5>Lyrics</h5>
-      <button className="add-btn" onClick={() => initLyricCreation(true)}>
+      {/* <button className="add-btn" onClick={() => initLyricCreation(true)}>
         <img src="/assets/icons/workspace/add.svg" alt="Add Lyric"/>
-      </button>
+      </button> */}
     </div>
     { 
     lyrics.create === true ?  <CreateLyrics />: null

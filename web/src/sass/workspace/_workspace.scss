@@ -1,5 +1,6 @@
 .workspace-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   width: 100%;
   height: 50vh;
   .delete-panel {
@@ -14,7 +15,7 @@
     .button-wrapper {
       margin: 0 auto;
       margin-top: 25px;
-    
+
       .delete-btn {
         color: $white;
       }
@@ -24,8 +25,30 @@
       }
     }
   }
+  .workspace-options {
+    display: none;
+    position: fixed;
+    top: 70px;
+    width: 100%;
+    height: 80px;
+    padding: 0 10%;
+    background-color: $dark;
+    // display: grid;
+    // grid-template-columns: repeat(3, 1fr);
+    z-index: 10;
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      font-family: $font;
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: $white;
+      cursor: pointer;
+    }
+  }
   .track-list-container {
-    width: 40%;
+    width: 100%;
     height: 100%;
     // padding: 25px;
     position: relative;
@@ -39,103 +62,6 @@
         margin: auto 0;
         font-size: 1rem;
         font-weight: 700;
-      }
-    }
-    .recorder-container {
-      // position: absolute;
-      // bottom: 90px;
-      // left: 0;
-      position: fixed;
-      bottom: 90px;
-      left: 0;
-      z-index: 15;
-      margin-left: 50%;
-      left: -50px;
-      width: 100px;
-      height: 60px;
-      background-color: $dark;
-      box-shadow: $divShadow;
-      border-radius: 22px 22px 0 0;
-      color: white;
-      display: flex;
-      // align-items: center;
-      .center-wrapper {
-        display: flex;
-        // margin: 0 50px;
-        margin: auto;
-        align-items: center;
-        justify-content: center;
-        .recording-btns {
-          background: none;
-          border: none;
-          outline: none;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          margin: 0;
-          // margin-right: 15px;
-          cursor: pointer;
-          img {
-            width: 100%;
-          }
-        }
-        #record {
-          width: 40px;
-          height: 40px;
-        }
-      }
-      .track-popup {
-        width: 300px;
-        height: 150px;
-        background-color: $dark;
-        padding: 15px;
-        position: absolute;
-        margin-left: 50%;
-        left: -150px;
-        top: -160px;
-        z-index: 20;
-        border-radius: 18px;
-        form {
-          display: flex;
-          flex-direction: column;
-          width: 80%;
-          margin: 0 auto;
-          span {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-            label {
-              font-size: 1rem;
-              font-weight: 500;
-              color: white;
-              margin-left: 15px;
-              margin-bottom: 5px;
-            }
-            input {
-              padding: 5px 15px;
-              border: none;
-              outline: none;
-              background-color: $lightBlue;
-              border-radius: 3px;
-              color: $dark;
-              font-family: $font;
-              font-size: 1.1rem;
-              font-weight: 500;
-            }
-          }
-          input[type="submit"] {
-            cursor: pointer;
-            background-color: $blue;
-            border: none;
-            outline: none;
-            padding: 5px;
-            border-radius: 9px;
-            color: white;
-            font-family: $font;
-            font-size: 1rem;
-            font-weight: 500;
-          }
-        }
       }
     }
     .track-list-scroll {
@@ -166,6 +92,7 @@
           background: none;
           border: none;
           outline: none;
+          z-index: 3;
         }
         .play-audio:hover {
           cursor: pointer;
@@ -174,6 +101,8 @@
           display: flex;
           flex-direction: column;
           align-self: center;
+          position: relative;
+          z-index: 5;
           .track-name {
             font-size: 1.2rem;
             font-weight: 700;
@@ -206,6 +135,8 @@
           justify-content: center;
           margin-left: auto;
           width: 120px;
+          position: relative;
+          z-index: 5;
           button {
             width: 40px;
             height: 40px;
@@ -220,13 +151,20 @@
             }
           }
         }
+        .no-tracks-p {
+          font-size: 1rem;
+          font-weight: 600;
+          opacity: 60%;
+          margin: 0 auto;
+          margin-bottom: 15px;
+        }
       }
     }
   }
 
   .lyrics-container,
   .tabs-container {
-    width: 30%;
+    width: 100%;
     height: 100%;
     padding: 0 25px;
     position: relative;
@@ -302,7 +240,6 @@
         opacity: 60%;
         margin: 0 auto;
         margin-bottom: 15px;
-
       }
       button {
         background: none;
@@ -328,7 +265,8 @@
       flex-direction: column;
       overflow-x: auto;
 
-      .lyric-tab-container, .tab-container {
+      .lyric-tab-container,
+      .tab-container {
         list-style-type: none;
         width: 90%;
         min-height: 80px;
@@ -360,7 +298,7 @@
             height: 100%;
             position: absolute;
             top: 1px;
-  
+
             display: grid;
             grid-template-columns: 1fr;
             grid-template-rows: repeat(6, 20px);
@@ -381,16 +319,147 @@
               background-color: white;
               border-radius: 25px;
               font-weight: 600;
-              color: $dark
+              color: $dark;
             }
           }
         }
       }
-      .tab-container { 
+      .tab-container {
         min-height: 250px;
       }
     }
   }
+}
+.recorder-container {
+  position: fixed;
+  bottom: 90px;
+  left: 0;
+  z-index: 15;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 30px;
+  width: auto;
+  height: 70px;
+  background-color: $dark;
+  box-shadow: $divShadow;
+  border-radius: 22px 22px 0 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  .create-btn-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    .create-btns {
+      background: none;
+      border: none;
+      outline: none;
+      width: 40px;
+      height: 40px;
+      margin: 0 7px;
+      cursor: pointer;
+      transition: 0.2s;
+      img {
+        width: 100%;
+      }
+    }
+    .create-btns:active {
+      transform: scale(0.9);
+    }
+  }
+  .repsonsive-ws-menu {
+    display: none;
+    margin-left: 15px;
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      font-family: $font;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: $white;
+      opacity: 0.5;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .active-btn {
+      opacity: 1;
+    }
+  }
+
+  .track-popup {
+    width: 300px;
+    height: 150px;
+    background-color: $dark;
+    padding: 15px;
+    position: absolute;
+    margin-left: 50%;
+    left: -150px;
+    top: -160px;
+    z-index: 20;
+    border-radius: 18px;
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      margin: 0 auto;
+      span {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        label {
+          font-size: 1rem;
+          font-weight: 500;
+          color: white;
+          margin-left: 15px;
+          margin-bottom: 5px;
+        }
+        input {
+          padding: 5px 15px;
+          border: none;
+          outline: none;
+          background-color: $lightBlue;
+          border-radius: 3px;
+          color: $dark;
+          font-family: $font;
+          font-size: 1.1rem;
+          font-weight: 500;
+        }
+      }
+      input[type="submit"] {
+        cursor: pointer;
+        background-color: $blue;
+        border: none;
+        outline: none;
+        padding: 5px;
+        border-radius: 9px;
+        color: white;
+        font-family: $font;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.loading-save {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $dark;
+  color: $white;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .workspace-reszized {
@@ -451,77 +520,21 @@
     }
   }
 }
-.recorder {
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  // width: 100%;
-  // height: 100vh;
-  // background-color: rgba(0, 0, 0, 0.5);
-  // display: flex;
-  // // align-items: center;
-  // // justify-content: center;
-  z-index: 11;
-  ._1ceqH {
-    width: 400px;
-    font-family: $font;
-    color: $blue;
-    ._2fG9h {
-      ._dt3-T {
-        border-radius: 35px;
-        overflow: hidden;
-        background-color: $white;
-        ._1lB9c {
-          background-color: white;
-
-          ._2N9dq {
-            color: $blue;
-            font-size: 1.2rem;
-            font-weight: 700;
-            font-family: $font;
-          }
-          ._3-aC9 {
-            // background-color: $blue;
-          }
-        }
-        ._3bC73 {
-          ._1Yplu {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          ._1YOWG {
-            ._f2DT8 {
-              span {
-                color: $blue;
-              }
-            }
-            ._eV_dK {
-              color: $blue;
-            }
-          }
-        }
-      }
-    }
-  }
-}
 
 @media (max-width: 610px) {
-  .workspace-reszized {
-    .track-list-container,
-    .tabs-container,
-    .lyrics-container {
-      width: 100%;
+  .workspace-container {
+    grid-template-columns: repeat(1, 1fr);
+    .repsonsive-ws-menu {
+      display: flex;
     }
   }
 }
 
-@media (min-width: 610px) and (max-width: 1000px) {
-  .workspace-reszized {
-    .track-list-container,
-    .tabs-container,
-    .lyrics-container {
-      width: 80%;
+@media (min-width: 611px) and (max-width: 1000px) {
+  .workspace-container {
+    grid-template-columns: repeat(2, 1fr);
+    .repsonsive-ws-menu {
+      display: flex;
     }
   }
 }

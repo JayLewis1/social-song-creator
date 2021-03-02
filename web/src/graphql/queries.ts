@@ -64,6 +64,7 @@ export const FEED_POSTS =gql`
         isPublic
         creatorId
         contributors
+        mainTrack
         postId
     }
   postId
@@ -102,6 +103,7 @@ export const ALL_POSTS = gql`
         isPublic
         creatorId
         contributors
+        mainTrack
         postId
     }
   postId
@@ -139,6 +141,7 @@ export const MY_POSTS = gql`
         isPublic
         creatorId
         contributors
+        mainTrack
         postId
     }
   postId
@@ -176,6 +179,7 @@ likes {
       isPublic
       creatorId
       contributors
+      mainTrack
       postId
       created
   }
@@ -218,6 +222,7 @@ export const MY_PROJECTS = gql`
         isPublic
         creatorId
         created
+        mainTrack
         postId
   }
 }`
@@ -230,6 +235,7 @@ export const CURRENT_PROJECT = gql`
 		isPublic
 		creatorId
     contributors
+    mainTrack
     created
   }
 }`
@@ -252,6 +258,7 @@ query SearchProjects($projectName: String!) {
 		isPublic
 		creatorId
     contributors
+    mainTrack
     created
   }
 }`

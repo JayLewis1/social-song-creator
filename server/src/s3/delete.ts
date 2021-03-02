@@ -12,7 +12,7 @@ const s3 = new AWS.S3({
   secretAccessKey: SECRET
 })
 
-export const getFileFromS3 = (projectId: string, fileId: string): Promise<any> => {
+export const deleteFileFromS3 = (projectId: string, fileId: string): Promise<any> => {
   
   var getParams = {
     Bucket: BUCKET_NAME,
@@ -20,7 +20,7 @@ export const getFileFromS3 = (projectId: string, fileId: string): Promise<any> =
   }
   
   const getPromise = new Promise((resolve, reject) => {
-    s3.getObject(getParams, (err: any, data: any) => {
+    s3.deleteObject(getParams, (err: any, data: any) => {
       if(err) {
         reject(err);
       }
