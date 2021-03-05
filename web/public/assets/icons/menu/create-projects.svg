@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="Group_768" data-name="Group 768" transform="translate(16957 -5429)">
+    <g id="Group_513" data-name="Group 513" transform="translate(-16957 5429)">
+      <circle id="Ellipse_582" data-name="Ellipse 582" cx="16" cy="16" r="16" fill="#3e424e"/>
+    </g>
+    <g id="music" transform="translate(-16949.279 5438.715)">
+      <g id="Group_727" data-name="Group 727" transform="translate(0 0.004)">
+        <path id="Path_1041" data-name="Path 1041" d="M13.4.128a.492.492,0,0,0-.376-.121L4.305.976a.484.484,0,0,0-.431.481v8.631a2.8,2.8,0,0,0-1.453-.4A2.223,2.223,0,0,0,0,11.627a2.223,2.223,0,0,0,2.421,1.937,2.222,2.222,0,0,0,2.421-1.937V4.314l7.749-.863V9.118a2.8,2.8,0,0,0-1.453-.4,2.223,2.223,0,0,0-2.421,1.937A2.223,2.223,0,0,0,11.139,12.6a2.222,2.222,0,0,0,2.421-1.937V.488A.484.484,0,0,0,13.4.128Z" transform="translate(0 -0.004)" fill="#fff"/>
+      </g>
+    </g>
+    <g id="Group_742" data-name="Group 742" transform="translate(-16946.223 5437)">
+      <circle id="Ellipse_679" data-name="Ellipse 679" cx="2.5" cy="2.5" r="2.5" transform="translate(7.222 1)" fill="#3e424e"/>
+      <path id="Subtraction_6" data-name="Subtraction 6" d="M3.5,7A3.5,3.5,0,1,1,7,3.5,3.5,3.5,0,0,1,3.5,7ZM2.565,3.259a.241.241,0,1,0,0,.482h.694v.694a.241.241,0,1,0,.482,0V3.741h.694a.241.241,0,0,0,0-.482H3.741V2.565a.241.241,0,1,0-.482,0v.694Z" transform="translate(6.222)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

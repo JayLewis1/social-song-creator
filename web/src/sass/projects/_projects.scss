@@ -215,7 +215,7 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: 0.2s;
+        transition: 0.3s;
         img {
           width: 50%;
           height: auto;
@@ -230,10 +230,16 @@
       .responsive-play:hover {
         background-color: $lightBlue;
       }
-      button:active {
+      .responsive-share {
         img {
-          transform: scale(0.9);
+          width: 35%;
         }
+      }
+      .responsive-share:hover {
+        background-color: $lightGreen;
+      }
+      button:active {
+        transform: scale(0.9);
       }
     }
   }
@@ -330,204 +336,475 @@
   }
 }
 
-.contributor-panel {
-  position: absolute;
-  top: 130px;
-  right: 0;
-  width: 250px;
-  background-color: $white;
-  box-shadow: $divShadow;
-  border-radius: 21px;
-  color: $dark;
-  z-index: 10;
-  padding: 15px 15px;
-  .panel-heading {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+.result-component {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $bgOpacity;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .wrapper {
+    width: 500px;
+    // height: 300px;
+    background-color: $white;
+    box-shadow: $divShadow;
+    border-radius: 12px;
+    padding: 0 35px;
     p {
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 500;
       color: $dark;
-    }
-    button {
-      background: none;
-      border: none;
-      outline: none;
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-      img {
-        width: 80%;
-      }
-    }
-    button:active {
-      transform: scale(0.9);
-    }
-  }
-  ul {
-    display: flex;
-    li {
-      width: 100%;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      margin: 2px 0;
-      position: relative;
-      img {
-        width: 40px;
-        margin-right: 15px;
-      }
-      .user-link {
-        font-size: 1.2rem;
-        font-weight: 600;
-        width: 100%;
-        height: 100%;
-        margin-right: auto;
-        position: relative;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
+      margin-top: 35px;
+      text-align: center;
+      em {
+        font-style: normal;
         color: $blue;
+        font-size: 1.1rem;
+        font-weight: 500;
       }
-      .remove-contributor {
-        background: none;
-        width: 35px;
-        height: 35px;
-        border: 1px $white solid;
-        border-radius: 25px;
-        padding: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.2s;
-        img {
-          width: 15px;
-          margin: auto;
-        }
-      }
-      .remove-contributor:hover {
-        background-color: $lightRed;
-      }
-
+    }
+    .btn-wrapper {
+      width: 100%;
+      display: flex;
+      margin: 35px 0;
+      a,
       button {
         background: none;
-        border: none;
         outline: none;
-        background-color: $blue;
-        color: $white;
-        padding: 5px 8px;
+        border: none;
+        padding: 5px 15px;
+        margin: 0 auto;
+        text-decoration: none;
         border-radius: 5px;
         cursor: pointer;
-      }
-    }
-  }
-  .remove-validation {
-    width: 100%;
-    height: 100%;
-    background-color: $white;
-    border: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 7;
-    span {
-      display: flex;
-      width: 100%;
-      button : {
-        margin: auto;
-      }
-      .remove-btn {
-        margin: auto;
-        background-color: $red;
-      }
-      .cancel-btn {
-        margin: auto;
-        background-color: $bgBlue;
-        color: $blue;
-      }
-    }
-  }
-  .mates-on-contributors {
-    height: 170px;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-x: auto;
-  }
-  form {
-    width: 100%;
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-    label {
-      font-size: 1rem;
-      font-weight: 600;
-      color: $dark;
-      margin-bottom: 10px;
-    }
-    .input-wrapper {
-      display: flex;
-      align-items: center;
-      position: relative;
-      height: 30px;
-      input {
-        background: none;
-        border: none;
-        outline: none;
-        background-color: $bgBlue;
-        color: #a5b8e6;
-        padding: 5px;
-        padding-left: 15px;
-        height: 100%;
-        font-size: 1.1rem;
-        font-weight: 500;
-        border-radius: 5px 0 0 5px;
-        border-radius: 25px;
-        width: 100%;
-        font-family: $font;
-      }
-      input::placeholder {
-        color: #a5b8e6;
-      }
-      .search-btn {
-        width: 35px;
-        height: 100%;
-        position: absolute;
-        padding: 0;
-        margin: 0;
-        right: 0;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        background: none;
-        outline: none;
-        cursor: pointer;
-        img {
-          border-radius: 0;
-          padding: 0;
-          overflow: none;
-          border: none;
+        position: relative;
+        overflow: hidden;
+        p {
+          position: relative;
+          text-transform: none;
+          font-family: $font;
+          color: $dark;
+          margin: 0;
+        }
+        .btn-bg {
+          min-width: 0%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background-color: $blue;
+          transition: 0.3s;
         }
       }
-
-      input::placeholder {
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: $lightGrey;
+      a {
+        background-color: $lightBlue;
+        padding: 10px 25px;
+        p {
+          color: $blue;
+        }
+      }
+      a:hover {
+        p {
+          color: $white;
+        }
+        .btn-bg {
+          min-width: 100%;
+        }
+      }
+      button:hover {
+        p {
+          color: $blue;
+        }
+      }
+      .delete-btn {
+        background-color: $lightRed;
+        .btn-bg {
+          background-color: $red;
+        }
+        p {
+          color: $red;
+        }
+      }
+      .delete-btn:hover {
+        p {
+          color: $white;
+        }
+        .btn-bg {
+          min-width: 100%;
+        }
       }
     }
   }
 }
+.contributor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $bgOpacity;
+  z-index: 50;
+  .contributor-panel {
+    // position: absolute;
+    // top: 130px;
+    // right: 0;
+    width: 400px;
+    background-color: $white;
+    box-shadow: $divShadow;
+    border-radius: 21px;
+    color: $dark;
+    z-index: 10;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: column;
+    .panel-heading {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      height: 40px;
+      padding: 25px 0;
+      position: relative;
+      p {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: $blue;
+        text-align: center;
+      }
+      button {
+        background: none;
+        border: none;
+        outline: none;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        display: none;
+        top: 0;
+        right: 0;
+        cursor: pointer;
 
+        transition: 0.2s;
+        img {
+          width: 80%;
+        }
+      }
+      button:active {
+        transform: scale(0.9);
+      }
+    }
+    ul {
+      display: flex;
+      margin-bottom: 25px;
+      max-height: 200px;
+      overflow-x: auto;
+      li {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        margin: 2px 0;
+        padding: 0 25px;
+        position: relative;
+        // border: 2px red solid;
+        img {
+          width: 40px;
+          margin-right: 15px;
+        }
+        .user-link {
+          width: 100%;
+          height: 100%;
+          margin-right: auto;
+          position: relative;
+          text-decoration: none;
+          text-transform: capitalize;
+          display: flex;
+          align-items: center;
+          color: $blue;
+          p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 40px;
+          }
+          .hover-show {
+            font-size: 1rem;
+            font-weight: 500;
+            color: $textLight;
+            margin-left: 25px;
+            margin-top: 2px;
+            opacity: 0;
+            transition: 0.1s;
+          }
+        }
+        .remove-contributor {
+          background: none;
+          border: none;
+          outline: none;
+          padding: 5px 10px;
+          transition: 0.2s;
+          border-radius: 5px;
+          cursor: pointer;
+          p {
+            font-family: $font;
+            font-size: 1rem;
+            font-weight: 500;
+            color: $red;
+          }
+          img {
+            width: 15px;
+            margin: auto;
+          }
+        }
+        .remove-contributor:hover {
+          background-color: $lightRed;
+        }
+        .add-btn {
+          background: none;
+          border: none;
+          outline: none;
+          color: $blue;
+          padding: 5px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: 0.2s;
+          p {
+            font-family: $font;
+            font-size: 1rem;
+            font-weight: 500;
+            color: $blue;
+          }
+        }
+        .add-btn:hover {
+          background-color: $lightBlue;
+        }
+      }
+      li:hover {
+        .user-link {
+          .hover-show {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .remove-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: $lightRed;
+      border-radius: 5px;
+      z-index: 10;
+      max-width: 0%;
+      transition: 0.2s;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .btn-wrapper {
+        display: flex;
+        width: 60%;
+        button {
+          border: none;
+          outline: none;
+          border-radius: 5px;
+          margin: auto;
+          padding: 5px 20px;
+          position: relative;
+          overflow: hidden;
+          cursor: pointer;
+          .btn-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 0%;
+            max-width: none;
+            height: 100%;
+            transition: 0.4s;
+          }
+          p {
+            position: relative;
+            font-family: $font;
+            font-size: 1rem;
+            font-weight: 600;
+          }
+        }
+        .remove-btn {
+          background: none;
+          background-color: $white;
+          color: $red;
+          .btn-bg {
+            background-color: $red;
+          }
+        }
+        .cancel-btn {
+          background: none;
+          background-color: white;
+          color: $blue;
+          .btn-bg {
+            background-color: $blue;
+          }
+        }
+        .remove-btn:hover,
+        .cancel-btn:hover {
+          p {
+            color: $white;
+          }
+          .btn-bg {
+            min-width: 100%;
+          }
+        }
+      }
+    }
+    .mates-on-contributors {
+      max-height: 300px;
+      padding: 0;
+      margin-top: 25px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-x: auto;
+    }
+    form {
+      width: 100%;
+      margin: 10px 0;
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: $blue;
+        margin-bottom: 5px;
+        margin-left: 25px;
+      }
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        position: relative;
+        height: 40px;
+        input {
+          background: none;
+          border: none;
+          outline: none;
+          background-color: $bgBlue;
+          padding: 5px;
+          padding-left: 25px;
+          padding-right: 45px;
+          height: 100%;
+          font-family: $font;
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: $placeholderDark;
+          border-radius: 5px 0 0 5px;
+          border-radius: 25px;
+          width: 100%;
+        }
+        input::placeholder {
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: $placeholderDark;
+        }
+        .search-btn {
+          width: 50px;
+          height: 100%;
+          position: absolute;
+          padding: 0;
+          margin: 0;
+          right: 0;
+          top: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          background: none;
+          outline: none;
+          cursor: pointer;
+          img {
+            border-radius: 0;
+            padding: 0;
+            overflow: none;
+            border: none;
+          }
+        }
+      }
+    }
+    .exit-btn {
+      padding: 5px 60px;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      align-self: center;
+      background: none;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      p {
+        font-family: $font;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $blue;
+      }
+    }
+    .exit-btn:hover {
+      background-color: $lightBlue;
+    }
+  }
+}
+
+#searched-projects-list {
+  margin-bottom: 0;
+  border-bottom: 2px $lightBlue solid;
+}
+
+@media (max-width: 350px) {
+  .result-component {
+    .wrapper {
+      width: 85%;
+      padding: 0 25px;
+      p {
+        margin-top: 25px;
+      }
+      .btn-wrapper {
+        margin: 25px 0;
+        flex-direction: column;
+        a,
+        button {
+          margin: 0 auto;
+
+          width: 90%;
+          text-align: center;
+          padding: 10px 0;
+        }
+        button {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 351px) and (max-width: 460px) {
+  .result-component {
+    .wrapper {
+      width: 85%;
+      padding: 0 25px;
+      p {
+        margin-top: 25px;
+      }
+      .btn-wrapper {
+        margin: 25px 0;
+      }
+    }
+  }
+}
 @media (max-width: 460px) {
   .projects-header {
     width: 100%;
@@ -621,8 +898,10 @@
       }
     }
   }
+  #searched-projects-list {
+    padding-top: 45px;
+  }
 }
-
 @media (min-width: 461px) and (max-width: 830px) {
   .projects-header {
     form {
@@ -656,10 +935,60 @@
       }
     }
   }
+  .result-component {
+    .wrapper {
+      width: 350px;
+      padding: 0 25px;
+      p {
+        margin-top: 25px;
+      }
+      .btn-wrapper {
+        margin: 25px 0;
+      }
+    }
+  }
 }
 
 @media (max-width: 600px) {
   .list-of-projects {
     width: 100%;
+    .no-posts {
+      width: 100%;
+    }
+  }
+  .contributor-container {
+    .contributor-panel {
+      width: 80%;
+      max-height: 80%;
+      padding: 0 15px;
+      ul {
+        li {
+          padding: 0 10px;
+
+          .hover-show {
+            display: none;
+          }
+        }
+        li:hover {
+          .user-link {
+            p {
+              color: $textLight;
+            }
+          }
+        }
+      }
+      .remove-bg {
+        .btn-wrapper {
+          width: 100%;
+          button {
+            margin: 0 auto;
+          }
+        }
+      }
+      form {
+        min-width: 80%;
+        margin: 0 auto;
+      }
+    }
   }
 }

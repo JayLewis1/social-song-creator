@@ -1,16 +1,24 @@
 export const STORE_PROJECT = "STORE_PROJECT";
 export const SHOW_PROJECT_DELETE_PANEL = "SHOW_PROJECT_DELETE_PANEL"
-export const SET_ID_FOR_DELETE = "SET_ID_FOR_DELETE";
+export const SELECTED_PROJECT_ID = "SELECTED_PROJECT_ID";
 export const REMOVE_CONTRIBUTOR = "REMOVE_CONTRIBUTOR";
+export const PROJECT_OPTIONS = "PROJECT_OPTIONS";
+export const PROJECT_RESULT = "PROJECT_RESULT";
 
 export interface Project {
   currentProject: string,
   deleteProject: boolean,
-  deleteId: string
+  selectedProject: string
+  options: string
   contributor:  {
     remove: boolean,
     projectId: string,
     userId: number
+  }
+  result: {
+    toggle: boolean
+    type: string
+    selectedId: string
   }
 }
 
@@ -24,8 +32,8 @@ interface setDeleteProjectPanel {
   payload: Project
 }
 
-interface setDeleteId {
-  type: typeof SET_ID_FOR_DELETE
+interface setSelectedProject {
+  type: typeof SELECTED_PROJECT_ID
   payload: Project
 }
 
@@ -34,4 +42,14 @@ interface removeContributor {
   payload: Project
 }
 
-export type ProjectTypes =  storeProject | setDeleteProjectPanel | setDeleteId | removeContributor;
+interface toggleOptions {
+  type: typeof PROJECT_OPTIONS
+  payload: Project
+}
+
+interface toggleResults {
+  type: typeof PROJECT_RESULT
+  payload: Project
+}
+
+export type ProjectTypes =  storeProject | setDeleteProjectPanel | setSelectedProject | removeContributor | toggleOptions |toggleResults;

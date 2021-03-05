@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { withRouter, useLocation } from "react-router-dom";
 // GraphQL
 import { useMutation } from "@apollo/client";
-import { CREATE_PROJECT } from "../../graphql/mutations";
-import {  MY_PROJECTS } from "../../graphql/queries";
+import { CREATE_PROJECT } from "../../../graphql/mutations";
+import {  MY_PROJECTS } from "../../../graphql/queries";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 

@@ -6,16 +6,24 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 90px;
-  right: 0px;
+  top: 80px;
+  right: 15px;
   z-index: 10;
   overflow: hidden;
+  align-items: left;
+  font-family: $font;
+  align-items: flex-start;
+  .account-icons {
+    width: 30px;
+    height: 30px;
+  }
+
   .top-wrapper {
     width: 100%;
     display: flex;
     align-items: center;
     padding: 15px 0;
-    img {
+    .avatar {
       width: 40px;
       height: 40px;
       margin: 0 15px;

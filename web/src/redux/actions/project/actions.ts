@@ -3,8 +3,10 @@ import {
     Project,
     STORE_PROJECT,
     SHOW_PROJECT_DELETE_PANEL,
-    SET_ID_FOR_DELETE,
-    REMOVE_CONTRIBUTOR
+    SELECTED_PROJECT_ID,
+    REMOVE_CONTRIBUTOR,
+    PROJECT_OPTIONS,
+    PROJECT_RESULT
   } from "./types"
 
   export const storeProject = (projectId : Project) : ProjectTypes => {
@@ -21,9 +23,9 @@ import {
     }
   }
 
-  export const setDeleteId = (id: Project) : ProjectTypes => {
+  export const setSelectedProject = (id: Project) : ProjectTypes => {
     return {
-      type: SET_ID_FOR_DELETE,
+      type:SELECTED_PROJECT_ID,
       payload: id
     }
   }
@@ -33,5 +35,18 @@ import {
     return {
       type: REMOVE_CONTRIBUTOR,
       payload: id
+    }
+  }
+  export const toggleOptions = (id: Project) : ProjectTypes => {
+    return {
+      type: PROJECT_OPTIONS,
+      payload: id
+    }
+  }
+
+ export const toggleProjectResult = (payload: Project) : ProjectTypes => {
+    return {
+      type: PROJECT_RESULT,
+      payload: payload
     }
   }

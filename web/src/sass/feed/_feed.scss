@@ -19,7 +19,7 @@ ul {
   width: 90%;
   padding: 30px 20px;
   margin: 0 auto;
-  display:  flex;
+  display: flex;
   p {
     font-size: 1rem;
     font-weight: 500;
@@ -35,7 +35,7 @@ ul {
   }
   button {
     background: none;
-    border: none; 
+    border: none;
     outline: none;
     font-family: $font;
     font-size: 1rem;
@@ -44,5 +44,11 @@ ul {
     text-decoration: none;
     margin-left: 5px;
     cursor: pointer;
+  }
+}
+@media (max-width: 460px) {
+  .feed-flex {
+    margin: 0;
+    width: 100%;
   }
 }

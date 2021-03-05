@@ -5,7 +5,7 @@ export const TOGGLE__NOTIFICATIONS = "TOGGLE__NOTIFICATIONS";
 export const INIT_PROJECT = "INIT_PROJECT";
 export const TOGGLE__CONTRIBUTORS = "TOGGLE__CONTRIBUTORS";
 export const TOGGLE_SEARCH = "TOGGLE_SEARCH";
-
+export const TOGGLE_CREATE_PANEL = "TOGGLE_CREATE_PANEL";
 
 export interface Application {
   location : string
@@ -15,6 +15,7 @@ export interface Application {
   notificationPanel: boolean
   contributorsPanel: boolean
   searchPanel: boolean
+  createPanel: boolean
 }
 
 interface setAppLocation  {
@@ -52,5 +53,9 @@ interface toggleSearch {
   type: typeof TOGGLE_SEARCH,
   payload : Application
 }
+interface toggleCreatePanel {
+  type: typeof TOGGLE_CREATE_PANEL,
+  payload : Application
+}
 
-export type ApplicationTypes = setAppLocation | closePostPanel | closeSettingsPanel | intialiseProject |toggleNotification |toggleContributors | toggleSearch;
+export type ApplicationTypes = setAppLocation | closePostPanel | closeSettingsPanel | intialiseProject |toggleNotification |toggleContributors | toggleSearch | toggleCreatePanel;

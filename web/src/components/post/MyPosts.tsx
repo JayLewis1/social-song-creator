@@ -9,7 +9,7 @@ import { connect, ConnectedProps } from "react-redux";
 import DeletePost from "./DeletePost";
 import Comment from "./Comment";
 import FormatTimestamp from "../formatTime/FormatTimestamp"
-import ContributorAvatar from "../project/ContributorAvatar";
+import ContributorAvatar from "../project/contributors/ContributorAvatar";
 
 interface ComponentProps {
   user: { 

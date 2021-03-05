@@ -7,7 +7,8 @@ import {
   SET_APP_LOCATION, 
   TOGGLE__NOTIFICATIONS,
   TOGGLE__CONTRIBUTORS,
-  TOGGLE_SEARCH} from "../../actions/application/types";
+  TOGGLE_SEARCH,
+TOGGLE_CREATE_PANEL} from "../../actions/application/types";
 
 const initialState: Application = {
   location : "",
@@ -16,7 +17,8 @@ const initialState: Application = {
   settingsPanel: false,
   notificationPanel: false,
   contributorsPanel: false,
-  searchPanel: false
+  searchPanel: false,
+  createPanel: false,
 }
 
 export const applicationReducer = (state: Application = initialState, action: ApplicationTypes ) => {
@@ -36,7 +38,8 @@ export const applicationReducer = (state: Application = initialState, action: Ap
         settingsPanel: false,
         notificationPanel: false,
         contributorsPanel: false,
-        searchPanel: false
+        searchPanel: false,
+        createPanel: false
       }
     case CLOSE_SETTINGS_PANEL: 
       return {
@@ -46,7 +49,8 @@ export const applicationReducer = (state: Application = initialState, action: Ap
         settingsPanel: payload,
         notificationPanel: false,
         contributorsPanel: false,
-        searchPanel: false
+        searchPanel: false,
+        createPanel: false
       }
     case TOGGLE__NOTIFICATIONS: 
       return {
@@ -56,7 +60,8 @@ export const applicationReducer = (state: Application = initialState, action: Ap
         settingsPanel: false,
         notificationPanel: payload,
         contributorsPanel: false,
-        searchPanel: false
+        searchPanel: false,
+        createPanel: false
       }
     case INIT_PROJECT : 
         return {
@@ -66,7 +71,8 @@ export const applicationReducer = (state: Application = initialState, action: Ap
           settingsPanel: false,
           notificationPanel: false,
           contributorsPanel: false,
-          searchPanel: false
+          searchPanel: false,
+          createPanel: false
         }
       case TOGGLE__CONTRIBUTORS: 
         return {
@@ -76,7 +82,8 @@ export const applicationReducer = (state: Application = initialState, action: Ap
           settingsPanel: false,
           notificationPanel: false,
           contributorsPanel: payload,
-          searchPanel: false
+          searchPanel: false,
+          createPanel: false
         }
     case TOGGLE_SEARCH : 
       return {
@@ -86,7 +93,19 @@ export const applicationReducer = (state: Application = initialState, action: Ap
         settingsPanel: false,
         notificationPanel: false,
         contributorsPanel: false,
-        searchPanel: payload
+        searchPanel: payload,
+        createPanel: false
+      }
+      case TOGGLE_CREATE_PANEL : 
+      return {
+        ...state,
+        postPanel: false,
+        projectPanel: false,
+        settingsPanel: false,
+        notificationPanel: false,
+        contributorsPanel: false,
+        searchPanel: false,
+        createPanel: payload
       }
     default :
     return state

@@ -3,18 +3,26 @@ import {
   ProjectTypes,
   STORE_PROJECT,
   SHOW_PROJECT_DELETE_PANEL,
-  SET_ID_FOR_DELETE,
-  REMOVE_CONTRIBUTOR
+  SELECTED_PROJECT_ID,
+  REMOVE_CONTRIBUTOR,
+  PROJECT_OPTIONS,
+  PROJECT_RESULT
 } from "../../actions/project/types";
 
 const intialState: Project = {
   currentProject: "",
   deleteProject: false,
-  deleteId: "",
+  selectedProject: "",
+  options: "",
   contributor:  {
     remove: false,
     projectId: "",
     userId: -1
+  },
+  result : {
+    toggle: false,
+    type: "",
+    selectedId: ""
   }
 }
 
@@ -33,15 +41,25 @@ export const project = (state:Project = intialState, action : ProjectTypes) => {
           ...state,
           deleteProject: payload,
         }
-    case SET_ID_FOR_DELETE : 
+    case SELECTED_PROJECT_ID : 
         return {
           ...state,
-          deleteId: payload
+          selectedProject: payload
         }
     case REMOVE_CONTRIBUTOR : 
         return {
           ...state,
           contributor: payload
+        }
+    case PROJECT_OPTIONS : 
+        return {
+          ...state,
+          options: payload
+        }
+    case PROJECT_RESULT : 
+        return {
+          ...state,
+          result: payload
         }
     default :
         return state;

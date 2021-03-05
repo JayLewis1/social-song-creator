@@ -12,7 +12,7 @@ import { connect, ConnectedProps } from "react-redux";
 
 
 import UserPosts from "../post/UserPosts";
-import UsersProjects from "../project/UsersProjects";
+import UsersProjects from "../project/projects/UsersProjects";
 import MatesComponent from "../mates/MatesComponent";
 
 interface ComponentProps {  
@@ -47,7 +47,7 @@ interface ComponentProps {
       history : any
   }
   
-const UserProfile = ({  } : Props) => {
+const UserProfile = ({ history } : Props) => {
     const location: any = useLocation();
     const params = location.pathname.split("/")
     const userId = parseInt(params[2]);

@@ -64,15 +64,15 @@ const AccountOptions = ({logoutUser, closeSettingsPanel , history} :Props) => {
         <span className="top-wrapper">
           { !loading && data && data.me &&
           <Fragment >
-          <img src={data.me.avatar} alt="Users Avatar"></img>
+          <img src={data.me.avatar} className="avatar" alt="Users Avatar"></img>
           <p>{ data.me.firstName + " " + data.me.lastName }</p>
           </Fragment>
         }
         </span>
         <ul>
-        <li><img src="/assets/icons/menu/profile.svg" alt="Profile Icon"/><Link to="/profile/me">Profile</Link></li>
-        <li><img src="/assets/icons/menu/settings.svg" alt="Settings Icon"/><Link to="/settings">Settings</Link></li>
-          <li><img src="/assets/icons/menu/logout.svg" alt="Logout Icon"/><button onClick={() => logoutUserFunction()}>Logout</button></li>
+        <li><img src="/assets/icons/menu/profile.svg" className="account-icons"alt="Profile Icon"/><Link to="/profile/me">Profile</Link></li>
+        <li><img src="/assets/icons/menu/settings.svg" className="account-icons" alt="Settings Icon"/><Link to="/settings">Settings</Link></li>
+          <li><img src="/assets/icons/menu/logout.svg"className="account-icons"  alt="Logout Icon"/><button onClick={() => logoutUserFunction()}>Logout</button></li>
         </ul>
       </div>
     );

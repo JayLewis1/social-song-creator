@@ -14,7 +14,7 @@ import Bio from "./edit/Bio";
 import Instruments from "./edit/Instruments";
 
 import MyPosts from "../../components/post/MyPosts";
-import MyProjects from "../../components/project/MyProjects";
+import MyProjects from "../../components/project/projects/MyProjects";
 import MatesComponent from "../../components/mates/MatesComponent";
 
 interface ComponentProps {  

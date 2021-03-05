@@ -2,7 +2,7 @@ import React, { Fragment, useState} from 'react'
 import { Link } from "react-router-dom";
 // GraphQL
 import { useQuery } from "@apollo/client";
-import { GET_CONTRIBUTORS } from "../../graphql/queries";
+import { GET_CONTRIBUTORS } from "../../../graphql/queries";
 interface ComponentProps {
   projectId: string
 }

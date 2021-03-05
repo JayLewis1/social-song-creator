@@ -47,22 +47,15 @@ const CreateComponent = ({projectPanel, postPanel ,closePostPanel , intialisePro
 
   return (
     <div className="create-component">
-          <div className="bottom">
-            <ul>
-              <li>
-                <button onClick={() => toggleProjectPanel()}> 
-                  <img src="/assets/icons/create/project-create.svg" alt="Create Project" />
-                  <p>Create Project</p>
-                </button>
-              </li>
-              <li className="create-post">
-                <button onClick={() => togglePostPanel()}> 
-                  <img src="/assets/icons/create/post-colour.svg" alt="Create Post" />
-                  <p>Create Post</p>
-                </button>
-              </li>
-            </ul>
-          </div>
+      <button onClick={() => toggleProjectPanel()} className="create-project"> 
+        <img src="/assets/icons/create/project-create.svg" alt="Create Project" />
+        <p>Create Project</p>
+      </button>
+
+      <button onClick={() => togglePostPanel()}  className="create-post"> 
+        <img src="/assets/icons/create/post-colour.svg" alt="Create Post" />
+        <p>Create Post</p>
+      </button>
     </div>
   )
 }

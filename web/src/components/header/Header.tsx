@@ -10,6 +10,7 @@ import DropDown from "../navigation/DropDown";
 import AccountOptions from "./AccountOptions";
 import Notifications from "../notifications/Notifications";
 import Search from "./Search";
+import CreateOptions from './CreateOptions';
 
 interface ComponentProps {
   application:  {
@@ -18,7 +19,8 @@ interface ComponentProps {
     postPanel : boolean,
     projectPanel: boolean,
     notificationPanel : boolean,
-    searchPanel: boolean
+    searchPanel: boolean,
+    createPanel: boolean
   },
   user : {
     authenticated: boolean,
@@ -37,6 +39,7 @@ const mapStateToProps = (state: ComponentProps) => ({
   projectPanel: state.application.projectPanel,
   notificationPanel: state.application.notificationPanel,
   searchPanel: state.application.searchPanel,
+  createPanel: state.application.createPanel,
   authenticated: state.user.authenticated,
   user: state.user.user,
 })
@@ -46,14 +49,15 @@ const mapDispatch = {
   closePostPanel : (payload: boolean) => ({ type: "CLOSE_POST_PANEL", payload: payload }),
   intialiseProject: (bool: boolean ) => ({type: "INIT_PROJECT", payload: bool }),
   toggleNotifications : (payload: boolean) => ({ type: "TOGGLE__NOTIFICATIONS", payload: payload }),
-  toggleSearch : (payload: boolean) => ({ type: "TOGGLE_SEARCH", payload: payload })
+  toggleSearch : (payload: boolean) => ({ type: "TOGGLE_SEARCH", payload: payload }),
+  toggleCreatePanel: (payload: boolean) => ({type: "TOGGLE_CREATE_PANEL", payload: payload})
 }
 
 const connector = connect(mapStateToProps, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux
 
-const Header = ({location,authenticated,user, postPanel, projectPanel,notificationPanel, toggleNotifications, closePostPanel, intialiseProject, closeSettingsPanel, settingsPanel,searchPanel, toggleSearch} : Props) => {
+const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPanel, notificationPanel, searchPanel, toggleNotifications, closePostPanel, intialiseProject, closeSettingsPanel, toggleSearch, toggleCreatePanel} : Props) => {
   const [btnDetails, setBtnDetails] = useState("")
   const [unRead, setUnRead]= useState(0)
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -92,7 +96,7 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
   
       window.addEventListener('resize', handleResize);
 
-  }, [user ,notifLoading, notifData, loading , data, pathname])
+  }, [user ,notifLoading, notifData, loading , data, pathname, componentLocation])
 
 
   if(loading) {
@@ -145,6 +149,13 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
       setToggleMenu(true)
     }
   }
+  const openCreateMenu = () => {
+    if(createPanel) {
+      toggleCreatePanel(false)
+    } else {
+      toggleCreatePanel(true)
+    }
+  }
       return (
         <Fragment>
           <div className="app-header">
@@ -152,6 +163,7 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
               <div className="aligned-left">
                 <h3 className="logo">Space</h3>
                 <span id="left-btns" style={windowSize.width <= 1100 || location === "workspace" ?{display:"flex"} : {display:"none"} }>
+                <span className="header-btn-wrapper">
                   <button
                     className="header-btns"
                     onClick={() => openSearchContainer()}
@@ -161,6 +173,8 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
                       { btnDetails === "Search" && <div className="btn-info">
                     <p>{btnDetails}</p></div>}
                   </button>
+                  </span>
+                  <span className="header-btn-wrapper">
                   <button 
                     className="header-btns"
                     onClick={() => openBurgerMenu()}
@@ -171,6 +185,8 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
                       <p>{btnDetails}</p></div>}
                   </button>
                 </span>
+                </span>
+                <span className="header-btn-wrapper">
                 <button 
                   onClick={() => openSearchContainer()} 
                   className="search-btn"
@@ -178,22 +194,24 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
                   <img src="/assets/icons/menu/search-btn.svg" alt="Search"/>
                   <p>Search people and projects</p>
                 </button>
-                {/* <form action="" id="search-form" style={windowSize.width <= 1100 || location === "workspace" ?{display:"none"} : {display:"flex"} }>
-                  <input type="text" id="search-bar" placeholder="Search projects, people and bands"/>
-                </form> */}
+                </span>
               </div>
+              <h3 className="logo-center">Space</h3>
               <div className="aligned-right">
+              <span className="header-btn-wrapper"  id="create-project-btn" >
                 <button 
                   className="header-btns" 
                   onClick={() => createProject()}
                   onMouseOver={() => setBtnDetails("Create Project")}
                   onMouseOut={() =>  setBtnDetails("")}>
-                  <img src="/assets/icons/menu/create.svg" alt="Create Project"/>
+                  <img src="/assets/icons/menu/create-projects.svg" alt="Create Project"/>
                   { btnDetails === "Create Project" && 
                   <div className="btn-info">
                      <p>{btnDetails}</p>
                   </div>}
                 </button>
+                </span>
+                <span className="header-btn-wrapper"   id="create-post-btn" >
                 <button 
                   className="header-btns" 
                   onClick={() => createPost()}
@@ -203,8 +221,10 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
                   { btnDetails === "Create Post" && <div className="btn-info">
                   <p>{btnDetails}</p></div>}
                 </button>
+                </span> 
+                <span className="header-btn-wrapper"    id="notifcations-btn" >
                 <button 
-                  className="header-btns" 
+                  className="header-btns"        
                   onClick={() => openNotifications()}
                   onMouseOver={() => setBtnDetails("Notficiations")}
                   onMouseOut={() =>  setBtnDetails("")}>
@@ -212,25 +232,40 @@ const Header = ({location,authenticated,user, postPanel, projectPanel,notificati
                   {unRead !== 0 && <div className="unread-notifications">{unRead}</div>} 
                   { btnDetails === "Notficiations" && <div className="btn-info">
                     <p>{btnDetails}</p></div>}
-                </button>
+                </button>  
+                {notificationPanel === true ? <Notifications /> : null}
+                </span>
+                <span className="header-btn-wrapper"    id="create-btn" >
                 <button 
-                    className="header-btns" onClick={() => openOptionsMenu()} 
+                    className="header-btns" 
+                    onClick={() => openCreateMenu()}
+                    onMouseOver={() => setBtnDetails("Create")}
+                    onMouseOut={() =>  setBtnDetails("")}>
+                    <img src="/assets/icons/menu/create.svg" alt="Create Project"/>
+                  { btnDetails === "Create" && <div className="btn-info">
+                    <p>{btnDetails}</p></div>}
+                </button>
+                {createPanel && <CreateOptions />}
+                </span>
+                <span className="header-btn-wrapper"   id="settings-btn" >
+                <button 
+                    className="header-btns" 
+                    onClick={() => openOptionsMenu()} 
                     onMouseOver={() => setBtnDetails("Options")}
                     onMouseOut={() =>  setBtnDetails("")}>
                   <img src="/assets/icons/menu/settings.svg" alt="settings"/>
                   { btnDetails === "Options" && <div className="btn-info">
                     <p>{btnDetails}</p></div>}
                 </button>
+                </span>
                 { !loading && data && data.me && 
-                  <img src={data.me.avatar} className="profile-avatar" alt="Profile Avatar"/>}
+                  <img src={data.me.avatar} className="profile-avatar"  id="avatar"  alt="Profile Avatar"/>}
                 {!loading && data && data.me === null && !userLoading && userData && userData.user  && <img src={userData.user.avatar} className="profile-avatar" alt="Profile Avatar"/>}
               </div>
-              {notificationPanel === true ? <Notifications /> : null}
               {settingsPanel === true  ? <AccountOptions/> : null}
               {searchPanel === true && <Search />}
             </div>
           </div>
-            {/* { location === "workspace" && <DropDown></DropDown>} */}
             { toggleMenu === true && <DropDown></DropDown>}
        </Fragment>
       )}

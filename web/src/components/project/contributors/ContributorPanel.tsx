@@ -1,9 +1,9 @@
-import React, { useState, Fragment } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import { Link } from "react-router-dom"
 // GrahphQL
 import { useQuery, useMutation } from "@apollo/client";
-import { SEARCH_MATES_FOR_CONTRIBUTORS , GET_CONTRIBUTORS, CURRENT_PROJECT, MY_ACCOUNT} from "../../graphql/queries"
-import { ADD_CONTRIBUTOR , SEND_NOTIFICATION} from "../../graphql/mutations";
+import { SEARCH_MATES_FOR_CONTRIBUTORS , GET_CONTRIBUTORS, CURRENT_PROJECT, MY_ACCOUNT} from "../../../graphql/queries"
+import { ADD_CONTRIBUTOR , SEND_NOTIFICATION} from "../../../graphql/mutations";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 // Components
@@ -20,12 +20,14 @@ interface ComponentProps {
       remove: boolean
       userId: number
     }
+    selectedProject: string
   }
 }
 
 const mapState = (state: ComponentProps) => ({
   id: state.user.user.id,
-  contributor: state.project.contributor
+  contributor: state.project.contributor,
+  selectedProject: state.project.selectedProject
 })
 
 const mapDispatch = {
@@ -35,38 +37,44 @@ const mapDispatch = {
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
-type Props = PropsFromRedux & {
-  currentProject : string
-};
+type Props = PropsFromRedux 
 
 
-const AddContributor = ({ removeContributors, contributor, toggleContributors, id, currentProject} :Props) => {
+const ContributorPanel = ({selectedProject, contributor, id, removeContributors, toggleContributors} :Props) => {
   const [searchName, setSearchData] = useState({ name: ""});
   const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT)
   const { data: userData, loading: userLoading } = useQuery(GET_CONTRIBUTORS, {
     variables : {
-      projectId: currentProject
+      projectId: selectedProject
     }
   })
   const { data: projectData, loading: projectLoading } = useQuery(CURRENT_PROJECT, {
     variables : {
-      projectId: currentProject
+      projectId: selectedProject
     }
   })
   const { data: searchData, loading: searchLoading} = useQuery(SEARCH_MATES_FOR_CONTRIBUTORS, {
     variables : {
-      projectId: currentProject,
+      projectId: selectedProject,
       name: searchName.name
     }
   })
   const [addContributor] = useMutation(ADD_CONTRIBUTOR)
   const [sendNotfication] = useMutation(SEND_NOTIFICATION);
+
+  useEffect(() => {
+    return () => {
+      toggleContributors(false)
+    } 
+  },[toggleContributors])
+
+
   const addContributorFunc = async (mateId: number) => {
         // Adding contributor with useMutatiion
         // Updating cache so we can see the change in realtime in our ui
        await  addContributor({
           variables : {
-            projectId : currentProject,
+            projectId : selectedProject,
             userId: mateId
         },
         update: (cache , { data: { addContributor } }) => {
@@ -74,7 +82,7 @@ const AddContributor = ({ removeContributors, contributor, toggleContributors, i
             cache.writeQuery({
               query: GET_CONTRIBUTORS,
               variables : {
-                projectId: currentProject
+                projectId: selectedProject
               },
               data: {
                 contributors: addContributor
@@ -83,7 +91,7 @@ const AddContributor = ({ removeContributors, contributor, toggleContributors, i
             // Read the cache for SEARCH_MATES query
             const searchCache: any = cache.readQuery({query: SEARCH_MATES_FOR_CONTRIBUTORS,
               variables : {
-                projectId: currentProject,
+                projectId: selectedProject,
                 name: searchName.name
               }})
             // Assign and iterate the cache to a new variable so we can mofidy
@@ -103,7 +111,7 @@ const AddContributor = ({ removeContributors, contributor, toggleContributors, i
             cache.writeQuery({
               query: SEARCH_MATES_FOR_CONTRIBUTORS,
               variables : {
-                projectId: currentProject,
+                projectId: selectedProject,
                 name: searchName.name
               },
               data: {
@@ -131,13 +139,13 @@ const AddContributor = ({ removeContributors, contributor, toggleContributors, i
       if(contributor.remove === true && contributor.userId === id) {
          dataToSend = {
           remove: false,
-          projectId : currentProject,
+          projectId : selectedProject,
           userId: id
         }
       } else {
          dataToSend = {
           remove: true,
-          projectId : currentProject,
+          projectId : selectedProject,
           userId: id
         }
       }
@@ -159,32 +167,34 @@ const AddContributor = ({ removeContributors, contributor, toggleContributors, i
   }
 
   return (
+    <div className="contributor-container">
     <div className="contributor-panel">
       <span className="panel-heading">
         <p>Contributors</p>
-        <button onClick={() => closePanel()}>
-          <img src="/assets/icons/plus/exit-dark.svg" alt="Close Panel"/>
-        </button>
       </span>
       <ul>
         { !userLoading && userData && userData.contributors && userData.contributors.map((user: any) => 
         <li key={user.id}>
+          <div className="remove-bg" style={contributor.remove === true && contributor.userId === user.id ? {minWidth: "100%", maxWidth:"100%"} : { minWidth: "0%", maxWidth:"0%"} }>
+            <RemoveContributor />
+          </div>
           <img src={user.avatar} alt="Profile Avatar"/>
-          <Link className="user-link" to={`/profile/${user.id}`}>{user.firstName}</Link>
+          <Link className="user-link" to={`/profile/${user.id}`}>
+            <p>{user.firstName}</p>
+            <p className="hover-show">See profile</p>
+          </Link>
           {!meLoading && !projectLoading && meData.me.id === projectData.currentProject.creatorId && 
             <Fragment>
               { meData.me.id !== user.id && 
               <button onClick={() => setRemoveContributor(user.id)} className="remove-contributor">
-                <img src="/assets/icons/post/red-cross.svg" alt="Remove Contributor"/>
+                <p>Remove</p> 
               </button>}
             </Fragment>
         }
-          
-          {contributor.remove === true && contributor.userId === user.id && <RemoveContributor /> }
         </li>) }
       </ul>
       <form onSubmit={(e) => onSubmit(e)}>
-          <label htmlFor="mateSearch">Add contributors</label>
+          <label htmlFor="mateSearch">Search mates</label>
           <span className="input-wrapper">
             <input 
               type="text"
@@ -201,12 +211,21 @@ const AddContributor = ({ removeContributors, contributor, toggleContributors, i
         { !searchLoading && searchData && searchData.searchMatesForContributors.length !== 0 && searchData.searchMatesForContributors.map((user: any) => 
           <li key={user.id}>
               <img src={user.avatar} alt="Profile Avatar"/>
-              <Link className="user-link" to={`/profile/${user.id}`}>{user.firstName}</Link>
-              <button onClick={() => addContributorFunc(user.id)}>Add</button>
+              <Link className="user-link" to={`/profile/${user.id}`}>
+              <p>{user.firstName}</p>
+              <p className="hover-show">See profile</p>
+              </Link>
+              <button onClick={() => addContributorFunc(user.id)} className="add-btn">
+                <p>Add</p> 
+              </button>
             </li> 
         )}
       </ul>
+      <button className="exit-btn" onClick={() => closePanel()}>
+        <p>Exit</p>
+      </button>
     </div>
+  </div>
   )
 }
-export default connector(AddContributor);
+export default connector(ContributorPanel);

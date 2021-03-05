@@ -75,7 +75,30 @@ const client = new ApolloClient({
   // For some reason Typescript doesn't agree with the tokenRefreshLink type here
   // @ts-ignore
   link: from([tokenRefreshLink, errorLink, authLink, httpLink]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          myFeed: {
+            merge(existing, incoming){
+              return incoming
+            }
+          },
+          myPosts: {
+            merge(existing, incoming){
+              return incoming
+            }
+          },
+          myProjects :{
+            merge(existing, incoming){
+              return incoming
+            } 
+            
+          }
+        }
+      }
+      }
+  }),
 
 })
 

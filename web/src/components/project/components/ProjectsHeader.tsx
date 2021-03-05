@@ -1,6 +1,6 @@
 import React, { useRef , useState, Fragment} from 'react'
 import { useQuery } from "@apollo/client";
-import { MY_ACCOUNT, SEARCH_PROJECTS } from "../../graphql/queries";
+import { MY_ACCOUNT, SEARCH_PROJECTS } from "../../../graphql/queries";
 // Redux 
 import { connect, ConnectedProps } from "react-redux";
 // Components 
@@ -45,10 +45,6 @@ const ProjectsHeader = ({projectPanel, intialiseProject} : Props) => {
 
   const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearchData({...searchData , search: e.target.value})
-    if(!projectLoading) {
-      console.log(searchData.search)
-      console.log(projectData.searchProjects)
-    }
   } 
 
   const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {

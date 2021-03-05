@@ -195,6 +195,13 @@ body .app .notFound p {
   position: relative;
 }
 
+.app-header .header-wrapper .logo-center {
+  font-size: 1.2rem;
+  color: white;
+  margin: 0 auto;
+  display: none;
+}
+
 .app-header .header-wrapper .aligned-left {
   height: 30px;
   display: -webkit-box;
@@ -299,25 +306,30 @@ body .app .notFound p {
   opacity: 0.3;
 }
 
-.app-header .header-wrapper .header-btns {
+.app-header .header-wrapper .header-btn-wrapper {
   position: relative;
   width: 35px;
   height: 35px;
+  margin-right: 15px;
+}
+
+.app-header .header-wrapper .header-btn-wrapper .header-btns {
+  width: 100%;
+  height: 100%;
   background: none;
   border: none;
   outline: none;
   border-radius: 50%;
-  margin-right: 15px;
   cursor: pointer;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
-.app-header .header-wrapper .header-btns img {
+.app-header .header-wrapper .header-btn-wrapper .header-btns img {
   width: 100%;
 }
 
-.app-header .header-wrapper .header-btns .btn-info {
+.app-header .header-wrapper .header-btn-wrapper .header-btns .btn-info {
   position: absolute;
   margin: 0 auto;
   margin-top: 20px;
@@ -343,7 +355,7 @@ body .app .notFound p {
   z-index: 50;
 }
 
-.app-header .header-wrapper .header-btns .btn-info p {
+.app-header .header-wrapper .header-btn-wrapper .header-btns .btn-info p {
   white-space: nowrap;
 }
 
@@ -605,6 +617,96 @@ body .app .notFound p {
 .app-header .header-wrapper .search-container .search-list li .creator {
   color: #768392;
   margin-left: 25px;
+}
+
+.app-header .header-wrapper #create-btn {
+  display: none;
+}
+
+.app-header .header-wrapper .create-options {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  width: 200px;
+  border-radius: 12px;
+  background-color: #1e212b;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+}
+
+.app-header .header-wrapper .create-options button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 20px 30px;
+  cursor: pointer;
+}
+
+.app-header .header-wrapper .create-options button img {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+}
+
+.app-header .header-wrapper .create-options button p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+}
+
+.app-header .header-wrapper .create-options button:hover {
+  background-color: #3e424e;
+}
+
+@media (max-width: 420px) {
+  .app-header .header-wrapper .create-options {
+    position: fixed;
+    top: 90px;
+    width: 80%;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-header .header-wrapper {
+    position: relative;
+  }
+  .app-header .header-wrapper .logo-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%);
+            transform: translate(-50%);
+    z-index: 25;
+  }
+  .app-header .header-wrapper .aligned-left .logo {
+    display: none;
+  }
+  .app-header .header-wrapper .aligned-right #notifcations-btn,
+  .app-header .header-wrapper .aligned-right #create-project-btn,
+  .app-header .header-wrapper .aligned-right #create-post-btn,
+  .app-header .header-wrapper .aligned-right #avatar {
+    display: none;
+  }
+  .app-header .header-wrapper .aligned-right #create-btn {
+    display: block;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -1002,10 +1104,22 @@ body .app .notFound p {
       -ms-flex-direction: column;
           flex-direction: column;
   position: absolute;
-  top: 90px;
-  right: 0px;
+  top: 80px;
+  right: 15px;
   z-index: 10;
   overflow: hidden;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+  font-family: "Nunito", sans-serif;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.account-options-dropdown .account-icons {
+  width: 30px;
+  height: 30px;
 }
 
 .account-options-dropdown .top-wrapper {
@@ -1019,7 +1133,7 @@ body .app .notFound p {
   padding: 15px 0;
 }
 
-.account-options-dropdown .top-wrapper img {
+.account-options-dropdown .top-wrapper .avatar {
   width: 40px;
   height: 40px;
   margin: 0 15px;
@@ -1215,6 +1329,13 @@ ul li {
   text-decoration: none;
   margin-left: 5px;
   cursor: pointer;
+}
+
+@media (max-width: 460px) {
+  .feed-flex {
+    margin: 0;
+    width: 100%;
+  }
 }
 
 .playbar-container {
@@ -1909,6 +2030,7 @@ ul li {
 .create-component {
   margin-left: auto;
   margin-right: 5%;
+  width: 400px;
   background-color: white;
   -webkit-box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
           box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
@@ -1916,13 +2038,6 @@ ul li {
   position: relative;
   margin-bottom: 50px;
   overflow: hidden;
-}
-
-.create-component .bottom {
-  width: 100%;
-}
-
-.create-component .bottom ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1932,7 +2047,7 @@ ul li {
           flex-direction: row;
 }
 
-.create-component .bottom ul li {
+.create-component button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1942,37 +2057,26 @@ ul li {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.create-component .bottom ul li button,
-.create-component .bottom ul li a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   background: none;
   border: none;
   outline: none;
   font-family: "Nunito", sans-serif;
   text-decoration: none;
-  padding: 15px 30px;
+  width: 100%;
+  padding: 15px;
   cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
-.create-component .bottom ul li button img,
-.create-component .bottom ul li a img {
+.create-component button img {
   width: 25px;
   height: 25px;
   margin-right: 15px;
 }
 
-.create-component .bottom ul li button p,
-.create-component .bottom ul li a p {
+.create-component button p {
+  font-family: "Nunito", sans-serif;
   font-size: 1rem;
   font-weight: 500;
   color: #768392;
@@ -1980,22 +2084,54 @@ ul li {
   transition: 0.2s;
 }
 
-.create-component .bottom ul li:hover {
+.create-component .create-project:hover {
   background-color: #eaf0ff;
 }
 
-.create-component .bottom ul li:hover button p,
-.create-component .bottom ul li:hover a p {
+.create-component .create-project:hover p {
   color: #2767fa;
 }
 
-.create-component .bottom ul .create-post:hover {
+.create-component .create-post:hover {
   background-color: #e6ffef;
 }
 
-.create-component .bottom ul .create-post:hover button p,
-.create-component .bottom ul .create-post:hover a p {
+.create-component .create-post:hover p {
   color: #20bf55;
+}
+
+@media (max-width: 950px) {
+  .create-component {
+    margin: 0 auto;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 630px) {
+  .create-component {
+    width: 94%;
+  }
+  .create-component button img {
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 460px) {
+  .create-component {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    padding: 0;
+    width: 100%;
+    height: 60px;
+    border-bottom: 2px #eaf0ff solid;
+    border-radius: 0;
+  }
+  .create-component button img {
+    margin: 0;
+  }
+  .create-component button p {
+    display: none;
+  }
 }
 
 .delete-popup {
@@ -4655,8 +4791,8 @@ ul li {
       -ms-flex-pack: center;
           justify-content: center;
   cursor: pointer;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .project .top .responsive-btns button img {
@@ -4674,7 +4810,15 @@ ul li {
   background-color: #eaf0ff;
 }
 
-.project .top .responsive-btns button:active img {
+.project .top .responsive-btns .responsive-share img {
+  width: 35%;
+}
+
+.project .top .responsive-btns .responsive-share:hover {
+  background-color: #e6ffef;
+}
+
+.project .top .responsive-btns button:active {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
 }
@@ -4811,21 +4955,171 @@ ul li {
   color: white;
 }
 
-.contributor-panel {
+.result-component {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(30, 33, 43, 0.29);
+  z-index: 50;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.result-component .wrapper {
+  width: 500px;
+  background-color: white;
+  -webkit-box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
+          box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 0 35px;
+}
+
+.result-component .wrapper p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1e212b;
+  margin-top: 35px;
+  text-align: center;
+}
+
+.result-component .wrapper p em {
+  font-style: normal;
+  color: #2767fa;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.result-component .wrapper .btn-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 35px 0;
+}
+
+.result-component .wrapper .btn-wrapper a,
+.result-component .wrapper .btn-wrapper button {
+  background: none;
+  outline: none;
+  border: none;
+  padding: 5px 15px;
+  margin: 0 auto;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.result-component .wrapper .btn-wrapper a p,
+.result-component .wrapper .btn-wrapper button p {
+  position: relative;
+  text-transform: none;
+  font-family: "Nunito", sans-serif;
+  color: #1e212b;
+  margin: 0;
+}
+
+.result-component .wrapper .btn-wrapper a .btn-bg,
+.result-component .wrapper .btn-wrapper button .btn-bg {
+  min-width: 0%;
+  height: 100%;
   position: absolute;
-  top: 130px;
-  right: 0;
-  width: 250px;
+  top: 0;
+  left: 0;
+  background-color: #2767fa;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.result-component .wrapper .btn-wrapper a {
+  background-color: #eaf0ff;
+  padding: 10px 25px;
+}
+
+.result-component .wrapper .btn-wrapper a p {
+  color: #2767fa;
+}
+
+.result-component .wrapper .btn-wrapper a:hover p {
+  color: white;
+}
+
+.result-component .wrapper .btn-wrapper a:hover .btn-bg {
+  min-width: 100%;
+}
+
+.result-component .wrapper .btn-wrapper button:hover p {
+  color: #2767fa;
+}
+
+.result-component .wrapper .btn-wrapper .delete-btn {
+  background-color: #fcecec;
+}
+
+.result-component .wrapper .btn-wrapper .delete-btn .btn-bg {
+  background-color: #f8323b;
+}
+
+.result-component .wrapper .btn-wrapper .delete-btn p {
+  color: #f8323b;
+}
+
+.result-component .wrapper .btn-wrapper .delete-btn:hover p {
+  color: white;
+}
+
+.result-component .wrapper .btn-wrapper .delete-btn:hover .btn-bg {
+  min-width: 100%;
+}
+
+.contributor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(30, 33, 43, 0.29);
+  z-index: 50;
+}
+
+.contributor-container .contributor-panel {
+  width: 400px;
   background-color: white;
   -webkit-box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
           box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
   border-radius: 21px;
   color: #1e212b;
   z-index: 10;
-  padding: 15px 15px;
+  padding: 0 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.contributor-panel .panel-heading {
+.contributor-container .contributor-panel .panel-heading {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4833,16 +5127,23 @@ ul li {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin-bottom: 10px;
+  height: 40px;
+  padding: 25px 0;
+  position: relative;
 }
 
-.contributor-panel .panel-heading p {
-  font-size: 1rem;
+.contributor-container .contributor-panel .panel-heading p {
+  font-size: 1.2rem;
   font-weight: 600;
-  color: #1e212b;
+  color: #2767fa;
+  text-align: center;
 }
 
-.contributor-panel .panel-heading button {
+.contributor-container .contributor-panel .panel-heading button {
   background: none;
   border: none;
   outline: none;
@@ -4856,27 +5157,34 @@ ul li {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  position: absolute;
+  display: none;
+  top: 0;
+  right: 0;
   cursor: pointer;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
-.contributor-panel .panel-heading button img {
+.contributor-container .contributor-panel .panel-heading button img {
   width: 80%;
 }
 
-.contributor-panel .panel-heading button:active {
+.contributor-container .contributor-panel .panel-heading button:active {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
 }
 
-.contributor-panel ul {
+.contributor-container .contributor-panel ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-bottom: 25px;
+  max-height: 200px;
+  overflow-x: auto;
 }
 
-.contributor-panel ul li {
+.contributor-container .contributor-panel ul li {
   width: 100%;
   height: 50px;
   display: -webkit-box;
@@ -4886,22 +5194,22 @@ ul li {
       -ms-flex-align: center;
           align-items: center;
   margin: 2px 0;
+  padding: 0 25px;
   position: relative;
 }
 
-.contributor-panel ul li img {
+.contributor-container .contributor-panel ul li img {
   width: 40px;
   margin-right: 15px;
 }
 
-.contributor-panel ul li .user-link {
-  font-size: 1.2rem;
-  font-weight: 600;
+.contributor-container .contributor-panel ul li .user-link {
   width: 100%;
   height: 100%;
   margin-right: auto;
   position: relative;
   text-decoration: none;
+  text-transform: capitalize;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4911,13 +5219,89 @@ ul li {
   color: #2767fa;
 }
 
-.contributor-panel ul li .remove-contributor {
+.contributor-container .contributor-panel ul li .user-link p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 40px;
+}
+
+.contributor-container .contributor-panel ul li .user-link .hover-show {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #93b3fd;
+  margin-left: 25px;
+  margin-top: 2px;
+  opacity: 0;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+
+.contributor-container .contributor-panel ul li .remove-contributor {
   background: none;
-  width: 35px;
-  height: 35px;
-  border: 1px white solid;
-  border-radius: 25px;
-  padding: none;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.contributor-container .contributor-panel ul li .remove-contributor p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f8323b;
+}
+
+.contributor-container .contributor-panel ul li .remove-contributor img {
+  width: 15px;
+  margin: auto;
+}
+
+.contributor-container .contributor-panel ul li .remove-contributor:hover {
+  background-color: #fcecec;
+}
+
+.contributor-container .contributor-panel ul li .add-btn {
+  background: none;
+  border: none;
+  outline: none;
+  color: #2767fa;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.contributor-container .contributor-panel ul li .add-btn p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2767fa;
+}
+
+.contributor-container .contributor-panel ul li .add-btn:hover {
+  background-color: #eaf0ff;
+}
+
+.contributor-container .contributor-panel ul li:hover .user-link .hover-show {
+  opacity: 1;
+}
+
+.contributor-container .contributor-panel .remove-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #fcecec;
+  border-radius: 5px;
+  z-index: 10;
+  max-width: 0%;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4927,64 +5311,78 @@ ul li {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
 }
 
-.contributor-panel ul li .remove-contributor img {
-  width: 15px;
-  margin: auto;
-}
-
-.contributor-panel ul li .remove-contributor:hover {
-  background-color: #fcecec;
-}
-
-.contributor-panel ul li button {
-  background: none;
-  border: none;
-  outline: none;
-  background-color: #2767fa;
-  color: white;
-  padding: 5px 8px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.contributor-panel .remove-validation {
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  border: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 7;
-}
-
-.contributor-panel .remove-validation span {
+.contributor-container .contributor-panel .remove-bg .btn-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
-  button-margin: auto;
+  width: 60%;
 }
 
-.contributor-panel .remove-validation span .remove-btn {
+.contributor-container .contributor-panel .remove-bg .btn-wrapper button {
+  border: none;
+  outline: none;
+  border-radius: 5px;
   margin: auto;
+  padding: 5px 20px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.contributor-container .contributor-panel .remove-bg .btn-wrapper button .btn-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 0%;
+  max-width: none;
+  height: 100%;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.contributor-container .contributor-panel .remove-bg .btn-wrapper button p {
+  position: relative;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .remove-btn {
+  background: none;
+  background-color: white;
+  color: #f8323b;
+}
+
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .remove-btn .btn-bg {
   background-color: #f8323b;
 }
 
-.contributor-panel .remove-validation span .cancel-btn {
-  margin: auto;
-  background-color: #eaf0ff;
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .cancel-btn {
+  background: none;
+  background-color: white;
   color: #2767fa;
 }
 
-.contributor-panel .mates-on-contributors {
-  height: 170px;
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .cancel-btn .btn-bg {
+  background-color: #2767fa;
+}
+
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .remove-btn:hover p,
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .cancel-btn:hover p {
+  color: white;
+}
+
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .remove-btn:hover .btn-bg,
+.contributor-container .contributor-panel .remove-bg .btn-wrapper .cancel-btn:hover .btn-bg {
+  min-width: 100%;
+}
+
+.contributor-container .contributor-panel .mates-on-contributors {
+  max-height: 300px;
   padding: 0;
-  margin: 0;
+  margin-top: 25px;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4996,7 +5394,7 @@ ul li {
   overflow-x: auto;
 }
 
-.contributor-panel form {
+.contributor-container .contributor-panel form {
   width: 100%;
   margin: 10px 0;
   display: -webkit-box;
@@ -5008,14 +5406,15 @@ ul li {
           flex-direction: column;
 }
 
-.contributor-panel form label {
-  font-size: 1rem;
+.contributor-container .contributor-panel form label {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #1e212b;
-  margin-bottom: 10px;
+  color: #2767fa;
+  margin-bottom: 5px;
+  margin-left: 25px;
 }
 
-.contributor-panel form .input-wrapper {
+.contributor-container .contributor-panel form .input-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5023,44 +5422,53 @@ ul li {
       -ms-flex-align: center;
           align-items: center;
   position: relative;
-  height: 30px;
+  height: 40px;
 }
 
-.contributor-panel form .input-wrapper input {
+.contributor-container .contributor-panel form .input-wrapper input {
   background: none;
   border: none;
   outline: none;
   background-color: #eaf0ff;
-  color: #a5b8e6;
   padding: 5px;
-  padding-left: 15px;
+  padding-left: 25px;
+  padding-right: 45px;
   height: 100%;
+  font-family: "Nunito", sans-serif;
   font-size: 1.1rem;
   font-weight: 500;
+  color: #8e92a0;
   border-radius: 5px 0 0 5px;
   border-radius: 25px;
   width: 100%;
-  font-family: "Nunito", sans-serif;
 }
 
-.contributor-panel form .input-wrapper input::-webkit-input-placeholder {
-  color: #a5b8e6;
+.contributor-container .contributor-panel form .input-wrapper input::-webkit-input-placeholder {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #8e92a0;
 }
 
-.contributor-panel form .input-wrapper input:-ms-input-placeholder {
-  color: #a5b8e6;
+.contributor-container .contributor-panel form .input-wrapper input:-ms-input-placeholder {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #8e92a0;
 }
 
-.contributor-panel form .input-wrapper input::-ms-input-placeholder {
-  color: #a5b8e6;
+.contributor-container .contributor-panel form .input-wrapper input::-ms-input-placeholder {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #8e92a0;
 }
 
-.contributor-panel form .input-wrapper input::placeholder {
-  color: #a5b8e6;
+.contributor-container .contributor-panel form .input-wrapper input::placeholder {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #8e92a0;
 }
 
-.contributor-panel form .input-wrapper .search-btn {
-  width: 35px;
+.contributor-container .contributor-panel form .input-wrapper .search-btn {
+  width: 50px;
   height: 100%;
   position: absolute;
   padding: 0;
@@ -5082,35 +5490,83 @@ ul li {
   cursor: pointer;
 }
 
-.contributor-panel form .input-wrapper .search-btn img {
+.contributor-container .contributor-panel form .input-wrapper .search-btn img {
   border-radius: 0;
   padding: 0;
   overflow: none;
   border: none;
 }
 
-.contributor-panel form .input-wrapper input::-webkit-input-placeholder {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #768392;
+.contributor-container .contributor-panel .exit-btn {
+  padding: 5px 60px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
-.contributor-panel form .input-wrapper input:-ms-input-placeholder {
-  font-size: 1.1rem;
+.contributor-container .contributor-panel .exit-btn p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.2rem;
   font-weight: 500;
-  color: #768392;
+  color: #2767fa;
 }
 
-.contributor-panel form .input-wrapper input::-ms-input-placeholder {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #768392;
+.contributor-container .contributor-panel .exit-btn:hover {
+  background-color: #eaf0ff;
 }
 
-.contributor-panel form .input-wrapper input::placeholder {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #768392;
+#searched-projects-list {
+  margin-bottom: 0;
+  border-bottom: 2px #eaf0ff solid;
+}
+
+@media (max-width: 350px) {
+  .result-component .wrapper {
+    width: 85%;
+    padding: 0 25px;
+  }
+  .result-component .wrapper p {
+    margin-top: 25px;
+  }
+  .result-component .wrapper .btn-wrapper {
+    margin: 25px 0;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .result-component .wrapper .btn-wrapper a,
+  .result-component .wrapper .btn-wrapper button {
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+    padding: 10px 0;
+  }
+  .result-component .wrapper .btn-wrapper button {
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 351px) and (max-width: 460px) {
+  .result-component .wrapper {
+    width: 85%;
+    padding: 0 25px;
+  }
+  .result-component .wrapper p {
+    margin-top: 25px;
+  }
+  .result-component .wrapper .btn-wrapper {
+    margin: 25px 0;
+  }
 }
 
 @media (max-width: 460px) {
@@ -5223,6 +5679,9 @@ ul li {
   .list-of-projects .project .bottom {
     display: none;
   }
+  #searched-projects-list {
+    padding-top: 45px;
+  }
 }
 
 @media (min-width: 461px) and (max-width: 830px) {
@@ -5263,11 +5722,48 @@ ul li {
   .projects-header .right:hover button {
     background-color: #eaf0ff;
   }
+  .result-component .wrapper {
+    width: 350px;
+    padding: 0 25px;
+  }
+  .result-component .wrapper p {
+    margin-top: 25px;
+  }
+  .result-component .wrapper .btn-wrapper {
+    margin: 25px 0;
+  }
 }
 
 @media (max-width: 600px) {
   .list-of-projects {
     width: 100%;
+  }
+  .list-of-projects .no-posts {
+    width: 100%;
+  }
+  .contributor-container .contributor-panel {
+    width: 80%;
+    max-height: 80%;
+    padding: 0 15px;
+  }
+  .contributor-container .contributor-panel ul li {
+    padding: 0 10px;
+  }
+  .contributor-container .contributor-panel ul li .hover-show {
+    display: none;
+  }
+  .contributor-container .contributor-panel ul li:hover .user-link p {
+    color: #93b3fd;
+  }
+  .contributor-container .contributor-panel .remove-bg .btn-wrapper {
+    width: 100%;
+  }
+  .contributor-container .contributor-panel .remove-bg .btn-wrapper button {
+    margin: 0 auto;
+  }
+  .contributor-container .contributor-panel form {
+    min-width: 80%;
+    margin: 0 auto;
   }
 }
 
@@ -5987,10 +6483,14 @@ ul li {
           box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
   border-radius: 18px;
   position: absolute;
-  top: 90px;
-  right: 0;
+  top: 80px;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
   color: white;
   padding-bottom: 30px;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
 }
 
 .notifications-container h3 {
@@ -6016,6 +6516,8 @@ ul li {
   width: 100%;
   list-style-type: none;
   padding: 15px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: default;
 }
 
@@ -6033,6 +6535,7 @@ ul li {
 
 .notifications-container ul li .list-top a {
   color: white;
+  font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
 }
@@ -6049,7 +6552,8 @@ ul li {
   margin-top: 25px;
 }
 
-.notifications-container ul li .li-btns a, .notifications-container ul li .li-btns button {
+.notifications-container ul li .li-btns a,
+.notifications-container ul li .li-btns button {
   background: none;
   border: none;
   outline: none;

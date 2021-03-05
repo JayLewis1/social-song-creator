@@ -16,7 +16,7 @@ import Header from "./components/header/Header";
 import Playbar from "./components/playbar/Playbar";
 import Navigation from "./components/navigation/Navigation";
 import CreatePost from './components/post/CreatePost';
-import CreateProject from './components/project/CreateProject';
+import CreateProject from './components/project/functions/CreateProject';
 import AuthRoute from "./components/authRoute/AuthRoute";
 import UnAuthRedirect from "./components/unAuthRedirect/UnAuthRedirect"
 import UserProfile from "./components/profile/UserProfile"

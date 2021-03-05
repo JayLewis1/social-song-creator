@@ -1,7 +1,7 @@
 import React from 'react'
 
-import MyProjects from "../../components/project/MyProjects";
-import ProjectsHeader from "../../components/project/ProjectsHeader";
+import MyProjects from "../../components/project/projects/MyProjects";
+import ProjectsHeader from "../../components/project/components/ProjectsHeader";
 
 const Projects: React.FC = () => {
     return (

@@ -2,11 +2,9 @@ import React, { Fragment } from 'react'
 import { Link , useLocation} from "react-router-dom";
 // GraphQL
 import { useQuery } from "@apollo/client";
-import {USERS_PROJECTS} from "../../graphql/queries";
+import {USERS_PROJECTS} from "../../../graphql/queries";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
-// Components
-import DeleteProject from "./DeleteProject";
 
 interface ComponentProps {
 

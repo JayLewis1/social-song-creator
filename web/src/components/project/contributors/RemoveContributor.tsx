@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMutation } from "@apollo/client"
-import { REMOVE_CONTRIBUTOR } from "../../graphql/mutations"
-import { GET_CONTRIBUTORS, SEARCH_MATES } from "../../graphql/queries"
+import { REMOVE_CONTRIBUTOR } from "../../../graphql/mutations"
+import { GET_CONTRIBUTORS, SEARCH_MATES_FOR_CONTRIBUTORS } from "../../../graphql/queries"
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 
@@ -62,24 +62,27 @@ const RemoveContributor = ({removeContributors, contributor}: Props) => {
             }
           })
           // Read the cache for SEARCH_MATES query
-          const searchCache: any = cache.readQuery({query: SEARCH_MATES,
+          const searchCache: any = cache.readQuery({query: SEARCH_MATES_FOR_CONTRIBUTORS,
             variables : {
               projectId: contributor.projectId,
               name: ""
             }})
+
           // Assign the cache to new array and add the removed user also
-          let modifiedCache = [...searchCache.searchMates, removeContributor ]
-          // Update cache with our modified array
-          cache.writeQuery({
-            query: SEARCH_MATES,
-            variables : {
-              projectId: contributor.projectId,
-              name: ""
-            },
-            data: {
-               searchMates: modifiedCache
-              }
-          })
+          if(searchCache !== null) {
+            let modifiedCache = [...searchCache.searchMatesForContributors, removeContributor ]
+            // Update cache with our modified array
+            cache.writeQuery({
+              query: SEARCH_MATES_FOR_CONTRIBUTORS,
+              variables : {
+                projectId: contributor.projectId,
+                name: ""
+              },
+              data: {
+                searchMatesForContributors: modifiedCache
+                }
+            })
+          }
       }
     })
     try{
@@ -103,12 +106,16 @@ const RemoveContributor = ({removeContributors, contributor}: Props) => {
   }
 
   return (
-    <div className="remove-validation">
-      <span>
-        <button onClick={() => removeFunc()}className="remove-btn">Remove</button>
-        <button onClick={() => closeValidation()}className="cancel-btn">Cancel</button>
+      <span className="btn-wrapper">
+        <button onClick={() => removeFunc()}className="remove-btn">
+          <span className="btn-bg"></span>
+          <p>Remove</p>
+        </button>
+        <button onClick={() => closeValidation()}className="cancel-btn">
+          <span className="btn-bg"></span>
+          <p>Cancel</p>
+        </button>
       </span>
-    </div>
   )
 }
 

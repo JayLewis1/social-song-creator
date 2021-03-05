@@ -7,7 +7,8 @@ import {
   SET_APP_LOCATION,
   TOGGLE__NOTIFICATIONS,
   TOGGLE__CONTRIBUTORS,
-  TOGGLE_SEARCH} from "./types";
+  TOGGLE_SEARCH,
+TOGGLE_CREATE_PANEL} from "./types";
 
 import { Dispatch } from "redux"
 
@@ -58,6 +59,12 @@ export const toggleContributors = (payload: Application) => (dispatch: Dispatch<
 export const toggleSearch = (payload: Application) => (dispatch: Dispatch<ApplicationTypes>) => {
   dispatch({
     type: TOGGLE_SEARCH,
+    payload: payload
+  })
+}
+export const toggleCreatePanel = (payload: Application) => (dispatch: Dispatch<ApplicationTypes>) => {
+  dispatch({
+    type: TOGGLE_CREATE_PANEL,
     payload: payload
   })
 }

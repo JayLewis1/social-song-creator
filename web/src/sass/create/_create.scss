@@ -318,65 +318,87 @@
 .create-component {
   margin-left: auto;
   margin-right: 5%;
+  width: 400px;
   background-color: $white;
   box-shadow: $divShadow;
   border-radius: 19px;
   position: relative;
   margin-bottom: 50px;
   overflow: hidden;
-  .bottom {
+  display: flex;
+  flex-direction: row;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: $font;
+    text-decoration: none;
     width: 100%;
-    // margin: 5px 0;
-    ul {
-      display: flex;
-      flex-direction: row;
-      li {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.2s;
-        cursor: pointer;
-        button,
-        a {
-          display: flex;
-          align-items: center;
-          background: none;
-          border: none;
-          outline: none;
-          font-family: $font;
-          text-decoration: none;
-          padding: 15px 30px;
-          cursor: pointer;
-          img {
-            width: 25px;
-            height: 25px;
-            margin-right: 15px;
-          }
-          p {
-            font-size: 1rem;
-            font-weight: 500;
-            color: $lightGrey;
-            transition: 0.2s;
-          }
-        }
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    img {
+      width: 25px;
+      height: 25px;
+      margin-right: 15px;
+    }
+    p {
+      font-family: $font;
+      font-size: 1rem;
+      font-weight: 500;
+      color: $lightGrey;
+      transition: 0.2s;
+    }
+  }
+
+  .create-project:hover {
+    background-color: $lightBlue;
+    p {
+      color: $blue;
+    }
+  }
+  .create-post:hover {
+    background-color: $lightGreen;
+    p {
+      color: #20bf55;
+    }
+  }
+}
+
+@media (max-width: 950px) {
+  .create-component {
+    margin: 0 auto;
+    margin-bottom: 50px;
+  }
+}
+@media (max-width: 630px) {
+  .create-component {
+    width: 94%;
+    button {
+      img {
+        margin-right: 8px;
       }
-      li:hover {
-        background-color: $lightBlue;
-        button,
-        a {
-          p {
-            color: $blue;
-          }
-        }
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .create-component {
+    box-shadow: none;
+    padding: 0;
+    width: 100%;
+    height: 60px;
+    border-bottom: 2px $lightBlue solid;
+    border-radius: 0;
+    button {
+      img {
+        margin: 0;
       }
-      .create-post:hover {
-        background-color: $lightGreen;
-        button,
-        a {
-          p {
-            color: #20bf55;
-          }
-        }
+      p {
+        display: none;
       }
     }
   }
