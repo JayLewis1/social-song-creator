@@ -1,4 +1,4 @@
-import React, { useEffect , useState, Fragment} from 'react'
+import React, { useRef , useState, Fragment} from 'react'
 import { useQuery } from "@apollo/client";
 import { MY_ACCOUNT, SEARCH_PROJECTS } from "../../graphql/queries";
 // Redux 
@@ -29,7 +29,7 @@ const ProjectsHeader = ({projectPanel, intialiseProject} : Props) => {
     search: ""
   })
   const { data, loading } = useQuery(MY_ACCOUNT);
-
+  const searchInput = useRef<HTMLInputElement>(null); 
   const { data: projectData, loading: projectLoading } = useQuery(SEARCH_PROJECTS , 
     {variables : {
     projectName : searchData.search
@@ -56,27 +56,35 @@ const ProjectsHeader = ({projectPanel, intialiseProject} : Props) => {
     console.log(e.target);
   }
 
+  const focusInput = () => {
+    if(searchInput && searchInput.current) {
+      searchInput.current.focus()
+    }
+  }
   return (
     <Fragment>
     <div className="projects-header">
       <form onSubmit={(e) => onSubmit(e)}>
+        <span className="input-wrapper">
       { searchData.search !== ""  ?
           <button className="clear-btn" onClick={() => setSearchData({search: ""})}>
             <img src="/assets/icons/menu/clear.svg" alt="Clear search"/>
           </button>
           :
-          <span>
+          <button className="focus-btn" onClick={() => focusInput()}>
             <img src="/assets/icons/menu/search-blue.svg" alt="Search"/>
-          </span>
+          </button>
         }
         <input 
           type="text"
           id="search"
           name="search"
           value={searchData.search}
-          placeholder="Search for projects"
+          placeholder="Search projects"
           onChange={(e) => onChange(e)}
+          ref={searchInput}
           />
+          </span>
       </form>
           <div className="right">
             <button onClick={() => toggleProjectPanel()}> 

@@ -16,9 +16,7 @@ import { User } from "./entity/User";
 import { createAccessToken , createRefreshToken} from "./auth/auth";
 import { sendRefreshToken } from "./auth/sendRefreshToken";
 import multer from 'multer';
-import { uploadToS3 } from "./s3/upload";
-import { getFileFromS3 } from "./s3/retrieve";
-import { deleteFileFromS3 } from "./s3/delete";
+import { uploadToS3, getFromS3, removeFileFromS3, removeProjectFromS3 } from "./apis/s3";
 
 const PORT = process.env.port || 4000;
 
@@ -34,28 +32,28 @@ var type = upload.single('users-audio');
         })
     )
     app.use(cookieParser());
+    app.use(express.json());
     app.get("/", (_req, res) => res.send("Hello"));
-    app.get("/get/:projectId/:fileId", async (req: Request, res: Response) => {
+    app.get("/get/:projectId/:fileId", (req: Request, res: Response) => {
         const fileId = req.params.fileId
         const projectId = req.params.projectId
         console.log(fileId);
         console.log(projectId);
 
-        const response = await getFileFromS3(projectId, fileId);
-        
-        try {
+        getFromS3(projectId, fileId)
+        .then((response) => {
             console.log(response)
             return res.send(response);
-        } catch(err) {
+        }).catch((err) => { 
             console.log(err);
             return res.send(err);
-        }
+        })
     })
 
-    app.post("/delete", type ,async (req: Request, res: Response) => {
+    app.post("/removeItem", type ,async (req: Request, res: Response) => {
         const fileId = req.body.fileId
         const projectId = req.body.projectId
-        const response = await deleteFileFromS3(projectId, fileId);
+        const response = await removeFileFromS3(projectId, fileId);
         try {
             console.log(response)
             return res.send(response);
@@ -63,6 +61,18 @@ var type = upload.single('users-audio');
             console.log(err);
             return res.send(err);
         }
+    })
+
+    app.post("/removeProject", type, async (req: Request, res: Response) => {
+        const projectId = req.body.projectId
+        removeProjectFromS3(projectId)
+            .then((response) => {
+            // console.log(response)
+            return res.send(response);
+        }).catch((err) => {
+            console.log(err);
+            return res.send(err);
+        });
     })
 
     app.post("/upload", type, (req: Request, res: Response) => {

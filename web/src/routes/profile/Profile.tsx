@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 
 import { withRouter } from "react-router-dom";
 
@@ -13,10 +13,8 @@ import NameDob from "./edit/NameDob";
 import Bio from "./edit/Bio";
 import Instruments from "./edit/Instruments";
 
-import ComponentHeader from "../../components/ComponentHeader";
 import MyPosts from "../../components/post/MyPosts";
 import MyProjects from "../../components/project/MyProjects";
-// import MyMates from "./mates/MyMates";
 import MatesComponent from "../../components/mates/MatesComponent";
 
 interface ComponentProps {  
@@ -69,9 +67,11 @@ const Profile = ({
         return <div>loading...</div>
     }
 
+    const onChange = (e:React.ChangeEvent<HTMLSelectElement> ) => {
+        setDisplayOption(e.target.value);
+    }
     return (
     <div className="component-container">
-        {/* <ComponentHeader /> */}
          {!loading && data && data.me &&
          <div className="profile-wrapper">
              {edittingNames === true ?  <NameDob/> : 
@@ -82,17 +82,13 @@ const Profile = ({
                  <div className="name-dob-wrapper">
                     <span>
                         <p className="label">Full Name</p>
-                        <p className="profile-info">{data.me.firstName + " " + data.me.lastName}</p>
+                        <p className="profile-info capitalize">{data.me.firstName + " " + data.me.lastName}</p>
                     </span>
                     <span>
                         <p className="label">Date of birth</p>
                         <p className="profile-info">{data.me.dob}</p>
                     </span>
                  </div>
-                    {/* <span>
-                        <p className="label">Date of birth</p>
-                        <p className="profile-info">{data.me.dob}</p>
-                    </span> */}
                 <span className="email-container">
                         <p className="label">Email</p>
                         <p className="profile-info">{data.me.email}</p> 
@@ -102,36 +98,61 @@ const Profile = ({
                     </button>
              </div>}
              {edditingBio === true ?  <Bio/> : 
-                <div className="info-wrappers">
-                 <span>
-                    <p className="label">Bio</p>
-                     <p className="profile-info">{data.me.bio ? data.me.bio : null}</p>
-                 </span>
-                 <button className="edit-profile" onClick={() => editBio(true)}>
-                     <img src="/assets/icons/post/edit-green.svg" alt="Edit"/>
-                 </button>
+                <div className="info-wrappers">                    
+                    {data.me.bio ?
+                        <Fragment>
+                            <span>
+                                <p className="label">Bio</p>
+                                <p className="profile-info">{data.me.bio}</p>
+                            </span>
+                            <button className="edit-profile" onClick={() => editBio(true)}>
+                                <img src="/assets/icons/post/edit-green.svg" alt="Edit"/>
+                            </button>
+                        </Fragment>
+                       : 
+                        <span className="empty-state-wrapper">
+                            <p className="label">Why not add a bio?</p>
+                            <button className="add-info-btn" onClick={() => editBio(true)}>
+                                Add bio
+                            </button>
+                        </span> }
                 </div>
                 } 
             {edditingInstruments === true ?  <Instruments/> :       
              <div className="info-wrappers"> 
-                <span>
-                     <p className="label">Instruments</p>
-                    <p className="profile-info instruments">{data.me.instruments ? data.me.instruments: null}</p>
-                </span>
-                <button className="edit-profile" onClick={() => editInstrument(true)}>
-                     <img src="/assets/icons/post/edit-green.svg" alt="Edit"/>
-                 </button>
-             </div>
+             { data.me.instruments ? 
+                <Fragment>
+                    <span>
+                        <p className="label">Instruments</p>
+                        <p className="profile-info instruments">{data.me.instruments}</p>
+                    </span>
+                    <button className="edit-profile" onClick={() => editInstrument(true)}>
+                        <img src="/assets/icons/post/edit-green.svg" alt="Edit"/>
+                    </button>
+                </Fragment>
+                 :
+                  <span className="empty-state-wrapper">
+                            <p className="label">Why not show what instruments you play?</p>
+                            <button className="add-info-btn" onClick={() => editInstrument(true)}>Add Instruments</button>
+                        </span> 
+                    }
+                </div> 
             } 
             <ul className="profile-components-options">
                 <li><button 
                     onClick={() => setDisplayOption("posts")} 
-                style={ display === "posts" ? { backgroundColor: " #2767fa", color: "white"} : { backgroundColor: "white", color: " #2767fa"}}>
-                    My Posts</button></li>
+                    className={display === "posts" ? "active-btn" : "component-btn"}>
+                    Posts</button></li>
                 <li><button 
                     onClick={() => setDisplayOption("projects")}
-                    style={ display === "projects" ? { backgroundColor: " #2767fa", color: "white"} : { backgroundColor: "white", color: " #2767fa"}} >My Projects</button></li>
-                <li><button style={ display === "mates" ? { backgroundColor: " #2767fa", color: "white"} : { backgroundColor: "white", color: " #2767fa"}} onClick={() => setDisplayOption("mates")}>My Mates</button></li>
+                    className={display === "projects" ? "active-btn" : "component-btn"}
+                     >Projects</button></li>
+                <li><button className={display === "mates" ? "active-btn" : "component-btn"} onClick={() => setDisplayOption("mates")}>Mates</button></li>
+                <select value={display} onChange={(e) => onChange(e)}>
+                    <option value="posts">Posts</option>
+                    <option value="projects">Projects</option>
+                    <option value="mates">Mates</option>
+                </select>
             </ul> 
             <ul className="profile-display">
             { display === "posts" && <MyPosts />}

@@ -1,9 +1,8 @@
-import React from 'react'
-
+import React, { Fragment } from 'react'
 // GraphQL
-import { useMutation } from "@apollo/client";
-import { MY_PROJECTS } from "../../graphql/queries";
-import { DELETE_PROJECT } from "../../graphql/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import { MY_PROJECTS, MY_ACCOUNT, CURRENT_PROJECT } from "../../graphql/queries";
+import { DELETE_PROJECT, REMOVE_CONTRIBUTOR } from "../../graphql/mutations";
 
 import { connect, ConnectedProps } from "react-redux";
 
@@ -28,6 +27,14 @@ type Props = PropsFromRedux;
 
 const DeleteProject = ({deleteId, setDeleteProjectPanel, setDeleteId}:Props) => {
   const [deleteProject] = useMutation(DELETE_PROJECT);
+  const [removeContribtutor] = useMutation(REMOVE_CONTRIBUTOR);
+  const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT);
+  const { data, loading } = useQuery(CURRENT_PROJECT, {
+    variables : {
+      projectId: deleteId
+    }
+  });
+
   const deletProjectById = async () => {
     const id = deleteId; 
     deleteProject({
@@ -57,14 +64,65 @@ const DeleteProject = ({deleteId, setDeleteProjectPanel, setDeleteId}:Props) => 
       })
       .catch(err => console.log(err) )
     }
+    
+    const removeAsContributor = async () => {
+      const projectId = deleteId;
+
+      await removeContribtutor({ 
+        variables : {
+          userId: meData.me.id,
+          projectId
+      }, update : (cache) => {
+            // Get project cache
+            const projectCache: any = cache.readQuery({ query: MY_PROJECTS })
+            // Iterate cache and assign to new variable
+            let cacheArray = [...projectCache.myProjects]
+            // Loop through array
+            for(let x = 0; x < cacheArray.length; x++) {
+              // Find the project id in the array
+              if(cacheArray[x].id === projectId ) {
+                // Get index of project and splice out of array
+                let index = cacheArray.indexOf(cacheArray[x]);
+                cacheArray.splice(index, 1);
+              }
+            }
+            /// Update myProjects cache
+            cache.writeQuery({
+              query: MY_PROJECTS,
+              data: {
+                myProjects : cacheArray
+              }
+            })
+      } })
+      try {      
+        setDeleteId("");
+        setDeleteProjectPanel(false);
+      } catch(err) {
+        console.log(err);
+      }
+
+    }
 
   return (
     <div className="delete-popup">
-      <p>Are you sure you want to delete this project?</p>
-      <span className="delete-buttons-wrappers">
-        <button className="delete-btn" onClick={() => deletProjectById()}>Delete</button>
-        <button onClick={() => setDeleteProjectPanel(false)}>Cancel</button>
-    </span>
+      {
+        !meLoading && !loading && meData && meData.me.id === data.currentProject.id ? 
+        <Fragment>
+          <p>Are you sure you want to delete this project?</p>
+          <span className="delete-buttons-wrappers">
+            <button className="delete-btn" onClick={() => deletProjectById()}>Delete</button>
+            <button onClick={() => setDeleteProjectPanel(false)}>Cancel</button>
+        </span>
+      </Fragment> :
+       <Fragment>
+       <p>Are you sure you want to remove yourself from this project?</p>
+       <span className="delete-buttons-wrappers">
+         <button className="delete-btn" onClick={() => removeAsContributor()}>Remove</button>
+         <button onClick={() => setDeleteProjectPanel(false)}>Cancel</button>
+     </span>
+   </Fragment> 
+      } 
+
   </div>
   )
 }

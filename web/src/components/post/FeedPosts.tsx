@@ -33,13 +33,15 @@ const mapState = (state: ComponentProps) => ({
 const mapDispatch = {
   setPostId : (id:number) => ({type: "SELECTED_POST_ID", payload: id}),
   validatePostDelete: (payload:boolean) => ({type: "SET_DELETE_COMPONENT", payload: payload}),
+  activatePlaybar : (payload: boolean) => ({ type: "OPEN_PLAYBAR", payload: payload }),
+  assignTrack : (payload: object) => ({type: "ASSIGN_TRACK", payload: payload}),
 }
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux;
 
-const FeedPosts = ({ user, postId, postDelete, setPostId, validatePostDelete }:Props) => {  
+const FeedPosts = ({ user, postId, postDelete, setPostId, validatePostDelete, activatePlaybar, assignTrack }:Props) => {  
   const [ postIdForComment, setIdForComments ] = useState(0)
   const [likePost] = useMutation(LIKE_POST);
   const { data, loading, error } = useQuery(FEED_POSTS);
@@ -105,9 +107,14 @@ const FeedPosts = ({ user, postId, postDelete, setPostId, validatePostDelete }:P
    }
  }
 
-  const openPlaybarAndAssignTrackId = () => {
-    // activatePlaybar(true);
-    console.log("open playbar")
+  const openPlaybarAndAssignTrackId = (trackId: string, projectId: string) => {
+    activatePlaybar(true);
+    const dataObject = {
+      id: trackId,
+      projectId,
+      trackName: ""
+    }
+    assignTrack(dataObject)
   }
   
     return (
@@ -143,7 +150,7 @@ const FeedPosts = ({ user, postId, postDelete, setPostId, validatePostDelete }:P
                       </span>
                     </div>
                       <div className="post-project-wrapper">
-                        <button>
+                        <button onClick={() => openPlaybarAndAssignTrackId(post.project.mainTrack, post.project.id)}>
                           <img src="/assets/icons/post/play.svg" alt="Play button"/>
                         </button>
                           <p className="project-name">{post.post.content}</p>

@@ -80,7 +80,7 @@ const DeleteWSItem = ({wsType, itemId, initTabDeletion, initLyricDeletion, initT
 
         axios({
           method: "post",
-          url: 'http://localhost:4000/delete',
+          url: 'http://localhost:4000/removeItem',
           data: newFormData,
           headers: { "Content-Type": "multipart/form-data" },
         })

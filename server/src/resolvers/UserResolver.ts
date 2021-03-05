@@ -674,6 +674,7 @@ export class UserResolver {
         bio: "",
         instruments: "",
         mates: [],
+        contributions: [],
         avatar: `/assets/icons/avatars/${avatar}.svg`,
       });
       

@@ -1,68 +1,91 @@
-.projects-header, .mates-header {
+.projects-header,
+.mates-header {
   width: 70%;
+  height: 60px;
   background-color: $white;
   box-shadow: $divShadow;
-  border-radius: 19px;
+  border-radius: 50px;
   display: flex;
   flex-direction: row;
   margin: 25px auto;
-  margin-top: 25px;
   overflow: hidden;
+  padding: 0;
   form {
     width: 60%;
     height: 100%;
-    padding: 15px 30px;
     display: flex;
     align-items: center;
-    span, .clear-btn {
-      min-width: 30px;
+    justify-content: center;
+    .input-wrapper {
+      background: none;
+      position: relative;
+      border-radius: 0;
+      width: 100%;
       height: 30px;
-      border-radius: 50%;
-      background-color: $bgBlue;
-      margin-right: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      img {
-        width: 40%;
+      padding: 0 20px;
+      input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        background-color: $bgBlue;
+        font-family: $font;
+        font-size: 1rem;
+        font-weight: 500;
+        color: $lightGrey;
+        border-radius: 25px;
+        padding: 5px 10px;
+        padding-left: 35px;
       }
-    }
-    .clear-btn {
-      border: none;
-      outline: none;
-      cursor: pointer;
-      transition: 0.2s;
-      img {
-        width: 30%;
-        height: 30%;
+      input::placeholder {
+        color: #a5b8e6;
       }
-    }
-    .clear-btn:active {
-      transform: scale(0.9);
-    }
-    input {
-       width: 100%;
-       border: none;
-       outline: none;
-       background-color: $bgBlue;
-       font-family: $font;
-       font-size: 1rem;
-       font-weight: 500;
-       color: $lightGrey;
-       border-radius: 9px;
-       padding: 5px 10px;
+      .clear-btn,
+      .focus-btn {
+        min-width: 30px;
+        height: 100%;
+        border-radius: 0;
+        margin-left: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: 0.2s;
+        position: absolute;
+        top: 0;
+        left: 1px;
+        img {
+          width: 40%;
+        }
+      }
+      .clear-btn {
+        img {
+          width: 30%;
+          height: 30%;
+        }
+      }
+      .clear-btn:active {
+        transform: scale(0.9);
+      }
     }
   }
   .right {
     width: 40%;
+    margin: 0;
+    margin-left: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: 0.2s;
     cursor: pointer;
-    button, a {
+    button,
+    a {
       display: flex;
       align-items: center;
+      height: 100%;
       background: none;
       border: none;
       outline: none;
@@ -79,11 +102,11 @@
         font-size: 1rem;
         font-weight: 500;
         color: $lightGrey;
-        transition:  0.2s;
+        transition: 0.2s;
       }
     }
   }
-  .right:hover { 
+  .right:hover {
     background-color: $bgBlue;
     button {
       p {
@@ -105,6 +128,7 @@
 }
 .list-of-projects {
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
   padding: 25px;
   position: relative;
@@ -137,16 +161,28 @@
         transition: 0.2s;
       }
       a:hover {
-       color: $blue;
+        color: $blue;
       }
       .post-date {
         font-size: 0.9rem;
         font-weight: 500;
         color: $textLight;
       }
+      .project-creator {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $lightGrey;
+        margin-left: 5px;
+        em {
+          text-transform: capitalize;
+          font-style: normal;
+          font-size: 1.2rem;
+          font-weight: 500;
+        }
+      }
     }
     .btn-wrapper {
-      display: flex;
+      display: none;
       margin-left: auto;
       z-index: 5;
       .post-buttons {
@@ -160,6 +196,43 @@
         cursor: pointer;
         img {
           width: 100%;
+        }
+      }
+    }
+    .responsive-btns {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      button {
+        background: none;
+        border: none;
+        outline: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.2s;
+        img {
+          width: 50%;
+          height: auto;
+        }
+      }
+      .responsive-play {
+        img {
+          width: 30%;
+          transform: translate(2px);
+        }
+      }
+      .responsive-play:hover {
+        background-color: $lightBlue;
+      }
+      button:active {
+        img {
+          transform: scale(0.9);
         }
       }
     }
@@ -249,11 +322,11 @@
   }
   .success-true {
     background-color: $blue;
-    color: $white
+    color: $white;
   }
   .success-false {
     background-color: $red;
-    color: $white
+    color: $white;
   }
 }
 
@@ -261,13 +334,41 @@
   position: absolute;
   top: 130px;
   right: 0;
-  width: 200px;
+  width: 250px;
   background-color: $white;
   box-shadow: $divShadow;
   border-radius: 21px;
   color: $dark;
   z-index: 10;
-  padding: 15px 10px;
+  padding: 15px 15px;
+  .panel-heading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    p {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $dark;
+    }
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      img {
+        width: 80%;
+      }
+    }
+    button:active {
+      transform: scale(0.9);
+    }
+  }
   ul {
     display: flex;
     li {
@@ -309,7 +410,7 @@
           margin: auto;
         }
       }
-      .remove-contributor:hover { 
+      .remove-contributor:hover {
         background-color: $lightRed;
       }
 
@@ -326,7 +427,6 @@
     }
   }
   .remove-validation {
-
     width: 100%;
     height: 100%;
     background-color: $white;
@@ -348,7 +448,7 @@
       .cancel-btn {
         margin: auto;
         background-color: $bgBlue;
-        color: $blue
+        color: $blue;
       }
     }
   }
@@ -369,33 +469,197 @@
     label {
       font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 5px;
+      color: $dark;
+      margin-bottom: 10px;
     }
-    span {
+    .input-wrapper {
       display: flex;
       align-items: center;
+      position: relative;
       height: 30px;
+      input {
+        background: none;
+        border: none;
+        outline: none;
+        background-color: $bgBlue;
+        color: #a5b8e6;
+        padding: 5px;
+        padding-left: 15px;
+        height: 100%;
+        font-size: 1.1rem;
+        font-weight: 500;
+        border-radius: 5px 0 0 5px;
+        border-radius: 25px;
+        width: 100%;
+        font-family: $font;
+      }
+      input::placeholder {
+        color: #a5b8e6;
+      }
+      .search-btn {
+        width: 35px;
+        height: 100%;
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        right: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        outline: none;
+        cursor: pointer;
+        img {
+          border-radius: 0;
+          padding: 0;
+          overflow: none;
+          border: none;
+        }
+      }
+
+      input::placeholder {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: $lightGrey;
+      }
     }
-    input {
+  }
+}
+
+@media (max-width: 460px) {
+  .projects-header {
+    width: 100%;
+    box-shadow: none;
+    border-bottom: 2px $lightBlue solid;
+    border-radius: 0;
+    margin: 0;
+    padding: 5px 15px;
+    align-items: center;
+    form {
+      width: 80%;
+    }
+    .right {
+      width: 20%;
+      button {
+        width: 45px;
+        height: 45px;
+        border-radius: 50px;
+        padding: 0;
+        justify-content: center;
+        transition: 0.2s;
+        img {
+          margin: 0;
+          width: 60%;
+        }
+        p {
+          display: none;
+        }
+      }
+    }
+    .right:hover {
       background: none;
-      border: none;
-      outline: none;
-      background-color: $bgBlue;
-      padding: 5px;
-      height: 100%;
-      font-size: 1.1rem;
-      font-weight: 500;
-      border-radius: 5px 0 0 5px;
-      width: 90%;
+      button {
+        background-color: $lightBlue;
+      }
     }
-    input[type="image"] {
-      width: 25px;
-      background-color: $dark;
-      border-radius: 0 5px 5px 0;
+  }
+  .list-of-projects {
+    .project {
+      padding: 20px;
+      .top {
+        align-items: flex-start;
+        .btn-wrapper {
+          margin: 15px 0;
+          display: none;
+          button {
+            margin: 0;
+            margin-right: 20px;
+          }
+        }
+        .responsive-btns {
+          margin-left: auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          button {
+            background: none;
+            border: none;
+            outline: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            img {
+              width: 50%;
+              height: auto;
+            }
+          }
+          .responsive-play {
+            img {
+              width: 30%;
+              transform: translate(2px);
+            }
+          }
+          .responsive-play:hover {
+            background-color: $lightBlue;
+          }
+          button:active {
+            img {
+              transform: scale(0.9);
+            }
+          }
+        }
+      }
+      .bottom {
+        display: none;
+      }
     }
-    input::placeholder {
-      font-size: 1.1rem;
-      font-weight: 500;
+  }
+}
+
+@media (min-width: 461px) and (max-width: 830px) {
+  .projects-header {
+    form {
+      width: 100%;
     }
+    .right {
+      width: 25%;
+      margin-left: auto;
+      button {
+        width: 45px;
+        height: 45px;
+        border-radius: 50px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        img {
+          width: 60%;
+          margin: 0;
+        }
+        p {
+          display: none;
+        }
+      }
+    }
+    .right:hover {
+      background: none;
+      button {
+        background-color: $lightBlue;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .list-of-projects {
+    width: 100%;
   }
 }

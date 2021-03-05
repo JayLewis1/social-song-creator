@@ -2,6 +2,8 @@ import { Arg, Resolver, Mutation, Query, UseMiddleware, Ctx, Int, ObjectType, Fi
 import { isAuth } from "../middleware/isAuth";
 import { MyContext }  from "../context/MyContext";
 import { getConnection } from "typeorm"
+import axios from "axios";
+import FormData from "form-data";
 // Entities
 import { User } from "../entity/User";
 import { Project } from "../entity/Project";
@@ -27,7 +29,20 @@ export class ProjectResolver {
   async myProjects(
     @Ctx() { payload } : MyContext,
   ) {
-    return await Project.find({ creatorId: payload!.userId })
+    // Get logged in user and their projects
+    const user = await User.findOne({ where : { id: payload!.userId } })
+    const projects = await Project.find({ creatorId: payload!.userId })
+    // Iterate the projects and assign to new variable
+    let projectsArray = [...projects]
+    // Loop through the user's contributions 
+    for(let x = 0; x < user!.contributions.length; x++) {
+        // Find the project that relates to the contribution id and push to array
+        let project = await Project.findOne({ where : { id: user!.contributions[x]} })
+        projectsArray.push(project!);
+      }  
+    // Sort projects by date of created
+    let projectSortedByDate = projectsArray.slice().sort((a: any, b: any) => b.created - a.created)
+    return projectSortedByDate;
   }
 
   // GET      All projects from a user's ID
@@ -550,6 +565,8 @@ export class ProjectResolver {
  ) {
    const myId = payload!.userId
    const project = await Project.findOne({ where : { id: projectId, creatorId: myId} })
+   const contributedUser = await User.findOne({ where : { id: userId } })
+
    if(!project) {
      throw new Error("There is no project");
    }
@@ -586,6 +603,21 @@ export class ProjectResolver {
        // Find the related user to their id and push to new array
       arrayOfUsers.push(await User.findOne({where : { id : updatedProject!.contributors[x]}}))
      }
+     // Get the all the user's contributions 
+     let newContributions: Array<string> = contributedUser!.contributions;
+     // Push the project id to the new array
+     newContributions.push(projectId);
+     // Get connection and update user's contributions field with new array
+    await getConnection()
+    .createQueryBuilder()
+    .update(User)
+    .set({ contributions : newContributions })
+    .where('id = :id', {
+      id : userId,
+    })
+    .returning("*")
+    .execute();
+
      // Return an array of users
      return arrayOfUsers;
    }catch(err) {
@@ -603,7 +635,7 @@ export class ProjectResolver {
    @Ctx() { payload } : MyContext
  ) {
    const myId = payload!.userId
-   const project = await Project.findOne({ where : { id: projectId, creatorId: myId} })
+   const project = await Project.findOne({ where : { id: projectId} })
    if(!project) {
      throw new Error("There is no project");
    }
@@ -613,17 +645,18 @@ export class ProjectResolver {
    // Loop through the contributors 
    for(var x = 0; x < contributors.length; x++) {
      // If the userId matches to one in the contributors
-     if(userId === contributors[x]) {
+     if(userId === contributors[x] || project.creatorId === myId) {
        // Find index of that contributor
       index = contributors.indexOf(contributors[x]);
+      contributors.splice(index, 1);
      }
    }
-   // If index has a value then splice the item out of array from the index given
-   if(index !== -1) {
-    contributors.splice(index!, 1);
-   } else {
-     throw new Error("User is already not a contributor")
-   }
+  //  // If index has a value then splice the item out of array from the index given
+  //  if(index !== -1) {
+    
+  //  } else {
+  //    throw new Error("User is already not a contributor")
+  //  }
    // Update the Contributors field in project with the new array
    await getConnection()
    .createQueryBuilder()
@@ -636,8 +669,29 @@ export class ProjectResolver {
    .execute();
 
    try {
-    // Get the removed and return them
+    // Get the removed user
     const removedUser = await User.findOne({where: { id : userId }});
+    // Get the user's contribtutions
+    let newContributions: Array<string> = removedUser!.contributions;
+    // Loop through contributions
+    for(let x = 0; x < newContributions.length; x++) {
+      // Find the contribtuion that matches the project id
+      if(newContributions[x] === projectId)   {
+        // find the index of that id and splice out of array
+        let index = newContributions.indexOf(newContributions[x]);
+        newContributions.splice(index, 1);
+      }
+    }
+    // Get connection and update contributions field
+   await getConnection()
+   .createQueryBuilder()
+   .update(User)
+   .set({ contributions : newContributions })
+   .where('id = :id', {
+     id : userId,
+   })
+   .returning("*")
+   .execute();
     return removedUser;
    }catch(err) {
      return err
@@ -657,17 +711,69 @@ export class ProjectResolver {
       const project = await Project.findOne({creatorId:userId, id });
       if(!project) {
         throw new Error("There is no existing project or you are unauthorized to delete the project");
+      }   
+      
+      const projectId = project.id;
+
+      if(projectId) {
+        var form = new FormData();
+        form.append('projectId', projectId); 
+        const object = {
+          'projectId' : projectId
+        } 
+          axios({
+              method: "post",
+              url: 'http://localhost:4000/removeProject',
+              data: object,
+              headers: { 'Content-Type': 'application/json' },
+            })
+              .then((res: any) => {
+                //handle success
+                console.log(res);
+              })
+              .catch((res: any) => {
+                //handle error
+                console.log(res);
+              });
       }
+      // Loop throught the projects contributors
+      for(let x = 0; x < project.contributors.length; x++) {
+        // For every contributor find the user
+        let contributedUser =  await User.findOne({ where :  { id: project.contributors[x] }})
+        // Find the user's contributions and assign to new variable
+        let newContributions: Array<string> = contributedUser!.contributions;
+        // Loop through contributions
+        for(let i = 0; i < newContributions.length; i++) {
+          // Find the contribution related to the deleted projectId 
+          if(newContributions[i] === projectId)   {
+            // Get index and splice out of the new array
+            let index = newContributions.indexOf(newContributions[i]);
+            newContributions.splice(index, 1);
+          }
+        }
+        // Get connection by the contributing user's id
+        // Update contributions field with the new array
+        await getConnection()
+        .createQueryBuilder()
+        .update(User)
+        .set({ contributions : newContributions })
+        .where('id = :id', {
+          id : contributedUser!.id,
+        })
+        .returning("*")
+        .execute();
+      }
+
       // Find the lyrics, tabs and tracks related to the project
-      const lyrics = await Lyric.find({projectId : project!.id});
-      const tabs = await Tab.find({projectId : project!.id});
-      const tracks = await Track.find({projectId : project!.id});
-      // const tracks = await Track.find({projectId : project!.id});
+      const lyrics = await Lyric.find({projectId});
+      const tabs = await Tab.find({projectId});
+      const tracks = await Track.find({projectId});
       // Remove all the lyrics, tabs and tracks along the project too
       await Tab.remove(tabs)
       await Lyric.remove(lyrics);
       await Track.remove(tracks);
       await Project.remove(project);
+      
       // Find the user's projects and return them
       const projects = Project.find({creatorId:payload!.userId });
       return projects;
@@ -696,6 +802,7 @@ export class ProjectResolver {
       // Insert the new project into the table 
       const response = await Project.insert({
         creator: user,
+        creatorName: user!.firstName,
         name,
         isPublic,
         tab: [],

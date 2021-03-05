@@ -125,9 +125,37 @@
       color: $second;
       margin-bottom: 5px;
     }
+    span {
+      margin-bottom: 15px;
+    }
     .profile-info {
       font-size: 1.2rem;
       font-weight: 600;
+    }
+    .empty-state-wrapper {
+      // display: flex;
+      // flex-direction: column;
+      margin: 0 auto;
+      text-align: center;
+      .add-info-btn {
+        background-color: $blue;
+        border: none;
+        outline: none;
+        font-family: $font;
+        font-size: 1rem;
+        color: $white;
+        border-radius: 5px;
+        padding: 5px 20px;
+        margin-top: 5px;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .add-info-btn:active {
+        transform: scale(0.9);
+      }
+    }
+    .capitalize {
+      text-transform: capitalize;
     }
     .instruments {
       text-transform: capitalize;
@@ -181,7 +209,7 @@
         border: none;
         outline: none;
         font-family: $font;
-        font-size: 1.2rem; 
+        font-size: 1.2rem;
         font-weight: 600;
         color: $dark;
         border-radius: 4px;
@@ -203,6 +231,7 @@
       border: none;
       outline: none;
       color: white;
+      font-family: $font;
       font-weight: 500;
       border-radius: 11px;
       display: flex;
@@ -250,7 +279,7 @@
       .day-wrapper {
         width: 20%;
       }
-     .month-wrapper {
+      .month-wrapper {
         width: 45%;
         margin: 0 auto;
         #month {
@@ -285,20 +314,43 @@
         border: none;
         outline: none;
         padding: 10px 25px;
-        background-color: $white;
-        color: $second;
+        // background-color: $white;
+        color: $dark;
         font-family: $font;
         font-size: 1.2rem;
         font-weight: 600;
         border-radius: 9px;
-        box-shadow: $divShadow;
+
         cursor: pointer;
       }
+      .active-btn {
+        background-color: $lightBlue;
+        color: $second;
+        // box-shadow: $divShadow;
+      }
+    }
+    select {
+      display: none;
+      color: $dark;
+      border: none;
+      outline: none;
+      width: 80%;
+      background-color: $white;
+      color: $blue;
+      font-family: $font;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 10px 25px;
+      border-radius: 5px;
+      box-shadow: $divShadow;
+      margin: 0 auto;
+      cursor: pointer;
     }
   }
   .profile-display {
     margin-top: 50px;
     margin-bottom: 200px;
+    flex-direction: column;
   }
 }
 
@@ -418,6 +470,106 @@
       flex-direction: column;
       margin-right: 20px;
       margin-bottom: 25px;
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .profile-wrapper,
+  .user-profile-wrapper {
+    width: 100%;
+    .info-wrappers {
+      flex-direction: column;
+      .my-profile-avatar {
+        margin: 0 auto;
+        margin-bottom: 25px;
+        width: 100px;
+        height: 100px;
+      }
+      .name-dob-wrapper,
+      .email-container {
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+    .edit-form {
+      .name-email-wrapper {
+        flex-direction: column;
+        span {
+          input {
+            width: 100%;
+          }
+        }
+        .email-container {
+          display: none;
+        }
+      }
+      .dob-wrapper {
+        width: 100%;
+        flex-direction: column;
+        .day-wrapper,
+        .month-wrapper,
+        .year-wrapper {
+          width: 100%;
+          margin: 5px 0;
+        }
+      }
+      input[type="submit"] {
+        margin: 0 auto;
+        margin-top: 15px;
+        width: 100%;
+      }
+    }
+    .profile-components-options {
+      li {
+        display: none;
+      }
+      display: flex;
+      select {
+        display: block;
+      }
+    }
+  }
+}
+@media (min-width: 460px) and (max-width: 690px) {
+  .profile-wrapper,
+  .user-profile-wrapper {
+    width: 90%;
+    .info-wrappers {
+      flex-direction: column;
+      .my-profile-avatar {
+        margin: 0 auto;
+        margin-bottom: 25px;
+        width: 100px;
+        height: 100px;
+      }
+      .name-dob-wrapper,
+      .email-container {
+        margin: 0 auto;
+        width: 100%;
+      }
+      .name-dob-wrapper {
+        flex-direction: row;
+        span {
+          margin-right: auto;
+        }
+      }
+    }
+    .edit-form {
+      .name-email-wrapper {
+        .email-container {
+          display: none;
+        }
+      }
+      .dob-wrapper {
+        width: 100%;
+        .month-wrapper {
+          width: 40%;
+        }
+        .year-wrapper {
+          width: 26%;
+        }
+      }
     }
   }
 }

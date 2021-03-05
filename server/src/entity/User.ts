@@ -53,6 +53,10 @@ export class User extends BaseEntity {
   
     @OneToMany(() => Project, (project) => project.creator)
     projects: Project[]
+
+    @Field(() => [String])
+    @Column("text")
+    contributions: string[];
   
     @OneToMany(() => Notification, (notification) => notification.user)
     notifications: Notification[]

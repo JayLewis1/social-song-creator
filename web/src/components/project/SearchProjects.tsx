@@ -30,6 +30,7 @@ const mapState = (state: ComponentProps) => ({
 
 const mapDispatch = {
   activatePlaybar : (payload: boolean) => ({ type: "OPEN_PLAYBAR", payload: payload }),
+  assignTrack : (payload: object) => ({type: "ASSIGN_TRACK", payload: payload}),
   setDeleteProjectPanel: (payload: boolean) => ({ type: "SHOW_PROJECT_DELETE_PANEL", payload: payload }),
   setDeleteId: (id: string) => ({ type: "SET_ID_FOR_DELETE", payload: id}),
   toggleContributors : (payload: boolean) => ({type: "TOGGLE__CONTRIBUTORS", payload: payload}),
@@ -42,7 +43,7 @@ type Props = PropsFromRedux & {
   searchInput: string
 };
 
-const SearchProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteId, activatePlaybar, contributorsPanel,toggleContributors, intialiseProject, searchInput }:Props) => {
+const SearchProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteId, activatePlaybar, contributorsPanel,toggleContributors, intialiseProject, searchInput , assignTrack}:Props) => {
   const [idForContributor, setIdForContributor] = useState("");
   const [selectedProject, setProjectId] = useState("");
   const [sharedResponse, setSharedResponse] = useState({
@@ -78,9 +79,6 @@ const SearchProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDel
     setDeleteProjectPanel(true);
   }
 
-  const openPlaybarAndAssignTrackId = () => {
-    activatePlaybar(true);
-  }
   const addContributorFunc = (projectId: string) => {
     if(idForContributor === projectId) {
       if(contributorsPanel === false) {
@@ -144,7 +142,15 @@ const SearchProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDel
       console.log(err);
     }
   }
-  
+  const openPlaybarAndAssignTrackId = (trackId: string, projectId: string, projectName: string) => {
+    activatePlaybar(true);
+    const dataObject = {
+      id: trackId,
+      projectId,
+      trackName: ""
+    }
+    assignTrack(dataObject)
+  }
   const toggleProjectPanel = () => {
     intialiseProject(true);
   }
@@ -158,7 +164,7 @@ const SearchProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDel
               <FormatTimestamp timestamp={project.created} />
             </span>
             <span className="btn-wrapper">
-              <button className="post-buttons" onClick={() => openPlaybarAndAssignTrackId()}>
+              <button className="post-buttons" onClick={() => openPlaybarAndAssignTrackId(project.mainTrack, project.id, project.name)}>
                 <img src="/assets/icons/post/play-dark.svg" alt="Play post"/>
               </button>
               { project.postId === null &&  <button className="post-buttons" onClick={() => shareProjectFunction(project.id)}>
@@ -168,6 +174,14 @@ const SearchProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDel
                 <img src="/assets/icons/workspace/delete.svg" alt="Delete post"/>
               </button> 
             </span>
+            <span className="responsive-btns">
+                <button className="post-buttons responsive-play"  onClick={() => openPlaybarAndAssignTrackId(project.mainTrack, project.id, project.name)}>
+                  <img src="/assets/icons/post/play-blue.svg" alt="Play"/>
+                </button>
+                <button className="post-buttons" onClick={() => toggleDeletePopUp(project.id)}>
+                  <img src="/assets/icons/post/options.svg" alt="Project options"/>
+                </button>
+              </span>
           </span>
           <div className="bottom">
           {project.isPublic === true ? 

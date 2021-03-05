@@ -359,13 +359,27 @@
       height: 40px;
       margin: 0 7px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.1s;
+      border-radius: 50%;
+      background-color: $lightGreen;
       img {
         width: 100%;
+        transition: 0.2s;
       }
     }
     .create-btns:active {
-      transform: scale(0.9);
+      img {
+        transform: scale(0.8);
+      }
+    }
+    #record {
+      background-color: $red;
+    }
+    #create-lyrics {
+      background-color: $lightGreen;
+    }
+    #create-tabs {
+      background-color: $lightBlue;
     }
   }
   .repsonsive-ws-menu {

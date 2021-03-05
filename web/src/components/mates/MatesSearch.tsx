@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import { Link } from "react-router-dom"
 // GrahphQL
 import { useQuery, useMutation } from "@apollo/client";
@@ -19,7 +19,7 @@ const MatesSearch = ({userId}: ComponentProps) => {
     name: searchData.search
   }
   });
-
+  const searchInput = useRef<HTMLInputElement>(null); 
   const removeMateFunc = (id: number) => {
     removeMate({
       variables: {
@@ -49,19 +49,25 @@ const MatesSearch = ({userId}: ComponentProps) => {
     setSearchData({...searchData , search: e.target.value })
   }
 
+  const focusInput = () => {
+    if(searchInput && searchInput.current) {
+      searchInput.current.focus()
+    }
+  }
 
   return (
     <Fragment>
       <div className="mates-header">
       <form>
+      <span className="input-wrapper">
       { searchData.search !== ""  ?
           <button className="clear-btn" onClick={() => setSearchData({search: ""})}>
             <img src="/assets/icons/menu/clear.svg" alt="Clear search"/>
           </button>
           :
-          <span>
-            <img src="/assets/icons/menu/search-blue.svg" alt="Search"/>
-          </span>
+          <button className="focus-btn" onClick={() => focusInput()}>
+          <img src="/assets/icons/menu/search-blue.svg" alt="Search"/>
+        </button>
         }
         <input 
           type="text"
@@ -71,6 +77,7 @@ const MatesSearch = ({userId}: ComponentProps) => {
           placeholder="Search for mates"
           onChange={(e) => onChange(e)}
           />
+       </span>
       </form>
     </div>
     { searchData.search !== "" && 

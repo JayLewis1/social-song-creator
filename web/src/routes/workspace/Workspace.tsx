@@ -138,17 +138,27 @@ const Workspace = ({setAppLocation, storeProject, intialiseProject, initTabCreat
             <div className="recorder-container">
               <span className="create-btn-container">
               <Recording />
-               {
-                 windowSize.width > 1000 || component[1].shown === true ? <button className="create-btns" onClick={() => initLyricCreation(true)}>
+              <button className="create-btns" id="create-lyrcis" onClick={() => initLyricCreation(true)}>
+                <img src="/assets/icons/workspace/createLyric.svg" alt="Create Lyric"/>
+              </button>
+              <button className="create-btns" 
+                  id="create-tabs"
+                  onClick={() =>   initTabCreation(true)}>
+                  <img src="/assets/icons/workspace/createTab.svg" alt="Create Tab"/>
+              </button>
+               {/* {
+                 windowSize.width > 1000 || component[1].shown === true ? <button className="create-btns" id="create-lyrcis" onClick={() => initLyricCreation(true)}>
                   <img src="/assets/icons/workspace/createLyric.svg" alt="Create Lyric"/>
                 </button>  : null
                } 
                 {
                   windowSize.width > 1000 || component[2].shown === true ?
-                  <button className="create-btns" onClick={() =>   initTabCreation(true)}>
+                  <button className="create-btns" 
+                  id="create-tabs"
+                  onClick={() =>   initTabCreation(true)}>
                     <img src="/assets/icons/workspace/createTab.svg" alt="Create Tab"/>
                   </button> : null
-               }
+               } */}
           
               </span>
 

@@ -52,15 +52,9 @@ const Login = ({history, client, authenticateUser}: Props) => {
         if(email === "") {
             setEmailErrors("You must enter an email address");
         } 
-        // else {
-        //     setEmailErrors("");
-        // }
         if(password === "") {
             setPasswordErrors("You must enter a password");
         } 
-        // else {
-        //     setPasswordErrors("");
-        // }
         if(email !== "" && password !== "") {
           const response = await login({
                 variables: {
@@ -129,6 +123,7 @@ const Login = ({history, client, authenticateUser}: Props) => {
 
     const showPassword = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
+
         if(passwordType === "password") {
             setPasswordType("text")
             setShowOrHide("hide")

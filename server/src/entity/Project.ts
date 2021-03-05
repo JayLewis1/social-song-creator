@@ -30,6 +30,11 @@ export class Project extends BaseEntity {
   @Column()
   creatorId: number
 
+  @Field(() => String)
+  @Column("text")
+  creatorName: String
+
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.projects)
   creator: User
 

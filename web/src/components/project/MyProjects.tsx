@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 // GraphQL
 import { useQuery, useMutation } from "@apollo/client";
-import { MY_PROJECTS, SEARCH_PROJECTS } from "../../graphql/queries";
+import { MY_PROJECTS, MY_POSTS, FEED_POSTS, MY_ACCOUNT } from "../../graphql/queries";
 import { SHARE_PROJECT } from "../../graphql/mutations"
 // Redux
 import { connect, ConnectedProps } from "react-redux";
@@ -11,6 +11,7 @@ import DeleteProject from "./DeleteProject";
 import AddContributor from "./AddContributor"
 import ContributorAvatar from "./ContributorAvatar";
 import FormatTimestamp from "../formatTime/FormatTimestamp";
+import Options from "./Options";
 
 interface ComponentProps {
   application : { 
@@ -30,6 +31,7 @@ const mapState = (state: ComponentProps) => ({
 
 const mapDispatch = {
   activatePlaybar : (payload: boolean) => ({ type: "OPEN_PLAYBAR", payload: payload }),
+  assignTrack : (payload: object) => ({type: "ASSIGN_TRACK", payload: payload}),
   setDeleteProjectPanel: (payload: boolean) => ({ type: "SHOW_PROJECT_DELETE_PANEL", payload: payload }),
   setDeleteId: (id: string) => ({ type: "SET_ID_FOR_DELETE", payload: id}),
   toggleContributors : (payload: boolean) => ({type: "TOGGLE__CONTRIBUTORS", payload: payload}),
@@ -40,7 +42,7 @@ const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux;
 
-const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteId, activatePlaybar, contributorsPanel,toggleContributors, intialiseProject }:Props) => {
+const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteId, activatePlaybar, contributorsPanel,toggleContributors, intialiseProject, assignTrack }:Props) => {
   const [idForContributor, setIdForContributor] = useState("");
   const [selectedProject, setProjectId] = useState("");
   const [sharedResponse, setSharedResponse] = useState({
@@ -49,16 +51,17 @@ const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteI
     data: "",
     projectId: ""
   });
+  const [userIds, setUserIds] = useState([0]);
   const [shareProject] = useMutation(SHARE_PROJECT);
   const { data, loading } = useQuery(MY_PROJECTS);
-  const { data: searchData, loading: searchLoading } = useQuery(SEARCH_PROJECTS);
+  const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT);
 
   useEffect(() => {
     return () => {
       setDeleteId("");
       setDeleteProjectPanel(false);
     }
-  }, [])
+  }, [setDeleteId, setDeleteProjectPanel])
   if(loading) {
     return <div>Loading...</div>
   }
@@ -68,8 +71,14 @@ const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteI
     setDeleteProjectPanel(true);
   }
 
-  const openPlaybarAndAssignTrackId = () => {
+  const openPlaybarAndAssignTrackId = (trackId: string, projectId: string, projectName: string) => {
     activatePlaybar(true);
+    const dataObject = {
+      id: trackId,
+      projectId,
+      trackName: ""
+    }
+    assignTrack(dataObject)
   }
   const addContributorFunc = (projectId: string) => {
     if(idForContributor === projectId) {
@@ -93,6 +102,7 @@ const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteI
         projectId
       },
       update: (cache, { data: { shareProject } }) => {
+        console.log(shareProject)
         // Read the MY_PROJECTS query cache
        const projectCache: any = cache.readQuery({query: MY_PROJECTS})
        // Assign and iterate the cache so we can modify the Array
@@ -114,6 +124,33 @@ const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteI
            myProjects: modifyCache
          }
        })
+       // Getting profile post cache
+       const postCache: any = cache.readQuery({query: MY_POSTS})
+       // Iterate cache and add the shareProject
+       if(postCache !== null) {
+       let modifyPostCache = [...postCache.myPosts, shareProject ];
+       // Update cache
+        cache.writeQuery({ 
+          query : MY_POSTS,
+          data:  {
+           myPosts: modifyPostCache
+         }
+       })
+      }
+        // Getting feed post cache
+       const feedCache: any = cache.readQuery({query: FEED_POSTS})
+       if(feedCache !== null) {
+        // Iterate cache and add the shareProject
+       let modifyFeedCache = [...feedCache.myFeed, shareProject ];
+        // Update cache
+        cache.writeQuery({ 
+          query : FEED_POSTS,
+          data:  {
+            myFeed: modifyFeedCache
+         }
+       })
+      }
+
       }
     })
     try {
@@ -134,38 +171,49 @@ const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteI
       console.log(err);
     }
   }
-  
+
   const toggleProjectPanel = () => {
     intialiseProject(true);
   }
+
+
+
+
     return (
      <Fragment>
       {!loading && data && data.myProjects.length !== 0  ?
       data.myProjects.map((project: any) => 
         <li className="project" key={project.id}>
-          {/* <Link to={`/workspace/${project.id}`}> </Link> */}
             <span className="top">
               <span className="project-details">
+                <span>
                 <Link to={`/workspace/${project.id}`} className="project-name">{project.name}</Link>
-                {/* <p className="project-date">8 January 2020</p> */} 
+                { !meLoading && meData && meData.me.id !== project.creatorId &&
+                   <Link to={`/profile/${project.creatorId}`} className="project-creator"> by <em>{project.creatorName}</em></Link>
+                }
+                </span>
                 <FormatTimestamp timestamp={project.created} />
               </span>
               <span className="btn-wrapper">
-                <button className="post-buttons" onClick={() => openPlaybarAndAssignTrackId()}>
+                <button className="post-buttons" onClick={() => openPlaybarAndAssignTrackId(project.mainTrack, project.id, project.name)}>
                   <img src="/assets/icons/post/play-dark.svg" alt="Play post"/>
                 </button>
                 { project.postId === null &&  <button className="post-buttons" onClick={() => shareProjectFunction(project.id)}>
                   <img src="/assets/icons/post/share.svg" alt="Share post"/>
                 </button>}
                 <button className="post-buttons" onClick={() => toggleDeletePopUp(project.id)}>
-                  <img src="/assets/icons/workspace/delete.svg" alt="Delete post"/>
-                </button> 
+                  <img src="/assets/icons/workspace/delete.svg" alt="Delete post or remove yourself"/>
+                </button>
+              </span>
+              <span className="responsive-btns">
+                <button className="post-buttons responsive-play"  onClick={() => openPlaybarAndAssignTrackId(project.mainTrack, project.id, project.name)}>
+                  <img src="/assets/icons/post/play-blue.svg" alt="Play"/>
+                </button>
+                <button className="post-buttons" onClick={() => toggleDeletePopUp(project.id)}>
+                  <img src="/assets/icons/post/options.svg" alt="Project options"/>
+                </button>
               </span>
             </span>
-            {/* <div className="contributors">
-            <button onClick={() => addContributorFunc(project.id)}>Contributors</button>
-                <ContributorAvatar projectId={project.id} />
-            </div> */}
             <div className="bottom">
             {project.isPublic === true ? 
               <p className="public">Public</p> :
@@ -192,6 +240,7 @@ const MyProjects = ({ deleteId, deleteProject, setDeleteProjectPanel, setDeleteI
          <button onClick={() => toggleProjectPanel()}>  Why not create a new project? 
          </button>
      </div> }
+     {/* <Options/> */}
     </Fragment>
     );
 } 

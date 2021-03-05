@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Link } from "react-router-dom"
 // GrahphQL
 import { useQuery, useMutation } from "@apollo/client";
@@ -150,31 +150,51 @@ const AddContributor = ({ removeContributors, contributor, toggleContributors, i
       setSearchData({...searchName, name: e.target.value})
   }
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  } 
+
+  const closePanel = () => {
+    toggleContributors(false);
+  }
+
   return (
     <div className="contributor-panel">
+      <span className="panel-heading">
+        <p>Contributors</p>
+        <button onClick={() => closePanel()}>
+          <img src="/assets/icons/plus/exit-dark.svg" alt="Close Panel"/>
+        </button>
+      </span>
       <ul>
         { !userLoading && userData && userData.contributors && userData.contributors.map((user: any) => 
         <li key={user.id}>
           <img src={user.avatar} alt="Profile Avatar"/>
           <Link className="user-link" to={`/profile/${user.id}`}>{user.firstName}</Link>
-          { !meLoading && meData && meData.me.id !== user.id && 
-            <button onClick={() => setRemoveContributor(user.id)} className="remove-contributor">
-              <img src="/assets/icons/post/red-cross.svg" alt="Remove Contributor"/>
-            </button>
-          }
+          {!meLoading && !projectLoading && meData.me.id === projectData.currentProject.creatorId && 
+            <Fragment>
+              { meData.me.id !== user.id && 
+              <button onClick={() => setRemoveContributor(user.id)} className="remove-contributor">
+                <img src="/assets/icons/post/red-cross.svg" alt="Remove Contributor"/>
+              </button>}
+            </Fragment>
+        }
+          
           {contributor.remove === true && contributor.userId === user.id && <RemoveContributor /> }
         </li>) }
       </ul>
-      <form>
+      <form onSubmit={(e) => onSubmit(e)}>
           <label htmlFor="mateSearch">Add contributors</label>
-          <span>
+          <span className="input-wrapper">
             <input 
               type="text"
               id="mateSearch" 
               name="mateSearch"
               placeholder="Enter mate's name"
               onChange={(e) => onChange(e)}/>
-              <input type="image" src="/assets/icons/menu/search.svg" alt="Submit"/>
+              <button className="search-btn">
+                <img src="/assets/icons/menu/search-blue.svg" alt="Submit"/>
+              </button>
           </span>
       </form>
       <ul className="mates-on-contributors">

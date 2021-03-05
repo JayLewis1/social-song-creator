@@ -3,7 +3,11 @@ import { Playbar, PlaybarTypes, OPEN_PLAYBAR, ASSIGN_TRACK } from '../../actions
 
 const initialState: Playbar = {
   status  : false,
-  data: {}
+  data: {
+    id: "",
+    projectId: "",
+    trackName: ""
+  }
 }
 
 export const playbarStatus = (state:Playbar = initialState, action: PlaybarTypes ) => {
