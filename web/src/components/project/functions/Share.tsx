@@ -46,6 +46,7 @@ const Share = ({projectId, location, options, toggleOptions, toggleProjectResult
         console.log(shareProject)
         // Read the MY_PROJECTS query cache
        const projectCache: any = cache.readQuery({query: MY_PROJECTS})
+       if(projectCache !== null) {
        // Assign and iterate the cache so we can modify the Array
        let modifyCache = [...projectCache.myProjects];
        let index: number;
@@ -65,6 +66,7 @@ const Share = ({projectId, location, options, toggleOptions, toggleProjectResult
            myProjects: modifyCache
          }
        })
+      }
        // Getting profile post cache
        const postCache: any = cache.readQuery({query: MY_POSTS})
        // Iterate cache and add the shareProject

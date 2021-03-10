@@ -15,6 +15,7 @@
     ul {
       display: flex;
       flex-direction: column;
+      padding: 0;
       li {
         list-style-type: none;
         margin-bottom: 15px;
@@ -40,6 +41,7 @@
           align-items: center;
           .profile-name {
             font-weight: 600;
+            text-transform: capitalize;
           }
           .menu-icons {
             width: 30px;
@@ -116,6 +118,6 @@
 
 @media (min-width: 701px) and (max-width: 1200px) {
   .main-menu {
-    margin-left: 35px;
+    margin-left: 25px;
   }
 }

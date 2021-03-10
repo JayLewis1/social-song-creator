@@ -19,12 +19,12 @@ import CreatePost from './components/post/functions/CreatePost';
 import CreateProject from './components/project/functions/CreateProject';
 import AuthRoute from "./components/authRoute/AuthRoute";
 import UnAuthRedirect from "./components/unAuthRedirect/UnAuthRedirect"
-import UserProfile from "./components/profile/UserProfile"
+import UserProfile from "./components/profile/user/UserProfile"
 import ScrollToTop from "./components/scrollToTop/ScrollToTop"
 // Routes
 import Feed from './routes/feed/Feed';
 import Workspace from './routes/workspace/Workspace';
-import Mates from './routes/mates/Mates';
+import MyMates from './routes/myMates/MyMates';
 import Profile from './routes/profile/Profile';
 import Projects from './routes/projects/Projects';
 import NotFound from './routes/notFound/NotFound';
@@ -108,7 +108,7 @@ const Routes = ({location, projectPanel, authenticated, postPanel, activatePlayb
              <Route exact path="/workspace/:id" component={Workspace} />
              <Route exact path="/profile/me" component={Profile} />
              <Route exact path="/projects" component={Projects} />
-             <Route exact path="/mates" component={Mates} />
+             <Route exact path="/mates" component={MyMates} />
              <Route exact path="/search/:input" component={SearchResult} />
              <Route exact path="/profile/:id" component={UserProfile} />
              <Route component={NotFound} />
@@ -124,14 +124,14 @@ const Routes = ({location, projectPanel, authenticated, postPanel, activatePlayb
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               {/* <Route component={NotFound} /> */}
-              <Route exact path="/login" component={UnAuthRedirect} />
+              {/* <Route exact path="/login" component={UnAuthRedirect} />
               <Route exact path="/register" component={UnAuthRedirect} />
               <Route exact path="/feed" component={UnAuthRedirect} />
               <Route exact path="/discover" component={UnAuthRedirect} />
               <Route path="/workspace/" component={UnAuthRedirect} />
               <Route path="/profile/" component={UnAuthRedirect} />
               <Route exact path="/projects" component={UnAuthRedirect} />
-              <Route exact path="/mates" component={UnAuthRedirect} />
+              <Route exact path="/mates" component={UnAuthRedirect} /> */}
           </Switch>
         </div>
          }

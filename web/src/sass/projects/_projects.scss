@@ -366,6 +366,9 @@
         font-size: 1.1rem;
         font-weight: 500;
       }
+      .capitalize {
+        text-transform: capitalize;
+      }
     }
     .btn-wrapper {
       width: 100%;
@@ -761,8 +764,11 @@
 }
 
 #searched-projects-list {
-  margin-bottom: 0;
+  margin: 0;
   border-bottom: 2px $lightBlue solid;
+  .project {
+    margin: 12.5px auto;
+  }
 }
 
 @media (max-width: 350px) {
@@ -806,7 +812,8 @@
   }
 }
 @media (max-width: 460px) {
-  .projects-header {
+  .projects-header,
+  .mates-header {
     width: 100%;
     box-shadow: none;
     border-bottom: 2px $lightBlue solid;
@@ -898,12 +905,10 @@
       }
     }
   }
-  #searched-projects-list {
-    padding-top: 45px;
-  }
 }
 @media (min-width: 461px) and (max-width: 830px) {
-  .projects-header {
+  .projects-header,
+  .mates-header {
     form {
       width: 100%;
     }

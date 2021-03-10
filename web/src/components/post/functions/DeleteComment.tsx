@@ -28,7 +28,7 @@ type Props = PropsFromRedux & {
 
 const DeleteComment = ({commentId, postId, toggleRemoveComment} : Props) => {
   const [deleteComment] = useMutation(DELETE_COMMENT);
-  const deletPostById = async () => {
+  const deleteCommentById = async () => {
     // Remove Comment and update cache
     await deleteComment({
       variables: {
@@ -58,7 +58,7 @@ const DeleteComment = ({commentId, postId, toggleRemoveComment} : Props) => {
       <div className="wrapper">
             <p>Are you sure you want to delete this comment?</p> 
             <span className="btn-wrapper">
-              <button onClick={() => deletPostById()} className="delete-btn">
+              <button onClick={() => deleteCommentById()} className="delete-btn">
                 <span className="btn-bg"></span>
                 <p>Delete</p>
               </button>

@@ -15,6 +15,7 @@ const LikePost = ({ id }:ComponentProps) => {
         // Read the query cache
         const cacheLikeData : any = cache.readQuery({query : FEED_POSTS })  
         var index: any;
+        if(cacheLikeData !== null ) {
         // Assign varaible with the cache so we can modify
         var myFeed = [...cacheLikeData.myFeed];
         // Loop through the poss array
@@ -35,6 +36,7 @@ const LikePost = ({ id }:ComponentProps) => {
             myFeed : myFeed
           }
         })
+      }
       }
     })
     .catch(err => console.log(err))

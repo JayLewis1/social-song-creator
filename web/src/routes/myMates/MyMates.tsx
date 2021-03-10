@@ -3,19 +3,17 @@ import React from 'react'
 import { useQuery } from "@apollo/client";
 import { MY_ACCOUNT } from "../../graphql/queries";
 // Components
-import MatesComponent from "../../components/mates/MatesComponent"
-import MatesSearch from "../../components/mates/MatesSearch";
+import MatesComponent from "../../components/mates/lists/Mates"
+import SearchMates from "../../components/mates/lists/SearchMates";
 
-interface RouteState {}
-
-const Mates = () => {
+const MyMates: React.FC = () => {
     const { data, loading } = useQuery(MY_ACCOUNT);
     if(loading) {
         return <div>loading...</div>
     }
     return (
         <div className="component-container">
-            <MatesSearch userId={!loading && data && data.me && data.me.id} />
+            <SearchMates/>
             <ul className="mates-list">
                 <MatesComponent userId={!loading && data && data.me && data.me.id} />
             </ul>
@@ -23,4 +21,4 @@ const Mates = () => {
             );
 }
 
-export default Mates;
+export default MyMates;

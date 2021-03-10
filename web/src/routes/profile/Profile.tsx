@@ -14,8 +14,8 @@ import Bio from "./edit/Bio";
 import Instruments from "./edit/Instruments";
 
 import Posts from "../../components/profile/me/Posts";
-import MyProjects from "../../components/project/projects/MyProjects";
-import MatesComponent from "../../components/mates/MatesComponent";
+import MyProjects from "../../components/project/lists/MyProjects";
+import Mates from "../../components/mates/lists/Mates";
 
 interface ComponentProps {  
     profile: {
@@ -157,7 +157,7 @@ const Profile = ({
             <ul className="profile-display">
             { display === "posts" && <Posts />}
             { display === "projects" && <MyProjects />}
-            { display === "mates" && <MatesComponent userId={!loading && data && data.me && data.me.id} />}
+            { display === "mates" && <Mates userId={!loading && data && data.me && data.me.id} />}
             </ul>
         </div> }
         </div>

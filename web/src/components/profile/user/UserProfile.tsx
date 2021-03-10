@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 
 import { withRouter, useLocation } from "react-router-dom";
  
 // GraphQL
 import { useQuery, useMutation } from "@apollo/client";
-import { USER_BY_ID, MY_ACCOUNT, GET_MY_MATES } from "../../graphql/queries";
-import { SEND_NOTIFICATION,  REMOVE_MATE } from "../../graphql/mutations";
+import { USER_BY_ID, MY_ACCOUNT, GET_MY_MATES } from "../../../graphql/queries";
+import { SEND_NOTIFICATION,  REMOVE_MATE } from "../../../graphql/mutations";
 
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 
+import Information from "./components/Information"
+import Posts from "./posts/Posts";
 
-import UserPosts from "../post/UserPosts";
-import UsersProjects from "../project/projects/UsersProjects";
-import MatesComponent from "../mates/MatesComponent";
+import Projects from "./projects/Projects";
+import Mates from "../../mates/lists/Mates";
+
 
 interface ComponentProps {  
     profile: {
@@ -47,7 +49,7 @@ interface ComponentProps {
       history : any
   }
   
-const UserProfile = ({ history } : Props) => {
+const ProfileByID = ({ history } : Props) => {
     const location: any = useLocation();
     const params = location.pathname.split("/")
     const userId = parseInt(params[2]);
@@ -129,7 +131,8 @@ const UserProfile = ({ history } : Props) => {
 
     return (
     <div className="component-container">
-        <div className="component-header">
+        <div className="user-profile-wrapper"> 
+        {/* <div className="component-header">
         <h3 className="feed-title">{data.user.firstName + " " + data.user.lastName}</h3>
         { !meLoading && meData && meData.me.id === userId  ? null : myFriend === true ?
             <button 
@@ -155,58 +158,37 @@ const UserProfile = ({ history } : Props) => {
           <div></div> 
           <p>{responseStatus}</p>
       </span> }
-        </div>
+        </div> */}
          {!loading && data && data.user &&
-         <div className="user-profile-wrapper"> 
-               <div className="profile-top-wrapper">
-               <div className="info-wrappers">
-                   <div className="profile-avatar">
-                   <img src={data.user.avatar} alt="User's Avatar"/>
-                   </div>
-                 <div className="name-dob">
-                     <div className="name-email-wrapper">
-                    <span>
-                        <p className="label">Full Name</p>
-                        <p className="profile-info">{data.user.firstName + " " + data.user.lastName}</p>
-                    </span>
-                 </div>
-                 <span>
-                    <p className="label">Date of birth</p>
-                    <p className="profile-info">{data.user.dob}</p>
-                </span>
-                </div>
-             </div>
-             <div className="info-wrappers user-instruments"> 
-                <span>
-                     <p className="label">Instruments</p>
-                    <p className="profile-info instruments">{data.user.instruments ? data.user.instruments: null}</p>
-                </span>
-             </div>
-             </div>
-                <div className="info-wrappers">
-                 <span>
-                    <p className="label">Bio</p>
-                     <p className="profile-info">{data.user.bio ? data.user.bio : null}</p>
-                 </span>
-                </div>    
-
+         <Fragment>
+            <Information user={data.user}/>
             <ul className="profile-components-options">
-                <li><button 
+                <li>
+                    <button 
                     onClick={() => setDisplayOption("posts")} 
-                style={ display === "posts" ? { backgroundColor: " #2767fa", color: "white"} : { backgroundColor: "white", color: " #2767fa"}}>Posts</button></li>
-                <li><button 
+                    className={ display === "posts" ? "display-active" : "display-normal"}>Posts</button>
+                </li>
+                <li>
+                    <button 
                     onClick={() => setDisplayOption("projects")}
-                    style={ display === "projects" ? { backgroundColor: " #2767fa", color: "white"} : { backgroundColor: "white", color: " #2767fa"}} >Projects</button></li>
-                <li><button style={ display === "mates" ? { backgroundColor: " #2767fa", color: "white"} : { backgroundColor: "white", color: " #2767fa"}} onClick={() => setDisplayOption("mates")}>Mates</button></li>
+                    className={ display === "projects" ? "display-active" : "display-normal"}>Projects</button>
+                </li>
+                <li>
+                    <button  
+                        className={ display === "mates" ? "display-active" : "display-normal"}
+                        onClick={() => setDisplayOption("mates")}>Mates</button>
+                </li>
             </ul> 
             <ul className="profile-display">
-            { display === "posts" && <UserPosts />}
-            { display === "projects" && <UsersProjects />}
-            { display === "mates" && <MatesComponent userId={data.user.id} />}
+            { display === "posts" && <Posts />}
+            { display === "projects" && <Projects />}
+            { display === "mates" && <Mates userId={data.user.id} />}
             </ul>
-        </div> }
+        </Fragment>
+        }
+        </div>
         </div>
     );
 }
 
-export default withRouter(connector(UserProfile));
+export default withRouter(connector(ProfileByID));

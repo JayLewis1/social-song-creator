@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect } from 'react'
-import { Link, withRouter } from "react-router-dom";
+import React from 'react'
+import { Link } from "react-router-dom";
 // GraphQL
 import { useQuery } from "@apollo/client";
-import { MY_PROJECTS, MY_ACCOUNT } from "../../../graphql/queries";
+import { MY_ACCOUNT } from "../../../graphql/queries";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 // Components
@@ -18,8 +18,6 @@ interface ComponentProps {
     contributorsPanel: boolean
   }
   project : {
-    deleteProject: boolean
-    selectedProject: string
     options: string
     result: {
       toggle: boolean,
@@ -30,8 +28,6 @@ interface ComponentProps {
 }
 
 const mapState = (state: ComponentProps) => ({
-  deleteProject: state.project.deleteProject,
-  selectedProject : state.project.selectedProject,
   options: state.project.options,
   contributorsPanel: state.application.contributorsPanel,
   result: state.project.result
@@ -40,31 +36,28 @@ const mapState = (state: ComponentProps) => ({
 const mapDispatch = {
   activatePlaybar : (payload: boolean) => ({ type: "OPEN_PLAYBAR", payload: payload }),
   assignTrack : (payload: object) => ({type: "ASSIGN_TRACK", payload: payload}),
-  setDeleteProjectPanel: (payload: boolean) => ({ type: "SHOW_PROJECT_DELETE_PANEL", payload: payload }),
-  setSelectedProject: (id: string) => ({ type: "SELECTED_PROJECT_ID", payload: id}),
-  intialiseProject: (bool: boolean ) => ({type: "INIT_PROJECT", payload: bool }),
   toggleOptions: (projectId: string) => ({type: "PROJECT_OPTIONS", payload: projectId}),
 }
 
 const connector = connect(mapState, mapDispatch);
+
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux &  {
-  history: any
+  project: {
+    id: string
+    name: string
+    creatorId: number
+    creatorName: string
+    mainTrack: string
+    created: string
+    postId: number
+    isPublic: boolean
+  }
 };
 
-const MyProjects = ({ contributorsPanel, options, result, setDeleteProjectPanel, setSelectedProject, activatePlaybar, assignTrack, toggleOptions, intialiseProject }:Props) => {
-  const { data, loading } = useQuery(MY_PROJECTS);
+const MyProject = ({ project, contributorsPanel, options, result, activatePlaybar, assignTrack, toggleOptions }:Props) => {
   const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT);
 
-  useEffect(() => {
-    return () => {
-      setSelectedProject("");
-      setDeleteProjectPanel(false);
-    }
-  }, [setSelectedProject, setDeleteProjectPanel])
-  if(loading) {
-    return <div>Loading...</div>
-  }
 
   const openPlaybarAndAssignTrackId = (trackId: string, projectId: string, projectName: string) => {
     activatePlaybar(true);
@@ -76,10 +69,6 @@ const MyProjects = ({ contributorsPanel, options, result, setDeleteProjectPanel,
     assignTrack(dataObject)
   }
 
-  const toggleProjectPanel = () => {
-    intialiseProject(true);
-  }
-
   const toggleOptionsMenu = (id: string) => {
     if(options === "") {
       toggleOptions(id)
@@ -89,11 +78,8 @@ const MyProjects = ({ contributorsPanel, options, result, setDeleteProjectPanel,
   }
 
     return (
-     <Fragment>
-      {!loading && data && data.myProjects.length !== 0  ?
-      data.myProjects.map((project: any) => 
         <li className="project" key={project.id}>
-            <span className="top">
+           <span className="top">
               <span className="project-details">
                 <span>
                 <Link to={`/workspace/${project.id}`} className="project-name">{project.name}</Link>
@@ -124,20 +110,12 @@ const MyProjects = ({ contributorsPanel, options, result, setDeleteProjectPanel,
                 <ContributorAvatar projectId={project.id} />
               </span>  
             </div>
+            {contributorsPanel === true && <ContributorPanel />}
+            { options !== "" && <Options/>}
+            { result.toggle && <ResultComponent /> }
         </li> 
-       ) : 
-       
-       <div className="no-posts">
-       <p>You have no projects yet.</p>
-         <button onClick={() => toggleProjectPanel()}>  Why not create a new project? 
-         </button>
-     </div> }
-     {contributorsPanel === true && <ContributorPanel />}
-    { options !== "" && <Options/>}
-    { result.toggle && <ResultComponent /> }
-    </Fragment>
     );
 } 
 
-export default withRouter(connector(MyProjects));
+export default connector(MyProject);
 

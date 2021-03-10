@@ -7,6 +7,7 @@ import { project } from "./project/reducers";
 import { workspace } from "./workspace/reducers";
 import {profileReducer} from "./profile/reducers"
 import {postReducer} from "./posts/reducers";
+import  {matesReducer} from "./mates/reducers";
 
 export const rootReducer = combineReducers({
   application : applicationReducer,
@@ -16,6 +17,7 @@ export const rootReducer = combineReducers({
   project,
   workspace,
   playbar: playbarStatus,
+  mates: matesReducer
 }); 
 
 export type RootState = ReturnType<typeof rootReducer>

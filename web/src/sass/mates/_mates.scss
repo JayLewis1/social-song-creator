@@ -1,6 +1,6 @@
 .mate-container {
   list-style-type: none;
-  width: 90%;
+  width: 100%;
   height: 80px;
   margin: 0 auto;
   background-color: $white;
@@ -17,6 +17,7 @@
   p {
     font-size: 1.2rem;
     font-weight: 600;
+    text-transform: capitalize;
   }
   a {
     font-size: 1rem;
@@ -28,71 +29,7 @@
   a:hover {
     color: $blue;
   }
-  .btn-wrapper {
-    margin-left: auto;
-    button {
-      background: none;
-      border: none;
-      outline: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      transition: 0.2s;
-      cursor: pointer;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    button:active {
-      transform: scale(0.9);
-    }
-  }
 }
-.remove-validation {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: $white;
-  border: 2px solid $red;
-  border-radius: 21px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  text-align: center;
-  p {
-    font-size: 1rem;
-  }
-  b {
-    color: $blue;
-  }
-  .remove-btns {
-    margin: 5px auto;
-    button {
-      background: none;
-      border: none;
-      outline: none;
-      font-family: $font;
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 5px 10px;
-      border-radius: 9px;
-      margin: 0 10px;
-      cursor: pointer;
-    }
-    .remove-button {
-      background-color: $lightRed;
-      color: $red;
-    }
-    .cancel-buton {
-      background-color: $lightBlue;
-      color: $blue;
-    }
-  }
-}
-
 .mates-list {
   display: flex;
   flex-direction: column;
@@ -100,4 +37,44 @@
   margin: 0 auto;
   margin-top: 25px;
   padding: 25px;
+  .no-posts {
+    width: 100%;
+  }
+}
+#search-mates-list {
+  border-bottom: 2px $lightBlue solid;
+  .mate-container {
+    margin: 12.5px auto;
+  }
+}
+
+@media (max-width: 460px) {
+  .mates-header {
+    width: 100%;
+    form {
+      width: 100%;
+    }
+  }
+
+  .mates-list {
+    margin: 0;
+    width: 100%;
+    .mate-container {
+      a {
+        display: none;
+      }
+    }
+  }
+}
+@media (min-width: 460px) and (max-width: 700px) {
+  .mates-header {
+    width: 80%;
+    form {
+      width: 100%;
+    }
+  }
+
+  .mates-list {
+    width: 100%;
+  }
 }

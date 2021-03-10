@@ -303,11 +303,14 @@ mutation RemoveMate($mateId: Int!) {
     email
     firstName
     lastName
+    avatar
     dob
+    bio
+    instruments
 	  mates
     created
   }
-}`
+}` 
 // NOTIFICATIONS
 export const SEND_NOTIFICATION = gql`
 mutation SendNotfication($recipient: Int!, $message: String!, $type: String! ){ 
