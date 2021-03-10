@@ -1,18 +1,17 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Link, withRouter } from "react-router-dom";
 // GraphQL
-import { useQuery, useMutation } from "@apollo/client";
-import { MY_PROJECTS, MY_POSTS, FEED_POSTS, MY_ACCOUNT } from "../../../graphql/queries";
-import { SHARE_PROJECT } from "../../../graphql/mutations"
+import { useQuery } from "@apollo/client";
+import { MY_PROJECTS, MY_ACCOUNT } from "../../../graphql/queries";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 // Components
-// import DeleteProject from "../functions/DeleteProject";
 import ContributorPanel from "../contributors/ContributorPanel"
 import ContributorAvatar from "../contributors/ContributorAvatar";
 import FormatTimestamp from "../../formatTime/FormatTimestamp";
-import Options from "../components/Options";
+import Options from "../options/Options";
 import ResultComponent from "../components/ResultComponent";
+import Share from "../functions/Share";
 
 interface ComponentProps {
   application : { 
@@ -38,21 +37,13 @@ const mapState = (state: ComponentProps) => ({
   result: state.project.result
 })
 
-type resultData =  {
-  toggle: boolean
-  type: string
-  selectedId: string
-}
-
 const mapDispatch = {
   activatePlaybar : (payload: boolean) => ({ type: "OPEN_PLAYBAR", payload: payload }),
   assignTrack : (payload: object) => ({type: "ASSIGN_TRACK", payload: payload}),
   setDeleteProjectPanel: (payload: boolean) => ({ type: "SHOW_PROJECT_DELETE_PANEL", payload: payload }),
   setSelectedProject: (id: string) => ({ type: "SELECTED_PROJECT_ID", payload: id}),
-  toggleContributors : (payload: boolean) => ({type: "TOGGLE__CONTRIBUTORS", payload: payload}),
   intialiseProject: (bool: boolean ) => ({type: "INIT_PROJECT", payload: bool }),
   toggleOptions: (projectId: string) => ({type: "PROJECT_OPTIONS", payload: projectId}),
-  toggleProjectResult: (payload: resultData) => ({type: "PROJECT_RESULT", payload}) 
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -61,9 +52,7 @@ type Props = PropsFromRedux &  {
   history: any
 };
 
-const MyProjects = ({ selectedProject, deleteProject, history, contributorsPanel, options,result, setDeleteProjectPanel, setSelectedProject, activatePlaybar,toggleContributors, intialiseProject, assignTrack, toggleOptions , toggleProjectResult }:Props) => {
-  const [idForContributor, setIdForContributor] = useState("");
-  const [shareProject] = useMutation(SHARE_PROJECT);
+const MyProjects = ({ contributorsPanel, options, result, setDeleteProjectPanel, setSelectedProject, activatePlaybar, assignTrack, toggleOptions, intialiseProject }:Props) => {
   const { data, loading } = useQuery(MY_PROJECTS);
   const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT);
 
@@ -77,11 +66,6 @@ const MyProjects = ({ selectedProject, deleteProject, history, contributorsPanel
     return <div>Loading...</div>
   }
 
-  const toggleDeletePopUp = (id: string) => {
-    setSelectedProject(id);
-    setDeleteProjectPanel(true);
-  }
-
   const openPlaybarAndAssignTrackId = (trackId: string, projectId: string, projectName: string) => {
     activatePlaybar(true);
     const dataObject = {
@@ -90,95 +74,6 @@ const MyProjects = ({ selectedProject, deleteProject, history, contributorsPanel
       trackName: ""
     }
     assignTrack(dataObject)
-  }
-  const addContributorFunc = (projectId: string) => {
-    if(idForContributor === projectId) {
-      if(contributorsPanel === false) {
-        toggleContributors(true)
-        setIdForContributor(projectId)
-      } else {
-        toggleContributors(false)
-        setIdForContributor("")
-      } 
-    } else {
-      setIdForContributor(projectId)
-      toggleContributors(true)
-    }
-  }
-
-  const shareProjectFunction = async (projectId: string) => {
-   const response = await shareProject({
-      variables: {
-        projectId
-      },
-      update: (cache, { data: { shareProject } }) => {
-        // Read the MY_PROJECTS query cache
-       const projectCache: any = cache.readQuery({query: MY_PROJECTS})
-       // Assign and iterate the cache so we can modify the Array
-       let modifyCache = [...projectCache.myProjects];
-       let index: number;
-       // Loop the project cache array
-       for(let x = 0; x < modifyCache.length; x++) {
-         // Find the post that matches our newly shared post with their ids
-        if(shareProject.post.id === modifyCache[x]) {
-          // Get the index of the matching project
-          index = modifyCache.indexOf(modifyCache[x])
-        }
-       }
-        // Remove the matching project by its index and then replace our new updated post
-        modifyCache.splice(index!, 1, shareProject.post)
-        cache.writeQuery({ 
-          query : MY_PROJECTS,
-          data:  {
-           myProjects: modifyCache
-         }
-       })
-       // Getting profile post cache
-       const postCache: any = cache.readQuery({query: MY_POSTS})
-       // Iterate cache and add the shareProject
-       if(postCache !== null) {
-       let modifyPostCache = [...postCache.myPosts, shareProject ];
-       // Update cache
-        cache.writeQuery({ 
-          query : MY_POSTS,
-          data:  {
-           myPosts: modifyPostCache
-         }
-       })
-      }
-        // Getting feed post cache
-       const feedCache: any = cache.readQuery({query: FEED_POSTS})
-       if(feedCache !== null) {
-        // Iterate cache and add the shareProject
-       let modifyFeedCache = [...feedCache.myFeed, shareProject ];
-        // Update cache
-        cache.writeQuery({ 
-          query : FEED_POSTS,
-          data:  {
-            myFeed: modifyFeedCache
-         }
-       })
-      }
-
-      }
-    })
-    try {
-      console.log(response)
-      if(response.data.shareProject.success) {
-        setSelectedProject(projectId)
-
-        const result = {
-          toggle: true,
-          type: "share",
-          selectedId: projectId
-        }
-        toggleProjectResult(result)
-
-      }
-
-    } catch(err) {
-      console.log(err);
-    }
   }
 
   const toggleProjectPanel = () => {
@@ -192,7 +87,6 @@ const MyProjects = ({ selectedProject, deleteProject, history, contributorsPanel
       toggleOptions("")
     }
   }
-
 
     return (
      <Fragment>
@@ -214,9 +108,7 @@ const MyProjects = ({ selectedProject, deleteProject, history, contributorsPanel
                   <img src="/assets/icons/post/play-blue.svg" alt="Play"/>
                 </button>
                 { project.postId === null &&  
-                  <button className="post-buttons responsive-share" onClick={() => shareProjectFunction(project.id)}>
-                    <img src="/assets/icons/post/share.svg" alt="Share post"/>
-                 </button>
+                <Share projectId={project.id} location="project"/>
                 }
                 <button className="post-buttons" onClick={() => toggleOptionsMenu(project.id)}>
                   <img src="/assets/icons/post/options.svg" alt="Project options"/>
@@ -229,7 +121,6 @@ const MyProjects = ({ selectedProject, deleteProject, history, contributorsPanel
               <p className="private">Private</p>
             }
               <span className="contributors">
-                {/* <button onClick={() => addContributorFunc(project.id)}>Contributors</button> */}
                 <ContributorAvatar projectId={project.id} />
               </span>  
             </div>

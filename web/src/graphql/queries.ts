@@ -243,6 +243,7 @@ export const CURRENT_PROJECT = gql`
     contributors
     mainTrack
     created
+    postId
   }
 }`
 export const USERS_PROJECTS = gql`

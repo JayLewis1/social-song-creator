@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom";
 // GraphQL
 import { useMutation } from "@apollo/client";
-import { CREATE_POST } from "../../graphql/mutations";
-import { MY_POSTS, FEED_POSTS, ALL_POSTS } from "../../graphql/queries";
+import { CREATE_POST } from "../../../graphql/mutations";
+import { MY_POSTS, FEED_POSTS, ALL_POSTS } from "../../../graphql/queries";
 // Redux 
 import { connect, ConnectedProps } from "react-redux";
 // Component props types

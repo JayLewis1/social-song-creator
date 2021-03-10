@@ -7,7 +7,7 @@ import { LIKE_POST } from "../../graphql/mutations";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 // Components
-import Comment from "./Comment";
+import Comment from "./comments/Comment";
 import FormatTimestamp from "../formatTime/FormatTimestamp"
 
 interface ComponentProps {

@@ -187,14 +187,18 @@ const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPa
                 </span>
                 </span>
                 <span className="header-btn-wrapper">
-                <button 
-                  onClick={() => openSearchContainer()} 
-                  className="search-btn"
-                  style={windowSize.width <= 1100 || location === "workspace" ?{display:"none"} : {display:"flex"}}>
-                  <img src="/assets/icons/menu/search-btn.svg" alt="Search"/>
-                  <p>Search people and projects</p>
-                </button>
-                </span>
+                  <button
+                    className="header-btns"
+                    onClick={() => openSearchContainer()}
+                    onMouseOver={() => setBtnDetails("Search")}
+                    onMouseOut={() =>  setBtnDetails("")}
+                    style={windowSize.width <= 1100 || location === "workspace" ?{display:"none"} : {display:"flex"}}>
+                      <img src="/assets/icons/menu/search-btn.svg" alt="Search"/>
+                      { btnDetails === "Search" && <div className="btn-info">
+                    <p>{btnDetails}</p></div>}
+                  </button>
+                  </span>
+
               </div>
               <h3 className="logo-center">Space</h3>
               <div className="aligned-right">

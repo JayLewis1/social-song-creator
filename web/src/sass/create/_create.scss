@@ -368,23 +368,6 @@
   }
 }
 
-@media (max-width: 950px) {
-  .create-component {
-    margin: 0 auto;
-    margin-bottom: 50px;
-  }
-}
-@media (max-width: 630px) {
-  .create-component {
-    width: 94%;
-    button {
-      img {
-        margin-right: 8px;
-      }
-    }
-  }
-}
-
 @media (max-width: 460px) {
   .create-component {
     box-shadow: none;
@@ -401,5 +384,22 @@
         display: none;
       }
     }
+  }
+}
+@media (max-width: 630px) {
+  .create-component {
+    // width: 94%;
+    button {
+      img {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+@media (max-width: 950px) {
+  .create-component {
+    margin: 0 auto;
+    margin-bottom: 50px;
   }
 }

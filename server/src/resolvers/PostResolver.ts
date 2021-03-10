@@ -297,24 +297,20 @@ export class PostResolver {
    ) {
     const id = payload!.userId;
     // Find likes and comments related to the post and remove them
-    const likes = await Likes.find({ where: { postId} })
-    const comments = await Comment.find({ where: { postId} })
+    const likes = await Likes.find({ where: { postId } })
+    const comments = await Comment.find({ where: { postId } })
     await Likes.remove(likes)
     await Comment.remove(comments) 
     // Find the related project
-    const project = await Project.findOne({where: {postId: {id: postId}}});
-    // If there is a project related to this post then set the related fields to null
+    const project = await Project.findOne({where: { postId }});
+    // If there is a project related to the post
     if(project) {
-       await getConnection()
+      // Get connection, find relation and set to null
+      await getConnection()
       .createQueryBuilder()
       .relation(Project, "post")
-      .of({ postId })
-      .set(null)  
-      // await getConnection()
-      // .createQueryBuilder()
-      // .relation(Post, "project")
-      // .of({ projectId : project.id })
-      // .set(null);
+      .of(project.id)
+      .set(null)
     }
     try {
       // Remove post once all relations have been removed

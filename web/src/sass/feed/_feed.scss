@@ -49,6 +49,11 @@ ul {
 @media (max-width: 460px) {
   .feed-flex {
     margin: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .feed-flex {
     width: 100%;
   }
 }

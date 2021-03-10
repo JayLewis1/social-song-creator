@@ -5,8 +5,6 @@ import { useLocation } from "react-router-dom";
 // Redux 
 import { connect, ConnectedProps } from "react-redux";
 
-import CreatePost from "./post/CreatePost";
-
 interface ComponentProps {
  application : {
    postPanel : boolean,

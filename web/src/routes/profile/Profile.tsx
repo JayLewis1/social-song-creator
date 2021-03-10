@@ -13,7 +13,7 @@ import NameDob from "./edit/NameDob";
 import Bio from "./edit/Bio";
 import Instruments from "./edit/Instruments";
 
-import MyPosts from "../../components/post/MyPosts";
+import Posts from "../../components/profile/me/Posts";
 import MyProjects from "../../components/project/projects/MyProjects";
 import MatesComponent from "../../components/mates/MatesComponent";
 
@@ -155,7 +155,7 @@ const Profile = ({
                 </select>
             </ul> 
             <ul className="profile-display">
-            { display === "posts" && <MyPosts />}
+            { display === "posts" && <Posts />}
             { display === "projects" && <MyProjects />}
             { display === "mates" && <MatesComponent userId={!loading && data && data.me && data.me.id} />}
             </ul>

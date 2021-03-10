@@ -4,7 +4,7 @@
   height: 60px;
   background-color: $white;
   box-shadow: $divShadow;
-  border-radius: 50px;
+  border-radius: 21px;
   display: flex;
   flex-direction: row;
   margin: 25px auto;
@@ -949,7 +949,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .list-of-projects {
     width: 100%;
     .no-posts {

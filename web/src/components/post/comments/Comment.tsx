@@ -1,15 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+// GraphQL
 import { useMutation, useQuery } from "@apollo/client";
-import { COMMENT_ON_POST, DELETE_COMMENT } from "../../graphql/mutations";
-import { GET_COMMENTS, MY_ACCOUNT, USER_BY_POST_ID } from "../../graphql/queries";
-interface ComponentProps {
+import { COMMENT_ON_POST, DELETE_COMMENT } from "../../../graphql/mutations";
+import { GET_COMMENTS, MY_ACCOUNT, USER_BY_POST_ID } from "../../../graphql/queries";
+// Components 
+import Options from "../options/Options";
+import DeleteComment from "../functions/DeleteComment";
+// Redux
+import { connect, ConnectedProps } from "react-redux";
+interface ComponentProps  {
+  posts : {
+    options: boolean
+    postDelete: boolean
+    commentDelete: boolean
+  }
+}
+const mapState = (state: ComponentProps) => ({
+  options: state.posts.options,
+  postDelete: state.posts.postDelete,
+  commentDelete: state.posts.commentDelete
+})
+
+const mapDispatch = {
+  activatePlaybar : (payload: boolean) => ({ type: "OPEN_PLAYBAR", payload: payload }),
+  assignTrack : (payload: object) => ({type: "ASSIGN_TRACK", payload: payload}),
+  togglePostOptions: (payload: boolean) => ({type: "TOGGLE_POST_OPTIONS", payload}),
+}
+
+const connector = connect(mapState, mapDispatch)
+type PropsFromRedux = ConnectedProps<typeof connector>
+type Props = PropsFromRedux & {
   postId: number
 }
-const Comment = ({postId}: ComponentProps) => {
+const Comment = ({postId, options, commentDelete, togglePostOptions}: Props) => {
   const [ formComment, setFormComment] = useState("")
   const [ disableButton, setDisabled] = useState(true)
+  const [selectId, setSelectedId] = useState(0);
   const [comment] = useMutation(COMMENT_ON_POST);
   const [deleteComment] = useMutation(DELETE_COMMENT);
   const { data: userData, loading : userLoading } = useQuery(USER_BY_POST_ID,{
@@ -31,7 +58,7 @@ const Comment = ({postId}: ComponentProps) => {
       setDisabled(false);
     }
   },[formComment, ])
-  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormComment(e.target.value);
   } 
   const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {
@@ -103,13 +130,23 @@ const Comment = ({postId}: ComponentProps) => {
      }
    })
  }
+
+ const toggleOptionsMenu = (id: number) => {
+  if(options === true) {
+    setSelectedId(0);
+    togglePostOptions(false)
+  } else {
+    setSelectedId(id);
+    togglePostOptions(true)
+  }
+}
   return (
     <div  className="comments-container">
       <form className="comment-form" onSubmit={(e) => onSubmit(e)}>
         <span className="input-wrapper">
           <label htmlFor="comment">Why not make a comment?</label>
           <span className="input-span">
-          <input type="text" id="comment" name="comment" value={formComment} placeholder="Write your comment here ..."onChange={(e) => onChange(e)}/>
+          <textarea value={formComment} placeholder="Write your comment here ..." onChange={(e) => onChange(e)} style={formComment === "" ? { minHeight: "40px" } : { minHeight: "150px" } } />
           <input type="submit" value="Send" disabled={disableButton === true}/>
           </span>
         </span>  
@@ -129,23 +166,37 @@ const Comment = ({postId}: ComponentProps) => {
                 }
                 <p className="date">{formatTimestamp(comment.created)}</p>
               </div>
+        
               { !meLoading && !userLoading && userData && userData.userByPostId &&  userData.userByPostId.id === meData.me.id ? 
-              <button className="delete-comment" onClick={() => deleteCommentById(comment.id)}>
-                  <img src="/assets/icons/workspace/delete.svg" alt="Delete post"/>
-              </button> : 
+              // <button className="delete-comment" onClick={() => deleteCommentById(comment.id)}>
+              //     <img src="/assets/icons/workspace/delete.svg" alt="Delete post"/>
+              // </button> 
+              <span className="post-btn-wrapper">
+                <button className="post-buttons" onClick={() => toggleOptionsMenu(comment.id)}>
+                  <img src="/assets/icons/post/options.svg" alt="Project options"/>
+                </button>
+                </span>
+              : 
               !meLoading && meData && meData.me &&  meData.me.id === comment.userId && 
-              <button className="delete-comment" onClick={() => deleteCommentById(comment.id)}>
-                  <img src="/assets/icons/workspace/delete.svg" alt="Delete post"/>
-              </button>}
+              // <button className="delete-comment" onClick={() => deleteCommentById(comment.id)}>
+              //     <img src="/assets/icons/workspace/delete.svg" alt="Delete post"/>
+              // </button>
+              <span className="post-btn-wrapper">
+              <button className="post-buttons" onClick={() => toggleOptionsMenu(comment.id)}>
+                <img src="/assets/icons/post/options.svg" alt="Project options"/>
+              </button>
+              </span>}
              </div>
             <p className="comment-context">{comment.comment}</p>
+            { selectId === comment.id && options === true && 
+                      <Options type="comment" />}
+            { commentDelete === true && selectId === comment.id && <DeleteComment postId={postId} commentId={comment.id}/>}
            </li>
         ) }
-
         </ul>
       </div>
     </div>
   )
 }
 
-export default Comment;
+export default connector(Comment);

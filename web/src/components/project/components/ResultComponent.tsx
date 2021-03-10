@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Link } from "react-router-dom"
 // GraphQL
 import { useQuery, useMutation } from "@apollo/client";
@@ -9,7 +9,6 @@ import { connect, ConnectedProps } from "react-redux";
 interface ComponentProps {
   project : {
     deleteProject: boolean
-    selectedProject: string
     options: string
     result:  {
       toggle: boolean
@@ -20,7 +19,6 @@ interface ComponentProps {
 }
 const mapState = (state: ComponentProps) => ({
   deleteProject: state.project.deleteProject,
-  selectedProject : state.project.selectedProject,
   result: state.project.result
 })
 type resultData =  {
@@ -31,7 +29,6 @@ type resultData =  {
 
 const mapDispatch = {
   setDeleteProjectPanel: (payload: boolean) => ({ type: "SHOW_PROJECT_DELETE_PANEL", payload: payload }),
-  setSelectedProject: (id: string) => ({ type: "SELECTED_PROJECT_ID", payload: id}),
   toggleOptions: (projectId: string) => ({type: "PROJECT_OPTIONS", payload: projectId}),
   toggleProjectResult: (payload: resultData) => ({type: "PROJECT_RESULT", payload}) 
 }
@@ -40,7 +37,7 @@ const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux 
 
-const ResultComponent = ({ result, toggleProjectResult, setSelectedProject, toggleOptions} : Props) => {
+const ResultComponent = ({ result, toggleProjectResult, toggleOptions} : Props) => {
   const [deleteProject] = useMutation(DELETE_PROJECT);
   const { data, loading} = useQuery(CURRENT_PROJECT, {
     variables: {
@@ -49,7 +46,16 @@ const ResultComponent = ({ result, toggleProjectResult, setSelectedProject, togg
   })
   const { data: meData } = useQuery(MY_ACCOUNT);
   const [removeContribtutor] = useMutation(REMOVE_CONTRIBUTOR);
-
+  useEffect(() => {
+    return () => {
+      const result = {
+        toggle: false,
+        type: "",
+        selectedId: ""
+      }
+      toggleProjectResult(result)
+    }
+  }, [toggleProjectResult])
   const deletProjectById = async () => {
     const id = result.selectedId;
     deleteProject({
@@ -94,7 +100,7 @@ const ResultComponent = ({ result, toggleProjectResult, setSelectedProject, togg
         }
       }
       }).then(() => {
-        setSelectedProject("")
+        // setSelectedProject("")
         const resultData = {
           toggle: false,
           type: "",
@@ -135,7 +141,7 @@ const ResultComponent = ({ result, toggleProjectResult, setSelectedProject, togg
             })
       } })
       try {      
-        setSelectedProject("")
+        // setSelectedProject("")
         const resultData = {
           toggle: false,
           type: "",
@@ -157,7 +163,7 @@ const ResultComponent = ({ result, toggleProjectResult, setSelectedProject, togg
       toggleOptions(result.selectedId)
       toggleProjectResult(resultData); 
     } else {
-      setSelectedProject("")
+      // setSelectedProject("")
       toggleProjectResult(resultData);
     }  
   }

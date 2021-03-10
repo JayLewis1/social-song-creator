@@ -1,34 +1,35 @@
-import React from 'react'
-
+import React, { Fragment, useEffect } from 'react'
+import { Link } from "react-router-dom"
 // GraphQL
 import { useMutation } from "@apollo/client";
-import { MY_POSTS, FEED_POSTS, ALL_POSTS } from "../../graphql/queries";
-import { DELETE_POST } from "../../graphql/mutations";
-
+import { MY_POSTS, FEED_POSTS, ALL_POSTS } from "../../../graphql/queries";
+import { DELETE_POST } from "../../../graphql/mutations";
+// Redux
 import { connect, ConnectedProps } from "react-redux";
 
 interface ComponentProps {
-  posts: {
-    postId: number
-  }
+
 }
 
 const mapState = (state: ComponentProps) => ({
-  postId : state.posts.postId
+
 })
 
 const mapDispatch = {
   setPostId : (id:number) => ({type: "SELECTED_POST_ID", payload: id}),
   validatePostDelete: (payload:boolean) => ({type: "SET_DELETE_COMPONENT", payload: payload}),
+  togglePostOptions: (payload: boolean) => ({type: "TOGGLE_POST_OPTIONS", payload}),
 }
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
-type Props = PropsFromRedux;
+type Props = PropsFromRedux & {
+  postId: number
+};
 
-const DeletePost = ({postId, validatePostDelete, setPostId}:Props) => {
+const DeletePost = ({postId, validatePostDelete, setPostId, togglePostOptions} : Props) => {
   const [deletePost] = useMutation(DELETE_POST);
-  const deletPostById = async () => {
+  const deletPostById = () => {
     const id = postId; 
     // Remove post and update all caches
     deletePost({
@@ -96,19 +97,25 @@ const DeletePost = ({postId, validatePostDelete, setPostId}:Props) => {
       }).then(() => {
         setPostId(0);
         validatePostDelete(false);
+        togglePostOptions(false)
       })
       .catch(err => console.log(err) )
     }
-
   return (
-    <div className="delete-popup">
-      <p>Are you sure you want to delete this post?</p>
-      <span className="delete-buttons-wrappers">
-        <button className="delete-btn" onClick={() => deletPostById()}>Delete</button>
-        <button onClick={() => validatePostDelete(false)}>Cancel</button>
-    </span>
-  </div>
+    <div className="result-component">
+      <div className="wrapper">
+            <p>Are you sure you want to delete this post?</p> 
+            <span className="btn-wrapper">
+              <button onClick={() => deletPostById()} className="delete-btn">
+                <span className="btn-bg"></span>
+                <p>Delete</p>
+              </button>
+              <button onClick={() =>    validatePostDelete(false)} >
+                <p>Cancel</p>
+              </button>
+            </span>
+      </div>
+    </div>
   )
 }
-
-export default connector(DeletePost);
+export default connector(DeletePost)
