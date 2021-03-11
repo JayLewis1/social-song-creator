@@ -1,20 +1,103 @@
 .results-container {
-  width: 80%; 
+  width: 80%;
   margin: 0 auto;
-  ul {
-    li {
-      list-style-type: none;
-      width: 90%;
-      height: 80px;
-      margin: 0 auto;
-      background-color: $white;
-      box-shadow: $divShadow;
-      margin-bottom: 25px;
-      border-radius: 21px;
-      padding: 25px;
-      display: flex;
-      align-items: center;
+}
+
+.results-wrapper {
+  width: 80%;
+  margin: 0 auto;
+  border-bottom: 2px $lightBlue solid;
+  // padding-bottom: 15px;
+  // margin-bottom: 15px;
+  .results-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+  }
+  .search-headings {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $dark;
+    background-color: $white;
+    padding: 10px 20px;
+    box-shadow: $divShadow;
+    border-radius: 12px;
+    text-align: center;
+    display: inline-block;
+  }
+  .hide-btn {
+    background: none;
+    outline: none;
+    border: none;
+    position: relative;
+    transition: 0.2s;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 10px;
+    text-align: center;
+    p {
       position: relative;
+      font-family: $font;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $textLight;
     }
+    .btn-bg {
+      position: absolute;
+      // border-radius: 50%;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%);
+      height: 100%;
+      background-color: $lightBlue;
+      min-width: 0;
+      transition: 0.2s;
+      border-radius: 3px;
+    }
+  }
+  .hide-btn:hover {
+    p {
+      color: $blue;
+    }
+    .btn-bg {
+      min-width: 120%;
+    }
+  }
+  ul {
+    transition: 0s padding-top;
+    // padding-top: 25px;
+    flex-direction: column;
+  }
+  .hide-list {
+    overflow: hidden;
+    padding-top: 0;
+    max-height: 0;
+  }
+  .show-less {
+    background: none;
+    outline: none;
+    border: none;
+    display: block;
+    width: 100%;
+    font-family: $font;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $textLight;
+    padding: 15px 25px;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+  .show-less:hover {
+    color: $blue;
+    background-color: $lightBlue;
+  }
+}
+.project-results {
+  border: none;
+}
+
+@media (max-width: 700px) {
+  .results-wrapper {
+    width: 100%;
   }
 }

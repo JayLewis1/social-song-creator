@@ -3,7 +3,7 @@ import React from 'react'
 import { useQuery } from "@apollo/client";
 import { MY_ACCOUNT } from "../../graphql/queries";
 // Components
-import MatesComponent from "../../components/mates/lists/Mates"
+import Mates from "../../components/mates/lists/Mates"
 import SearchMates from "../../components/mates/lists/SearchMates";
 
 const MyMates: React.FC = () => {
@@ -15,7 +15,7 @@ const MyMates: React.FC = () => {
         <div className="component-container">
             <SearchMates/>
             <ul className="mates-list">
-                <MatesComponent userId={!loading && data && data.me && data.me.id} />
+                <Mates userId={!loading && data && data.me && data.me.id} />
             </ul>
         </div>    
             );

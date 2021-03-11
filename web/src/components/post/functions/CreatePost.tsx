@@ -114,7 +114,8 @@ const CreatePost = ({closePostPanel} : Props) => {
               onChange={(e:any) => setPostContent(e.target.value)}
               />
           </span>
-            <input type="submit" className="create-submit" value="Post"/>
+            <input type="submit" className="create-submit" value="Post"/>     
+            <button onClick={() => closePostPanel(false)} className="create-cancel">Cancel</button>
          </form>
        </div> 
        

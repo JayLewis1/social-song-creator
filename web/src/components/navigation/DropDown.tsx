@@ -51,7 +51,7 @@ const DropDown = ({projectPanel, intialiseProject} : Props) => {
                 <span className="menu-icons">
                   <img src={meData.me.avatar} alt="Profile Avatar" className="avatar"/>
                 </span>
-                  <p>{meData.me.firstName + " " + meData.me.lastName}</p></NavLink></li>
+                  <p className="user-name">{meData.me.firstName + " " + meData.me.lastName}</p></NavLink></li>
            } 
             <li>
               <NavLink exact activeClassName="navlink-active" to="/feed">

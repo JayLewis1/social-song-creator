@@ -29,7 +29,11 @@
       margin: 0 15px;
     }
     p {
+      font-family: $font;
+      font-size: 1.1rem;
+      font-weight: 400;
       color: $white;
+      text-transform: capitalize;
     }
   }
   ul {
@@ -37,6 +41,7 @@
     flex-direction: column;
     width: 100%;
     margin-bottom: 15px;
+    padding: 0;
     li {
       list-style-type: none;
       width: 100%;
@@ -73,6 +78,27 @@
     }
     li:hover {
       background-color: $inputGrey;
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .account-options-dropdown {
+    width: 80%;
+    top: 128px;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    .top-wrapper {
+      padding-left: 25px;
+      .avatar {
+        margin-left: 0;
+      }
+    }
+    ul {
+      li {
+        padding-left: 30px;
+      }
     }
   }
 }

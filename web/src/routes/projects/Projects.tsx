@@ -7,7 +7,9 @@ const Projects: React.FC = () => {
     return (
     <div className="component-container">
          <ProjectsHeader />
-         <MyProjects />
+         <ul className="list-of-projects">
+            <MyProjects />
+         </ul>
     </div>
     );
 }

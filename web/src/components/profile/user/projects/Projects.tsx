@@ -20,7 +20,7 @@ const UserProjects: React.FC = () => {
     return (
       <Fragment>
         {!loading && data && data.usersProjects.length !== 0  ?
-            data.myProjects.map((project: any) => 
+            data.usersProjects.map((project: any) => 
             <UsersProject userId={userId} project={project}/>) :
             <EmptyState type="user" userId={userId} />
         }

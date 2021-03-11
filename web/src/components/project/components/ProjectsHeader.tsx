@@ -28,12 +28,7 @@ const ProjectsHeader = ({projectPanel, intialiseProject} : Props) => {
   const [searchData, setSearchData] = useState({
     search: ""
   })
-  const { data, loading } = useQuery(MY_ACCOUNT);
   const searchInput = useRef<HTMLInputElement>(null); 
-  const { data: projectData, loading: projectLoading } = useQuery(SEARCH_PROJECTS , 
-    {variables : {
-    projectName : searchData.search
-  }});
 
   const toggleProjectPanel = () => {
     if(projectPanel === true) {
@@ -49,7 +44,6 @@ const ProjectsHeader = ({projectPanel, intialiseProject} : Props) => {
 
   const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.target);
   }
 
   const focusInput = () => {

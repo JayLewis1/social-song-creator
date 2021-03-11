@@ -37,10 +37,7 @@ const Options = ({ mateId, toggleMatesOptions, toggleMatesRemove}:Props) => {
         }
       }
     }
-    return () => {
-      toggleMatesOptions(false);
-    }
-  }, [meLoading, mateLoading , meData, mateData, mateId, toggleMatesOptions, setIsOurMate])
+  }, [meLoading, mateLoading , meData, mateData, mateId, setIsOurMate])
 
 
   const toggleRemoveValidations = () => {

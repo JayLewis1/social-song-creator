@@ -180,6 +180,7 @@ const CreateProject = ({initiliseProject, history, storeProject, user}: Props) =
             </div>
             <p className="bottom-p">Your project will be { isPublic === true ? "public" : "private"}</p>
             <input type="submit" value="Create Project" className="create-submit"/> 
+            <button onClick={() => initiliseProject(false)} className="create-cancel">Cancel</button>
           </form>
       </div>
     );

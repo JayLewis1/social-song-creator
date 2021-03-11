@@ -7,12 +7,12 @@ import { SEARCH_APPLICATION } from "../../graphql/queries"
 import { connect, ConnectedProps } from "react-redux"
 
 interface ComponentProps {
-  applciation : {
+  application : {
     searchPanel: boolean
   }
 }
 
-const mapState = (state: any) => ({
+const mapState = (state: ComponentProps) => ({
   searchPanel: state.application.searchPanel
 }) 
 
@@ -30,9 +30,10 @@ type Props = PropsFromRedux & {
 const Search = ({toggleSearch, searchPanel, history}: Props) => {
   const [ searchData, setSearchData ] = useState({ search: "" })
   const [routeLocation, setLocation] = useState("")
+  const [indexLimit, setIndexLimit] = useState(8);
   const { data, loading } = useQuery(SEARCH_APPLICATION, {
     variables: {
-      input : searchData.search
+      input : searchData.search.toLowerCase()
     }
   })
   const location = useLocation();
@@ -47,7 +48,7 @@ const Search = ({toggleSearch, searchPanel, history}: Props) => {
       setLocation(pathname)
     }
 
-  }, [location, routeLocation])
+  }, [location, routeLocation, toggleSearch])
 
   const closeContainer = () => {
     if(searchPanel === true ) {
@@ -62,7 +63,7 @@ const Search = ({toggleSearch, searchPanel, history}: Props) => {
 
   const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    history.push(`/search/${searchData.search}`)
+    history.push(`/search/${searchData.search.toLowerCase()}`)
   }
 
   return (
@@ -79,28 +80,42 @@ const Search = ({toggleSearch, searchPanel, history}: Props) => {
         <ul className="search-list">
            { !loading && data && data.searchApplication.users.length !== 0 && 
            <Fragment>
+            <span className="list-headings">
             <h3>Users</h3>
-              { data.searchApplication.users.map((user: any) => 
-                <li key={user.id}>
-                  <Link to={`/profile/${user.id}`}> </Link>
-                    <span>
-                      <img src={user.avatar} alt="Users avatar"/>
-                    </span>
-                    <p>{user.firstName}</p>
-                </li>
+            <Link to={`/search/${searchData.search}`} className="see-more">See more</Link>
+            </span>
+              { data.searchApplication.users.map((user: any, index: number) => 
+              <Fragment key={user.id}>
+                { index < indexLimit &&
+                    <li key={user.id} >
+                    <Link to={`/profile/${user.id}`}  className="search-link"> </Link>
+                      <span>
+                        <img src={user.avatar} alt="Users avatar"/>
+                      </span>
+                      <p className="username">{user.firstName}</p>
+                  </li>
+                 }
+              </Fragment>
               )}  
           </Fragment> }
           { !loading && data && data.searchApplication.projects.length !== 0 && <Fragment>
-          <h3>Projects</h3>
-            {data.searchApplication.projects.map((project: any) => 
-            <li key={project.id}>
-              <Link to={`/workspace/${project.id}`}></Link>
+            <span className="list-headings">
+              <h3>Projects</h3>
+              <Link to={`/search/${searchData.search}`} className="see-more">See more</Link>
+            </span>
+            {data.searchApplication.projects.map((project: any, index: number) => 
+            <Fragment key={project.id}>
+              { index < indexLimit &&
+             <li key={project.id}>
+              <Link to={`/workspace/${project.id}`} className="search-link"></Link>
                 <span>
                   <img className="project-icon" src="/assets/icons/menu/projects.svg" alt="Project icon"/>
                 </span>
                 <p>{project.name}</p>
-                <p className="creator">by {project.creatorId}</p>
+                <Link to={`/profile/${project.creatorId}`} className="creator">by <em>{project.creatorName}</em></Link>
               </li>
+            }
+            </Fragment> 
           )}
           </Fragment> }
         </ul>

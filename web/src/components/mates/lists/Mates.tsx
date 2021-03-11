@@ -7,23 +7,25 @@ import Mate from "../mate/Mate";
 interface ComponentProps {
   userId: string
 }
-const MatesComponent = ({userId}: ComponentProps) => {
+const Mates = ({userId}: ComponentProps) => {
   const { data, loading } = useQuery(GET_MY_MATES, {
   variables : {
     userId
-  }
+  } 
   });
 
   return (
     <Fragment>
         { !loading && data && data.getMates.length !== 0 ? data.getMates.map((mate: any) => 
-        <Mate mate={mate} />
+        <Fragment key={mate.id}> 
+          <Mate mate={mate} />
+        </Fragment>
         ) : 
-        <li className="no-posts">
+        <li className="no-posts" key={0}>
           <p>You have no mates. Check out the <Link to="/discover">Discover</Link> page and find some new mates.</p>
         </li> }
     </Fragment>
   )
 }
 
-export default MatesComponent;
+export default Mates;

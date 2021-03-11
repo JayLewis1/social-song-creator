@@ -104,6 +104,9 @@ body {
       }
     }
   }
+  .user-name {
+    text-transform: capitalize;
+  }
 }
 
 @media (max-width: 460px) {
@@ -140,6 +143,7 @@ body {
         .component-container {
           width: 90%;
           margin: 0 auto;
+          margin-bottom: 100px;
         }
       }
     }

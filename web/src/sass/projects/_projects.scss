@@ -336,6 +336,18 @@
   }
 }
 
+.users-projects,
+.profile-display {
+  .project {
+    .bottom {
+      margin-top: 5px;
+      .contributors {
+        margin-right: 2px;
+      }
+    }
+  }
+}
+
 .result-component {
   position: fixed;
   top: 0;
@@ -848,6 +860,9 @@
         background-color: $lightBlue;
       }
     }
+  }
+  .project {
+    padding: 20px;
   }
   .list-of-projects {
     .project {
