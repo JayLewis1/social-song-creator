@@ -1,5 +1,5 @@
 import React , { useEffect, useState } from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, withRouter } from "react-router-dom";
 
 import { connect, ConnectedProps } from "react-redux";
 
@@ -18,15 +18,32 @@ const mapState = (state: ComponentProps) => ({
 
 const mapDispatch = {
   intialiseProject: (bool: boolean ) => ({type: "INIT_PROJECT", payload: bool }),
+  toggleNavbar: (payload: boolean) => ({type: "NAVBAR_TOGGLE", payload })
 }
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
-type Props = PropsFromRedux
+type Props = PropsFromRedux & {
+  history : any
+}
 
-const DropDown = ({projectPanel, intialiseProject} : Props) => {
+const DropDown = ({history,projectPanel, intialiseProject, toggleNavbar} : Props) => {
   const { data, loading } = useQuery(MY_PROJECTS); 
   const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT); 
+  const locationPath = useLocation();
+  var pathname = locationPath.pathname;
+  var params = pathname.split("/");
+  const [routeLocation] = useState(params[1]);
+
+  useEffect(() => {
+    let unlisten = history.listen((location: any, action: any) => {
+      toggleNavbar(false)
+    });
+    return () => {
+      unlisten();
+    }
+  }, [history, toggleNavbar])
+
   const toggleCreatePanel = () => {
     if(projectPanel === false) {
       intialiseProject(true)
@@ -36,7 +53,7 @@ const DropDown = ({projectPanel, intialiseProject} : Props) => {
   }
   return (
       <div 
-        className="drop-down-wrapper">
+        className={routeLocation === "workspace" ? 'workspace-drop-down' : "drop-down-wrapper"}>
       <div className="main-menu">
         <nav className="menu-navigation">
           <ul> 
@@ -107,4 +124,4 @@ const DropDown = ({projectPanel, intialiseProject} : Props) => {
   )
 }
 
-export default connector(DropDown);
+export default withRouter(connector(DropDown));

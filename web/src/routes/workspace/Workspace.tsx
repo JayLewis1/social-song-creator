@@ -40,12 +40,12 @@ type Props = PropsFromRedux
 
 const Workspace = ({setAppLocation, storeProject, intialiseProject, initTabCreation, initLyricCreation} : Props) => {
   const [component , setComponent] = useState([
-    {name: "tracks",
-     shown : true},
+    { name: "tracks",
+      col: 1},
     {name : "lyrics",
-    shown: true},
+    col: 2},
     {name: "tabs", 
-    shown: false}
+    col: 3}
  ])
   const [isContributor, setIsContributor] = useState(false);
   const location = useLocation();
@@ -59,16 +59,6 @@ const Workspace = ({setAppLocation, storeProject, intialiseProject, initTabCreat
     }
   });
 
-  function getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height
-    };
-  }
-
-  const [ windowSize, setWindowSize] = useState(getWindowDimensions())
-
   useEffect(() => {
     if(!loading && !meLoading && meData && meData.me) {
       for(let x = 0; x < data.currentProject.contributors.length; x++) {
@@ -79,62 +69,101 @@ const Workspace = ({setAppLocation, storeProject, intialiseProject, initTabCreat
       console.log(isContributor);
     }
 
-    function handleResize() {
-      setWindowSize(getWindowDimensions());
-    }
-
-    window.addEventListener('resize', handleResize);
-
     storeProject(projectId);
     setAppLocation("workspace");
     intialiseProject(false);
     return () => {
       setAppLocation("");
-      window.removeEventListener('resize', handleResize);
-
     }
   }, [data, projectId, loading, meLoading, meData, isContributor, intialiseProject, setAppLocation, storeProject])
   
-  const assignComponentType = (option : string) => {
-    let newArray = [...component];
-    for(let x = 0; x < newArray.length; x ++) {
-      if(newArray[x].name === option) {
-        let index = newArray.indexOf(newArray[x]);
-        let showComponent = {
-          name: option,
-          shown: true
-        }
-        newArray.splice(index, 1, showComponent)
-        if(index === 2) {
-        let hideComponent = {
-            name: newArray[0].name,
-            shown: false
-        }
-          newArray.splice(0, 1, hideComponent)
-          setComponent(newArray);
-        } else {
-          let newIndex = index + 1;
-      
-          let hideComponent = {
-              name: newArray[newIndex].name,
-              shown: false
-          }
-            newArray.splice(newIndex, 1, hideComponent)
-            setComponent(newArray);
-        }
-      }
+  const changeComponent = (cType: string) => {
+    type objectType = {
+      name : string,
+      col : number,
     }
+    let typeObject : Array<objectType>;
+    switch(cType) {
+      case "tracks" :
+        typeObject = [
+          {
+            name : "tracks",
+            col : 1,
+          },
+          {
+            name : "lyrics",
+            col : component[1].col + 1
+          },
+          {
+            name : "tabs",
+            col : component[2].col + 1
+          },
+        ];
+        break;
+      case "lyrics" :
+        typeObject = [
+          {
+            name : "tracks",
+            col : component[0].col + 1
+          },
+          {
+            name : "lyrics",
+            col : 1
+          },
+          {
+            name : "tabs",
+            col : component[2].col + 1
+          },
+        ];
+      break;
+      case "tabs" :
+        typeObject = [
+          {
+            name : "tracks",
+            col : component[0].col + 1
+          },
+          {
+            name : "lyrics",
+            col : component[1].col + 1
+          },
+          {
+            name : "tabs",
+            col : 1,
+          },
+        ];
+        break;
+      default :
+      typeObject = [
+        {
+          name : "tracks",
+          col : 1,
+        },
+        {
+          name : "lyrics",
+          col : 2,
+        },
+        {
+          name : "tabs",
+          col : 3,
+        },
+      ];
+    }
+    setComponent(typeObject)
   }
 
   return (
     <div className="workspace-container">
         { isContributor ? 
           <Fragment>
-  
-            { windowSize.width > 1000 || component[0].shown === true ? <Tracks /> : null  }
-            { windowSize.width > 1000 || component[1].shown === true ? <Lyrics /> : null }
-            { windowSize.width > 1000 || component[2].shown === true ? <Tabs /> : null }
-
+            <span className={`col-${component[0].col}`} >
+              <Tracks />
+            </span>
+            <span className={`col-${component[1].col}`}  >
+              <Lyrics />
+            </span>
+            <span className={`col-${component[2].col}`} >
+              <Tabs />
+            </span>
             <div className="recorder-container">
               <span className="create-btn-container">
               <Recording />
@@ -145,36 +174,23 @@ const Workspace = ({setAppLocation, storeProject, intialiseProject, initTabCreat
                   id="create-tabs"
                   onClick={() =>   initTabCreation(true)}>
                   <img src="/assets/icons/workspace/createTab.svg" alt="Create Tab"/>
-              </button>
-               {/* {
-                 windowSize.width > 1000 || component[1].shown === true ? <button className="create-btns" id="create-lyrcis" onClick={() => initLyricCreation(true)}>
-                  <img src="/assets/icons/workspace/createLyric.svg" alt="Create Lyric"/>
-                </button>  : null
-               } 
-                {
-                  windowSize.width > 1000 || component[2].shown === true ?
-                  <button className="create-btns" 
-                  id="create-tabs"
-                  onClick={() =>   initTabCreation(true)}>
-                    <img src="/assets/icons/workspace/createTab.svg" alt="Create Tab"/>
-                  </button> : null
-               } */}
-          
+              </button>      
               </span>
-
               <div className="repsonsive-ws-menu">
                 <button 
-                  onClick={() => assignComponentType("tracks")} 
-                  className={component[0].shown === true ? "active-btn" : ""}
-                  disabled={component[0].shown === true}>Tracks</button>
+                  onClick={() => changeComponent("tracks")} 
+                  className={`active-${component[0].col}`}
+                  >Tracks</button>
                 <button 
-                  onClick={() => assignComponentType("lyrics")} 
-                  className={component[1].shown === true ? "active-btn" : ""}
-                  disabled={component[1].shown === true}>Lyrics</button>
+                  onClick={() => changeComponent("lyrics")} 
+                  className={`active-${component[1].col}`}
+                  disabled={component[1].col === 1 || component[1].col === 2}
+                 >Lyrics</button>
                 <button 
-                  onClick={() => assignComponentType("tabs")} 
-                  className={component[2].shown === true ? "active-btn" : ""}
-                  disabled={component[2].shown === true}>Tabs</button>
+                  onClick={() => changeComponent("tabs")} 
+                  className={`active-${component[2].col}`}
+                  disabled={component[2].col === 1 || component[2].col === 2}
+                  >Tabs</button>
               </div>
             </div>
           </Fragment>

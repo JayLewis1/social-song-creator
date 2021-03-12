@@ -75,15 +75,6 @@ const Header = ({navbar, location, createPanel, user, postPanel, projectPanel,se
   const routeLocation = useLocation();
   var pathname = routeLocation.pathname;
 
-  const getWindowDimensions = () => {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height
-    };
-  }
-  const [ windowSize, setWindowSize] = useState(getWindowDimensions())
-
   useEffect(() => {
     if(pathname !== componentLocation) {
       setComponentLocation(pathname);
@@ -93,13 +84,7 @@ const Header = ({navbar, location, createPanel, user, postPanel, projectPanel,se
       setUnRead(notifData.notifications.length)
       }       
 
-      const handleResize = () => {
-        setWindowSize(getWindowDimensions());
-      }
-  
-      window.addEventListener('resize', handleResize);
-     
-  }, [user, windowSize,notifLoading, notifData, loading , data, pathname, componentLocation, toggleNavbar])
+  }, [user,notifLoading, notifData, loading , data, pathname, componentLocation, toggleNavbar])
 
 
   if(loading) {

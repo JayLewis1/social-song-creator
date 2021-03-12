@@ -85,7 +85,6 @@ const Playbar = ({status, data} : Props) => {
     <div className="playbar-container" style={status === true ? { height: "90px" } : { height: "0" } }>  
       <div className="playbar-wrapper">
       <div className="project-details">
-
           {
             !loading && projectData && projectData.currentProject && 
             <Fragment>
@@ -94,25 +93,27 @@ const Playbar = ({status, data} : Props) => {
             </Fragment>
           }
       </div>
-        <div className="playbar-controls">
-        <button id="playbar-play" onClick={() => playAudio()} disabled={buffer === ""}>
-          { isPlaying ?  
-          <img src="/assets/icons/playbar/pause.svg" id="pause" alt="Pause"/> :  
-          <img src="/assets/icons/playbar/play.svg" alt="Play"/>
-           }           
-          </button>
-        </div>
+      <div className="controls-wrapper">
+          <div className="playbar-controls">
+          <button id="playbar-play" onClick={() => playAudio()} disabled={buffer === ""}>
+            { isPlaying ?  
+            <img src="/assets/icons/playbar/pause.svg" id="pause" alt="Pause"/> :  
+            <img src="/assets/icons/playbar/play.svg" alt="Play"/>
+            }           
+            </button>
+          </div>
 
-        <div className="playbar-scrub">
-        <AudioPlayer
-          autoPlay
-          autoPlayAfterSrcChange={false}
-          src={`data:audio/wav;base64, ${buffer}`}
-          onPlay={() => setIsPlaying(true)}
-          ref={player}
-          defaultCurrentTime="0:00"
-          defaultDuration="0:00"
-        />
+          <div className="playbar-scrub">
+          <AudioPlayer
+            autoPlay
+            autoPlayAfterSrcChange={false}
+            src={`data:audio/wav;base64, ${buffer}`}
+            onPlay={() => setIsPlaying(true)}
+            ref={player}
+            defaultCurrentTime="0:00"
+            defaultDuration="0:00"
+          />
+          </div>
         </div>
       </div>
     </div>
