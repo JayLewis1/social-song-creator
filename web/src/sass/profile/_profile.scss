@@ -178,6 +178,101 @@
         width: 100%;
       }
     }
+    .left-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .user-profile-btn {
+        position: relative;
+        background: none;
+        outline: none;
+        border: none;
+        margin-top: 15px;
+        padding: 5px 10px;
+        background-color: $lightBlue;
+        color: $blue;
+        border-radius: 6px;
+        cursor: pointer;
+        overflow: hidden;
+        .btn-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          background-color: $blue;
+          min-width: 0%;
+          height: 100%;
+          transition: 0.2s;
+        }
+        p {
+          position: relative;
+          font-family: $font;
+          font-size: 1rem;
+          font-weight: 500;
+          color: $blue;
+        }
+      }
+      .user-profile-btn:hover {
+        p {
+          color: $white;
+        }
+        .btn-bg {
+          min-width: 100%;
+        }
+      }
+      .user-profile-options {
+        position: relative;
+        background: none;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5px;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        overflow: hidden;
+        cursor: pointer;
+        .btn-bg {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          min-height: 0%;
+          min-width: 0%;
+          border-radius: 50%;
+          background-color: $lightGrey;
+          opacity: 0.2;
+          transition: 0.2s;
+        }
+        img {
+          position: relative;
+          z-index: 5;
+          width: 60%;
+          height: auto;
+          border: 1px red solid;
+          border: none;
+          overflow: none;
+          object-fit: cover;
+        }
+      }
+      .user-profile-options:hover {
+        .btn-bg {
+          min-width: 100%;
+          min-height: 100%;
+        }
+      }
+      .req-sent {
+        cursor: default;
+      }
+      .req-sent:hover {
+        p {
+          color: $blue;
+        }
+      }
+    }
   }
   .edit-form {
     flex-direction: column;
@@ -589,6 +684,17 @@
         .year-wrapper {
           width: 26%;
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 880px) {
+  .user-profile-wrapper {
+    .profile-top-wrapper {
+      flex-direction: column;
+      .info-wrappers {
+        width: 100%;
       }
     }
   }

@@ -6,40 +6,33 @@ import { withRouter, useLocation } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { USER_BY_ID, MY_ACCOUNT, GET_MY_MATES } from "../../../graphql/queries";
 import { SEND_NOTIFICATION,  REMOVE_MATE } from "../../../graphql/mutations";
-
 // Redux
 import { connect, ConnectedProps } from "react-redux";
-
+// Components 
 import Information from "./components/Information"
+import Options from "../../../components/mates/options/Options";
+import Validation from "../../../components/mates/functions/Validation";
 import Posts from "./posts/Posts";
-
 import Projects from "./projects/Projects";
 import Mates from "../../mates/lists/Mates";
 
 
 interface ComponentProps {  
-    profile: {
-      update: boolean
-      editting: {
-        names : boolean
-        bio: boolean
-        instruments: boolean
+    mates: {
+        options : boolean
+        remove: boolean
+        add : boolean
       }
-    }
   }
   
   const mapState = (state: ComponentProps) => ({
-    update: state.profile.update,
-    edittingNames : state.profile.editting.names,
-    edditingBio: state.profile.editting.bio,
-    edditingInstruments: state.profile.editting.instruments,
+    options: state.mates.options,
+    remove: state.mates.remove,
+    add : state.mates.add
   })
   
   const mapDispatch = {
-    updateProfile: (payload: boolean) => ({ type: "UPDATE_PROFILE", payload: payload}),
-    editNames: (payload: boolean) => ({type: "EDIT_NAME", payload: payload}),
-    editBio: (payload: boolean) => ({type: "EDIT_BIO", payload: payload}),
-    editInstrument: (payload: boolean) => ({type: "EDIT_INSTRUMENT", payload: payload}),
+
   }
   
   const connector = connect(mapState,mapDispatch);
@@ -49,84 +42,22 @@ interface ComponentProps {
       history : any
   }
   
-const ProfileByID = ({ history } : Props) => {
+const ProfileByID = ({ add, options, remove } : Props) => {
     const location: any = useLocation();
     const params = location.pathname.split("/")
     const userId = parseInt(params[2]);
-    const [sendNotfication] = useMutation(SEND_NOTIFICATION);
-    const [removeMate] = useMutation(REMOVE_MATE);
-    const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT);
     const { data, loading } = useQuery(USER_BY_ID, {
         variables: {
             userId: userId,
         } 
     });
-    const [addBtnDisabled, setBtnDisabled] = useState(false)
-    const [notificationSent, setNotificationSent] = useState(false)
-    const [myFriend, setMyFriend] = useState(false)
-    const [clearMessage, setClearMessage] = useState(false)
-    const [responseStatus, setResStatus] = useState("")
     const [display , setDisplayOption] = useState("posts");
-
-    useEffect(() => {
-        if(addBtnDisabled === true ||  notificationSent === true) {
-            const timer = setTimeout(() => {
-                setClearMessage(true)
-              }, 5000);
-              return () => clearTimeout(timer);
-        }
-        if(!loading && meData && meData.me) {
-            for(var x = 0; x < meData.me.mates.length; x ++) {
-                if(meData.me.mates[x] === userId){
-                    setMyFriend(true);
-                }
-            }
-        }
-    }, [addBtnDisabled, loading, meData, userId, notificationSent])
 
     if(loading) {
         return <div>loading...</div>
     }
-
-    const removeMateFunc = async (userId: number) => {
-        console.log(userId);
-        removeMate({
-            variables: {
-                mateId: userId
-            }, 
-            update: (cache , { data: removeMate }) => {
-                cache.writeQuery({
-                    query : GET_MY_MATES,
-                    variables: meData.me.id,
-                    data :  {
-                        getMates: removeMate
-                    }       
-                })
-            } 
-        })
-    } 
-
-    const addMate = async (userId: number) => {
-        setClearMessage(false)
-       const response =  await sendNotfication({
-            variables : {
-                recipient: userId,
-                type: "request",
-                message: "wants to be your mate."
-            }
-        })
-        try{
-            if(response.data.sendNotfication.reqBlocked === true) {
-                setResStatus(response.data.sendNotfication.status)
-                setNotificationSent(false);
-                setBtnDisabled(true);
-            } else {
-                setNotificationSent(true);
-                setResStatus(response.data.sendNotfication.status)
-            }
-        } catch(err) {
-            console.log(err);
-        }
+    const onChange = (e:React.ChangeEvent<HTMLSelectElement> ) => {
+        setDisplayOption(e.target.value);
     }
 
     return (
@@ -178,6 +109,11 @@ const ProfileByID = ({ history } : Props) => {
                         className={ display === "mates" ? "display-active" : "display-normal"}
                         onClick={() => setDisplayOption("mates")}>Mates</button>
                 </li>
+                <select value={display} onChange={(e) => onChange(e)}>
+                    <option value="posts">Posts</option>
+                    <option value="projects">Projects</option>
+                    <option value="mates">Mates</option>
+                </select>
             </ul> 
             <ul className="profile-display">
             { display === "posts" && <Posts />}
@@ -186,6 +122,9 @@ const ProfileByID = ({ history } : Props) => {
             </ul>
         </Fragment>
         }
+        { options === true && <Options type="profile" mateId={userId}/>}
+        {remove === true  && <Validation type="remove" mateId={userId} />}
+        {add === true &&  <Validation type="add" mateId={userId} />}
         </div>
         </div>
     );

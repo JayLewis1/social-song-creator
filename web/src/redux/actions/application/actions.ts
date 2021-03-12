@@ -8,10 +8,11 @@ import {
   TOGGLE__NOTIFICATIONS,
   TOGGLE__CONTRIBUTORS,
   TOGGLE_SEARCH,
-TOGGLE_CREATE_PANEL} from "./types";
+TOGGLE_CREATE_PANEL,
+RESULT_TOGGLE,
+NAVBAR_TOGGLE} from "./types";
 
 import { Dispatch } from "redux"
-
 
 export const setAppLocation = (location: Application) => (dispatch: Dispatch<ApplicationTypes>) => {
   dispatch({
@@ -68,3 +69,17 @@ export const toggleCreatePanel = (payload: Application) => (dispatch: Dispatch<A
     payload: payload
   })
 }
+export const toggleResult = (payload: Application) => (dispatch: Dispatch<ApplicationTypes>) => {
+  dispatch({
+    type: RESULT_TOGGLE,
+    payload: payload
+  })
+}
+export const toggleNavbar = (payload: Application) => (dispatch: Dispatch<ApplicationTypes>) => {
+  dispatch({
+    type: NAVBAR_TOGGLE,
+    payload: payload
+  })
+}
+
+

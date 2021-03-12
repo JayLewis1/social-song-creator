@@ -20,7 +20,8 @@ interface ComponentProps {
     projectPanel: boolean,
     notificationPanel : boolean,
     searchPanel: boolean,
-    createPanel: boolean
+    createPanel: boolean,
+    navbar: boolean,
   },
   user : {
     authenticated: boolean,
@@ -42,22 +43,24 @@ const mapStateToProps = (state: ComponentProps) => ({
   createPanel: state.application.createPanel,
   authenticated: state.user.authenticated,
   user: state.user.user,
+  navbar: state.application.navbar
 })
 
 const mapDispatch = {
-  closeSettingsPanel : (payload: boolean) => ({ type: "CLOSE_SETTINGS_PANEL", payload: payload }),
-  closePostPanel : (payload: boolean) => ({ type: "CLOSE_POST_PANEL", payload: payload }),
+  closeSettingsPanel : (payload: boolean) => ({ type: "CLOSE_SETTINGS_PANEL", payload }),
+  closePostPanel : (payload: boolean) => ({ type: "CLOSE_POST_PANEL", payload }),
   intialiseProject: (bool: boolean ) => ({type: "INIT_PROJECT", payload: bool }),
-  toggleNotifications : (payload: boolean) => ({ type: "TOGGLE__NOTIFICATIONS", payload: payload }),
-  toggleSearch : (payload: boolean) => ({ type: "TOGGLE_SEARCH", payload: payload }),
-  toggleCreatePanel: (payload: boolean) => ({type: "TOGGLE_CREATE_PANEL", payload: payload})
+  toggleNotifications : (payload: boolean) => ({ type: "TOGGLE__NOTIFICATIONS", payload }),
+  toggleSearch : (payload: boolean) => ({ type: "TOGGLE_SEARCH", payload }),
+  toggleCreatePanel: (payload: boolean) => ({type: "TOGGLE_CREATE_PANEL", payload}),
+  toggleNavbar: (payload: boolean) => ({ type: "NAVBAR_TOGGLE", payload })
 }
 
 const connector = connect(mapStateToProps, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux
 
-const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPanel, notificationPanel, searchPanel, toggleNotifications, closePostPanel, intialiseProject, closeSettingsPanel, toggleSearch, toggleCreatePanel} : Props) => {
+const Header = ({navbar, location, createPanel, user, postPanel, projectPanel,settingsPanel, notificationPanel, searchPanel, toggleNotifications, closePostPanel, intialiseProject, closeSettingsPanel, toggleSearch, toggleCreatePanel, toggleNavbar} : Props) => {
   const [btnDetails, setBtnDetails] = useState("")
   const [unRead, setUnRead]= useState(0)
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -95,8 +98,8 @@ const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPa
       }
   
       window.addEventListener('resize', handleResize);
-
-  }, [user ,notifLoading, notifData, loading , data, pathname, componentLocation])
+     
+  }, [user, windowSize,notifLoading, notifData, loading , data, pathname, componentLocation, toggleNavbar])
 
 
   if(loading) {
@@ -142,11 +145,10 @@ const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPa
   }
 
   const openBurgerMenu = () => {
-    console.log("Search Clicked");
-    if(toggleMenu === true ) {
-      setToggleMenu(false)
+    if(navbar === true ) {
+      toggleNavbar(false)
     } else {
-      setToggleMenu(true)
+      toggleNavbar(true)
     }
   }
   const openCreateMenu = () => {
@@ -161,8 +163,8 @@ const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPa
           <div className="app-header">
             <div className="header-wrapper">
               <div className="aligned-left">
-                <h3 className="logo">Space</h3>
-                <span id="left-btns" style={windowSize.width <= 700 || location === "workspace" ?{display:"flex"} : {display:"none"} }>
+                {/* <h3 className="logo">Space</h3> */}
+                <span id="left-btns" style={location === "workspace" ?{display:"flex"} : {display:""} }>
                 <span className="header-btn-wrapper">
                   <button
                     className="header-btns"
@@ -186,13 +188,13 @@ const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPa
                   </button>
                 </span>
                 </span>
-                <span className="header-btn-wrapper">
+                <span className="header-btn-wrapper" id="search-to-hide">
                   <button
                     className="header-btns"
                     onClick={() => openSearchContainer()}
                     onMouseOver={() => setBtnDetails("Search")}
                     onMouseOut={() =>  setBtnDetails("")}
-                    style={windowSize.width <= 700 || location === "workspace" ?{display:"none"} : {display:"block"}}>
+                    style={location === "workspace" ?{display:"none"} : {display:"block"}}>
                       <img src="/assets/icons/menu/search-btn.svg" alt="Search"/>
                       { btnDetails === "Search" && <div className="btn-info">
                     <p>{btnDetails}</p></div>}
@@ -270,7 +272,7 @@ const Header = ({location, createPanel, user, postPanel, projectPanel,settingsPa
               {searchPanel === true && <Search />}
             </div>
           </div>
-            { toggleMenu === true && <DropDown></DropDown>}
+            { navbar === true && <DropDown></DropDown>}
        </Fragment>
       )}
 

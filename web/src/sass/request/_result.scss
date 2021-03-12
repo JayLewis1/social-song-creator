@@ -1,0 +1,26 @@
+.request-sent-container {
+  // width: 300px;
+
+  background-color: $blue;
+  padding: 15px 30px;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: $divShadow;
+  p {
+    font-family: $font;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $white;
+  }
+  img {
+    width: 15px;
+    height: auto;
+    margin-right: 10px;
+  }
+}

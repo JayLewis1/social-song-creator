@@ -329,6 +329,11 @@ export const GET_NOTIFICATIONS = gql`
     created 
   }
 }`
+export const VALIDATE_NOTIFICATION = gql`
+query ValidateNotification($recipient: Int!, $type: String!){
+  validateNotification(recipient : $recipient, type: $type) 
+}`
+
 // MATES
 export const GET_MY_MATES = gql`
 query GetMates($userId: Int!){

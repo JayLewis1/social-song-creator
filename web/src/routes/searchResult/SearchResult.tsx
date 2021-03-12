@@ -28,6 +28,7 @@ const SearchResult = ({history}:ComponetProps) => {
     }
   });
   const searchInput = useRef<HTMLInputElement>(null); 
+
   if(loading) {
       return <div>loading...</div>
   }
@@ -35,7 +36,7 @@ const SearchResult = ({history}:ComponetProps) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchData({...searchData, search : e.target.value})
   }
-
+  
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     history.push(`/search/${searchData.search}`)

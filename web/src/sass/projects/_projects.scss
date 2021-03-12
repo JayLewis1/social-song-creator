@@ -444,12 +444,22 @@
           color: $red;
         }
       }
-      .delete-btn:hover {
+      .delete-btn:hover,
+      .add-btn:hover {
         p {
           color: $white;
         }
         .btn-bg {
           min-width: 100%;
+        }
+      }
+      .add-btn {
+        background-color: $lightBlue;
+        .btn-bg {
+          background-color: $blue;
+        }
+        p {
+          color: $blue;
         }
       }
     }

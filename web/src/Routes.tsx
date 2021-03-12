@@ -21,6 +21,7 @@ import AuthRoute from "./components/authRoute/AuthRoute";
 import UnAuthRedirect from "./components/unAuthRedirect/UnAuthRedirect"
 import UserProfile from "./components/profile/user/UserProfile"
 import ScrollToTop from "./components/scrollToTop/ScrollToTop"
+import RequestResult from "./components/request/RequestResult";
 // Routes
 import Feed from './routes/feed/Feed';
 import Workspace from './routes/workspace/Workspace';
@@ -37,6 +38,11 @@ interface ComponentProps {
       location: string
       postPanel : boolean
       projectPanel : boolean
+      result: {
+        show: boolean
+        success: boolean
+        type: string
+      }
   }  
   user: {
     authenticated : boolean,
@@ -52,7 +58,8 @@ const mapState = (state : ComponentProps) => ({
   authenticated : state.user.authenticated,
   location: state.application.location,
   projectPanel: state.application.projectPanel,
-  postPanel : state.application.postPanel
+  postPanel : state.application.postPanel,
+  result: state.application.result
 })
 
 const mapDispatch = {
@@ -67,7 +74,7 @@ type Props = PropsFromRedux
 
 
 // Component 
-const Routes = ({location, projectPanel, authenticated, postPanel, activatePlaybar, authenticateUser} : Props) => {
+const Routes = ({location, projectPanel, authenticated, result, postPanel, activatePlaybar, authenticateUser} : Props) => {
   const { data , loading } = useQuery(MY_ACCOUNT);
 
   useEffect(() => {
@@ -95,6 +102,7 @@ const Routes = ({location, projectPanel, authenticated, postPanel, activatePlayb
          {location === "workspace" ?  null : <Navigation></Navigation>}
          {postPanel === true ? <CreatePost/> : null}
          {projectPanel === true ? <CreateProject/> : null}
+         {result.show === true ? <RequestResult /> : null}
          <ScrollToTop />
            <Switch>
              <Route exact path="/">

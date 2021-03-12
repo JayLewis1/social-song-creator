@@ -220,7 +220,13 @@ body .user-name {
   font-size: 1.2rem;
   color: white;
   margin: 0 auto;
-  display: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
 }
 
 .app-header .header-wrapper .aligned-left {
@@ -729,6 +735,23 @@ body .user-name {
   }
 }
 
+@media (max-width: 700px) {
+  .app-header .header-wrapper .aligned-left #left-btns {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .app-header .header-wrapper #search-to-hide {
+    display: none;
+  }
+}
+
+@media (min-width: 701px) {
+  .app-header .header-wrapper .aligned-left #left-btns {
+    display: none;
+  }
+}
+
 @media (max-width: 720px) {
   .app-header .header-wrapper {
     position: relative;
@@ -760,14 +783,6 @@ body .user-name {
 @media (max-width: 1100px) {
   .app-header .header-wrapper {
     padding: 0 5%;
-  }
-  .app-header .header-wrapper .aligned-left #search-form {
-    display: none;
-  }
-  .app-header .header-wrapper .aligned-left #left-btns {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
   }
 }
 
@@ -1155,6 +1170,12 @@ body .user-name {
 @media (max-width: 460px) {
   .drop-down-wrapper {
     width: 100%;
+  }
+}
+
+@media (min-width: 700px) {
+  .drop-down-wrapper {
+    display: none;
   }
 }
 
@@ -3973,6 +3994,162 @@ ul li {
   width: 100%;
 }
 
+.profile-wrapper .info-wrappers .left-wrapper,
+.profile-wrapper .edit-form .left-wrapper,
+.user-profile-wrapper .info-wrappers .left-wrapper,
+.user-profile-wrapper .edit-form .left-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-btn,
+.profile-wrapper .edit-form .left-wrapper .user-profile-btn,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-btn,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-btn {
+  position: relative;
+  background: none;
+  outline: none;
+  border: none;
+  margin-top: 15px;
+  padding: 5px 10px;
+  background-color: #eaf0ff;
+  color: #2767fa;
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-btn .btn-bg,
+.profile-wrapper .edit-form .left-wrapper .user-profile-btn .btn-bg,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-btn .btn-bg,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-btn .btn-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #2767fa;
+  min-width: 0%;
+  height: 100%;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-btn p,
+.profile-wrapper .edit-form .left-wrapper .user-profile-btn p,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-btn p,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-btn p {
+  position: relative;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2767fa;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-btn:hover p,
+.profile-wrapper .edit-form .left-wrapper .user-profile-btn:hover p,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-btn:hover p,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-btn:hover p {
+  color: white;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-btn:hover .btn-bg,
+.profile-wrapper .edit-form .left-wrapper .user-profile-btn:hover .btn-bg,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-btn:hover .btn-bg,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-btn:hover .btn-bg {
+  min-width: 100%;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-options,
+.profile-wrapper .edit-form .left-wrapper .user-profile-options,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-options,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-options {
+  position: relative;
+  background: none;
+  border: none;
+  outline: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 5px;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-options .btn-bg,
+.profile-wrapper .edit-form .left-wrapper .user-profile-options .btn-bg,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-options .btn-bg,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-options .btn-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  min-height: 0%;
+  min-width: 0%;
+  border-radius: 50%;
+  background-color: #768392;
+  opacity: 0.2;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-options img,
+.profile-wrapper .edit-form .left-wrapper .user-profile-options img,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-options img,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-options img {
+  position: relative;
+  z-index: 5;
+  width: 60%;
+  height: auto;
+  border: 1px red solid;
+  border: none;
+  overflow: none;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .user-profile-options:hover .btn-bg,
+.profile-wrapper .edit-form .left-wrapper .user-profile-options:hover .btn-bg,
+.user-profile-wrapper .info-wrappers .left-wrapper .user-profile-options:hover .btn-bg,
+.user-profile-wrapper .edit-form .left-wrapper .user-profile-options:hover .btn-bg {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .req-sent,
+.profile-wrapper .edit-form .left-wrapper .req-sent,
+.user-profile-wrapper .info-wrappers .left-wrapper .req-sent,
+.user-profile-wrapper .edit-form .left-wrapper .req-sent {
+  cursor: default;
+}
+
+.profile-wrapper .info-wrappers .left-wrapper .req-sent:hover p,
+.profile-wrapper .edit-form .left-wrapper .req-sent:hover p,
+.user-profile-wrapper .info-wrappers .left-wrapper .req-sent:hover p,
+.user-profile-wrapper .edit-form .left-wrapper .req-sent:hover p {
+  color: #2767fa;
+}
+
 .profile-wrapper .edit-form,
 .user-profile-wrapper .edit-form {
   -webkit-box-orient: vertical;
@@ -4622,6 +4799,18 @@ ul li {
   }
 }
 
+@media (max-width: 880px) {
+  .user-profile-wrapper .profile-top-wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .user-profile-wrapper .profile-top-wrapper .info-wrappers {
+    width: 100%;
+  }
+}
+
 .projects-header,
 .mates-header {
   width: 70%;
@@ -5253,12 +5442,26 @@ ul li {
   color: #f8323b;
 }
 
-.result-component .wrapper .btn-wrapper .delete-btn:hover p {
+.result-component .wrapper .btn-wrapper .delete-btn:hover p,
+.result-component .wrapper .btn-wrapper .add-btn:hover p {
   color: white;
 }
 
-.result-component .wrapper .btn-wrapper .delete-btn:hover .btn-bg {
+.result-component .wrapper .btn-wrapper .delete-btn:hover .btn-bg,
+.result-component .wrapper .btn-wrapper .add-btn:hover .btn-bg {
   min-width: 100%;
+}
+
+.result-component .wrapper .btn-wrapper .add-btn {
+  background-color: #eaf0ff;
+}
+
+.result-component .wrapper .btn-wrapper .add-btn .btn-bg {
+  background-color: #2767fa;
+}
+
+.result-component .wrapper .btn-wrapper .add-btn p {
+  color: #2767fa;
 }
 
 .contributor-container {
@@ -7682,5 +7885,38 @@ ul li {
 .options-container .options .add-btn:hover {
   color: #2767fa;
   background-color: #eaf0ff;
+}
+
+.request-sent-container {
+  background-color: #2767fa;
+  padding: 15px 30px;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  z-index: 100;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 8px;
+  -webkit-box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
+          box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.08);
+}
+
+.request-sent-container p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.request-sent-container img {
+  width: 15px;
+  height: auto;
+  margin-right: 10px;
 }
 /*# sourceMappingURL=styles.css.map */

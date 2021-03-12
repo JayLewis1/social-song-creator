@@ -6,6 +6,8 @@ export const INIT_PROJECT = "INIT_PROJECT";
 export const TOGGLE__CONTRIBUTORS = "TOGGLE__CONTRIBUTORS";
 export const TOGGLE_SEARCH = "TOGGLE_SEARCH";
 export const TOGGLE_CREATE_PANEL = "TOGGLE_CREATE_PANEL";
+export const RESULT_TOGGLE = "RESULT_TOGGLE";
+export const NAVBAR_TOGGLE = "NAVBAR_TOGGLE";
 
 export interface Application {
   location : string
@@ -16,6 +18,12 @@ export interface Application {
   contributorsPanel: boolean
   searchPanel: boolean
   createPanel: boolean
+  navbar: boolean
+  result: {
+    show: boolean
+    success: boolean
+    type: string
+  }
 }
 
 interface setAppLocation  {
@@ -58,4 +66,14 @@ interface toggleCreatePanel {
   payload : Application
 }
 
-export type ApplicationTypes = setAppLocation | closePostPanel | closeSettingsPanel | intialiseProject |toggleNotification |toggleContributors | toggleSearch | toggleCreatePanel;
+interface toggleResult {
+  type: typeof RESULT_TOGGLE,
+  payload: Application
+}
+
+interface toggleNavbar {
+  type: typeof NAVBAR_TOGGLE,
+  payload: Application
+}
+
+export type ApplicationTypes = setAppLocation | closePostPanel | closeSettingsPanel | intialiseProject |toggleNotification |toggleContributors | toggleSearch | toggleCreatePanel | toggleResult | toggleNavbar;

@@ -2,22 +2,24 @@ import React, { useEffect, useState} from 'react'
 import { Link } from "react-router-dom";
 // GraphQL
 import { useQuery } from "@apollo/client";
-import { MY_ACCOUNT, GET_MY_MATES } from "../../../graphql/queries";
+import { MY_ACCOUNT, GET_MY_MATES, VALIDATE_NOTIFICATION } from "../../../graphql/queries";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 
 const mapDispatch = {
   toggleMatesOptions: (payload: boolean) => ({type: "MATES_OPTIONS", payload}),
-  toggleMatesRemove: (payload: boolean) => ({type: "MATES_REMOVE", payload})
+  toggleMatesRemove: (payload: boolean) => ({type: "MATES_REMOVE", payload}),
+  toggleMatesAdd: (payload: boolean) => ({type: "MATES_ADD", payload})
 }
 
 const connector = connect(null, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & {
   mateId: number
+  type: string
 }
 
-const Options = ({ mateId, toggleMatesOptions, toggleMatesRemove}:Props) => {
+const Options = ({ type, mateId, toggleMatesOptions, toggleMatesRemove, toggleMatesAdd}:Props) => {
   const [isOurMate, setIsOurMate] = useState(false);
   const [myId, setMyId] = useState(0);
   const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT);
@@ -28,6 +30,14 @@ const Options = ({ mateId, toggleMatesOptions, toggleMatesRemove}:Props) => {
     }
   });
   
+  const { data: nData, loading: nLoading } = useQuery(VALIDATE_NOTIFICATION, { 
+    variables : {
+      senderId : meData.me.id,
+      recipient: mateId,
+      type: "request"
+    }
+  })
+
   useEffect(() => {
     if(!meLoading && !mateLoading && mateData) {
       setMyId(meData.me.id);
@@ -38,22 +48,23 @@ const Options = ({ mateId, toggleMatesOptions, toggleMatesRemove}:Props) => {
       }
     }
   }, [meLoading, mateLoading , meData, mateData, mateId, setIsOurMate])
-
-
-  const toggleRemoveValidations = () => {
-    toggleMatesRemove(true);
-  }
-
+  console.log(mateId)
   return (
     <div className="options-container">
         <div className="options">
-          {isOurMate === false && myId !== mateId && 
-            <button className="add-btn" onClick={() => toggleRemoveValidations()}>Add Friend</button>
+          {!nLoading && nData.validateNotification !== true &&  isOurMate === false && myId !== mateId && 
+            <button className="add-btn" onClick={() => toggleMatesAdd(true)}>Add Friend</button>
           }
-            <Link className="share-btn" to={`/profile/${mateId}`}>See Profile</Link>    
+          { myId !== mateId  && !nLoading && nData.validateNotification === true &&
+           <button className="add-btn" disabled style={{cursor: "default"}}>Mate request sent</button>
+           }  
           {isOurMate === true && myId !== mateId &&  
-            <button className="delete-btn" onClick={() => toggleRemoveValidations()}>Remove Friend</button>
+            <button className="delete-btn" onClick={() => toggleMatesRemove(true)}>Remove Friend</button>
           }
+          { type !== "profile" && 
+            <Link className="share-btn" to={`/profile/${mateId}`}>See Profile</Link>  
+          }
+  
             <button onClick={() => toggleMatesOptions(false)}>Cancel</button>
         </div>
     </div>

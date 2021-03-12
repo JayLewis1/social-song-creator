@@ -4,17 +4,19 @@ import { Link } from "react-router-dom"
 import { connect, ConnectedProps } from "react-redux";
 // Components 
 import Options from "../options/Options";
-import Remove from "../functions/Remove";
+import Validation from "../functions/Validation";
 
 interface ComponentProps {
   mates: {
     options : boolean
     remove: boolean
+    add : boolean
   }
 }
 const mapState = (state: ComponentProps) => ({
   options: state.mates.options,
-  remove: state.mates.remove
+  remove: state.mates.remove,
+  add : state.mates.add
 })
 
 const mapDispatch = {
@@ -31,7 +33,7 @@ type Props = PropsFromRedux & {
     lastName: string
   }
 }
-const Mate = ({mate, options, remove, toggleMatesOptions}: Props) => {
+const Mate = ({mate, options, remove, add, toggleMatesOptions}: Props) => {
   const [selectedId, setSelectedId] = useState(-1)
 
   const toggleOptionsMenu = (id: number) => {
@@ -43,7 +45,7 @@ const Mate = ({mate, options, remove, toggleMatesOptions}: Props) => {
       toggleMatesOptions(true);
     }
   }
-
+  
   return (
         <li key={mate.id} className="mate-container">
           <img src={mate.avatar} alt="User Avatar"></img>
@@ -55,9 +57,11 @@ const Mate = ({mate, options, remove, toggleMatesOptions}: Props) => {
             <button className="post-buttons" onClick={() => toggleOptionsMenu(mate.id)}>
               <img src="/assets/icons/post/options.svg" alt="Project options"/>
             </button>
-          </span>
-          { options === true && selectedId === mate.id &&  <Options mateId={mate.id}/>}
-          {remove === true && selectedId === mate.id  && <Remove mateId={mate.id} />}
+          </span> 
+          { options === true && selectedId === mate.id &&  <Options type="user" mateId={mate.id}/>}
+          
+          {remove === true && selectedId === mate.id  && <Validation type="remove" mateId={mate.id} />}
+          {add === true &&  selectedId === mate.id  && <Validation type="add" mateId={mate.id} />}
         </li> 
   )
 }

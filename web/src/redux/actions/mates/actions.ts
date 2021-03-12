@@ -2,7 +2,8 @@ import {
   MatesTypes, 
   Mates, 
   MATES_OPTIONS,
-  MATES_REMOVE } from "./types";
+  MATES_REMOVE,
+  MATES_ADD } from "./types";
 
 export const toggleMatesOptions = (payload: Mates) : MatesTypes => {
   return {
@@ -14,6 +15,13 @@ export const toggleMatesOptions = (payload: Mates) : MatesTypes => {
 export const toggleMatesRemove = (payload: Mates) : MatesTypes => {
   return {
     type: MATES_REMOVE,
+    payload
+  }
+}
+
+export const toggleMatesAdd = (payload: Mates) : MatesTypes => {
+  return {
+    type: MATES_ADD,
     payload
   }
 }

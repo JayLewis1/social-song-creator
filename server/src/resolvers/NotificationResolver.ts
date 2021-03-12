@@ -38,6 +38,24 @@ export class NotificationResolver {
     ) {
       return await Notification.find({recipient: payload!.userId})   
     }
+    // GET      Check if there is already a notification
+    // RETURN   Array of notifications
+    // USED     Within the header
+    @Query(() => Boolean)
+    @UseMiddleware(isAuth)
+    async validateNotification(
+      @Arg("recipient", () => Int) recipient : number,
+      @Arg("type") type: string,
+      @Ctx() { payload } : MyContext
+    ) {
+      const notification = await Notification.findOne({ where : { senderId : payload!.userId, recipient, type }})
+
+      if(notification) {
+        return true
+      }
+      return false
+    }
+  
   
     // MUTATION       DELETE notification
     // RETURN         Array of notifications
@@ -69,7 +87,7 @@ export class NotificationResolver {
     @Arg("message") message : string,
     @Arg("type") type : string,
     @Ctx() { payload } : MyContext
-   ) {
+   ) { 
     // Find the logged in user and assign to sender variable
     const myId = payload!.userId
     const sender: any = await User.findOne({ where : { id: myId } })  

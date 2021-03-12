@@ -1,4 +1,4 @@
-import React , { Fragment, useState } from 'react'
+import React , { useEffect, useState } from 'react'
 import { NavLink } from "react-router-dom";
 
 import { connect, ConnectedProps } from "react-redux";
@@ -21,16 +21,12 @@ const mapDispatch = {
 }
 
 const connector = connect(mapState, mapDispatch);
-
 type PropsFromRedux = ConnectedProps<typeof connector>
-
 type Props = PropsFromRedux
-
 
 const DropDown = ({projectPanel, intialiseProject} : Props) => {
   const { data, loading } = useQuery(MY_PROJECTS); 
   const { data: meData, loading: meLoading } = useQuery(MY_ACCOUNT); 
-
   const toggleCreatePanel = () => {
     if(projectPanel === false) {
       intialiseProject(true)
