@@ -19,7 +19,7 @@ import multer from 'multer';
 import { uploadToS3, getFromS3, removeFileFromS3, removeProjectFromS3 } from "./apis/s3";
 
 const PORT = process.env.port || 4000;
-
+const path = require("path");
 var upload = multer({ dest: 'uploads/'});
 var type = upload.single('users-audio');
 
@@ -33,7 +33,11 @@ var type = upload.single('users-audio');
     )
     app.use(cookieParser());
     app.use(express.json());
-    app.get("/", (_req, res) => res.send("Hello"));
+    // app.get("/", (_req, res) => res.send("Hello"));
+    app.use(express.static(path.join(__dirname, '../../web/build')))
+    app.get("/", (_req, res) => {
+        res.sendFile(path.join(__dirname, "../../web/build", "index.html"));
+        });
     app.get("/get/:projectId/:fileId", (req: Request, res: Response) => {
         const fileId = req.params.fileId
         const projectId = req.params.projectId
