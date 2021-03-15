@@ -1,0 +1,19 @@
+{
+  "name": "foliotune",
+  "version": "1.0.0",
+  "description": "Song creation and collaboration web application",
+  "main": "./server/src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JayLewis1/social-song-creator.git"
+  },
+  "author": "Jay Lewis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JayLewis1/social-song-creator/issues"
+  },
+  "homepage": "https://github.com/JayLewis1/social-song-creator#readme"
+}
