@@ -11,16 +11,20 @@ interface ComponentProps {
     options : boolean
     remove: boolean
     add : boolean
+    id : number
   }
 }
 const mapState = (state: ComponentProps) => ({
+  userId: state.mates.id,
   options: state.mates.options,
   remove: state.mates.remove,
   add : state.mates.add
+  
 })
 
 const mapDispatch = {
-  toggleMatesOptions: (payload: boolean) => ({type: "MATES_OPTIONS", payload})
+  toggleMatesOptions: (payload: boolean) => ({type: "MATES_OPTIONS", payload}),
+  selectedUserId: (userId: number ) => ({type: "MATES_SELECTED_ID", payload: userId})
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -33,15 +37,18 @@ type Props = PropsFromRedux & {
     lastName: string
   }
 }
-const Mate = ({mate, options, remove, add, toggleMatesOptions}: Props) => {
+const Mate = ({userId, mate, options, remove, add, toggleMatesOptions, selectedUserId}: Props) => {
   const [selectedId, setSelectedId] = useState(-1)
 
   const toggleOptionsMenu = (id: number) => {
+    console.log(id);
     if(options === true) {
       setSelectedId(0);
+      selectedUserId(0);
       toggleMatesOptions(false);
     } else {
       setSelectedId(id);
+      selectedUserId(id)
       toggleMatesOptions(true);
     }
   }
@@ -58,10 +65,10 @@ const Mate = ({mate, options, remove, add, toggleMatesOptions}: Props) => {
               <img src="/assets/icons/post/options.svg" alt="Project options"/>
             </button>
           </span> 
-          { options === true && selectedId === mate.id &&  <Options type="user" mateId={mate.id}/>}
-          
-          {remove === true && selectedId === mate.id  && <Validation type="remove" mateId={mate.id} />}
-          {add === true &&  selectedId === mate.id  && <Validation type="add" mateId={mate.id} />}
+          {selectedId === mate.id &&  <p>{mate.id}</p>}
+          { options === true && userId === mate.id &&  <Options type="user" />} 
+          {remove === true && userId === mate.id  && <Validation type="remove" />}
+          {add === true &&  userId=== mate.id  && <Validation type="add" />} 
         </li> 
   )
 }

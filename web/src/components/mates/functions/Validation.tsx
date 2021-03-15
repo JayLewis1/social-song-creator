@@ -6,6 +6,17 @@ import { REMOVE_MATE, SEND_NOTIFICATION } from "../../../graphql/mutations";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 
+interface ComponentProps {
+  mates: {
+    id: number
+  }
+}
+
+const mapState = (state: ComponentProps) => ({
+  userId: state.mates.id
+})
+
+
 type Result  = {
   show: boolean
   success: boolean
@@ -15,22 +26,22 @@ const mapDispatch = {
   toggleMatesOptions: (payload: boolean) => ({type: "MATES_OPTIONS", payload}),
   toggleMatesRemove: (payload: boolean) => ({type: "MATES_REMOVE", payload}),
   toggleMatesAdd: (payload: boolean) => ({type: "MATES_ADD", payload}),
-  toggleResult: (payload: Result ) => ({type: "RESULT_TOGGLE", payload})
+  toggleResult: (payload: Result ) => ({type: "RESULT_TOGGLE", payload}),
+  selectedUserId: (userId: number ) => ({type: "MATES_SELECTED_ID", payload: userId})
 }
 
-const connector = connect(null, mapDispatch);
+const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & {
-  mateId: number
   type: string
 }
 
-const Validation = ({type, mateId, toggleMatesRemove, toggleMatesOptions, toggleMatesAdd, toggleResult}: Props) => {
+const Validation = ({userId, type, toggleMatesRemove, toggleMatesOptions, toggleMatesAdd, toggleResult, selectedUserId}: Props) => {
   const [sendNotfication] = useMutation(SEND_NOTIFICATION);
   const [removeMate] = useMutation(REMOVE_MATE);
   const { data, loading } = useQuery(USER_BY_ID, {
     variables : {
-      userId: mateId
+      userId
     }
   })
   const { data: meData } = useQuery(MY_ACCOUNT);
@@ -38,7 +49,7 @@ const Validation = ({type, mateId, toggleMatesRemove, toggleMatesOptions, toggle
   const removeMateFunc = async () => {
    await removeMate({
       variables: {
-        mateId
+        mateId: userId
       },
       update: (cache, { data: { removeMate }}) => {
      
@@ -56,6 +67,7 @@ const Validation = ({type, mateId, toggleMatesRemove, toggleMatesOptions, toggle
     try {
       toggleMatesOptions(false)
       toggleMatesRemove(false)
+      selectedUserId(0);
     } catch(err) {
       console.log(err);
     }
@@ -64,7 +76,7 @@ const Validation = ({type, mateId, toggleMatesRemove, toggleMatesOptions, toggle
   const addMate = async () => {
     const response =  await sendNotfication({
       variables : {
-          recipient: mateId,
+          recipient: userId,
           type: "request",
           message: "wants to be your mate."
       }, update : (cache ,  {data : { sendNotfication }}) => {
@@ -72,7 +84,7 @@ const Validation = ({type, mateId, toggleMatesRemove, toggleMatesOptions, toggle
           query : VALIDATE_NOTIFICATION,
           variables: {
             senderId : meData.me.id,
-            recipient: mateId,
+            recipient: userId,
             type: "request"
           }
         });
@@ -81,7 +93,7 @@ const Validation = ({type, mateId, toggleMatesRemove, toggleMatesOptions, toggle
             query : VALIDATE_NOTIFICATION,
             variables: {
               senderId : meData.me.id,
-              recipient: mateId,
+              recipient: userId,
               type: "request"
             },
             data: {
@@ -93,6 +105,7 @@ const Validation = ({type, mateId, toggleMatesRemove, toggleMatesOptions, toggle
   try{
     toggleMatesOptions(false);
     toggleMatesAdd(false);
+    selectedUserId(0);
     if(response.data.sendNotfication.reqBlocked !== true) {
       const result = {
         show: true,

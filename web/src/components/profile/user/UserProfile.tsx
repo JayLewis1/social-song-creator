@@ -1,11 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react'
-
+import React, { useState, Fragment } from 'react'
 import { withRouter, useLocation } from "react-router-dom";
- 
 // GraphQL
-import { useQuery, useMutation } from "@apollo/client";
-import { USER_BY_ID, MY_ACCOUNT, GET_MY_MATES } from "../../../graphql/queries";
-import { SEND_NOTIFICATION,  REMOVE_MATE } from "../../../graphql/mutations";
+import { useQuery } from "@apollo/client";
+import { USER_BY_ID } from "../../../graphql/queries";
 // Redux
 import { connect, ConnectedProps } from "react-redux";
 // Components 
@@ -122,9 +119,9 @@ const ProfileByID = ({ add, options, remove } : Props) => {
             </ul>
         </Fragment>
         }
-        { options === true && <Options type="profile" mateId={userId}/>}
+        {/* { options === true && <Options type="profile" mateId={userId}/>}
         {remove === true  && <Validation type="remove" mateId={userId} />}
-        {add === true &&  <Validation type="add" mateId={userId} />}
+        {add === true &&  <Validation type="add" mateId={userId} />} */}
         </div>
         </div>
     );

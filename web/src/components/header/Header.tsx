@@ -161,7 +161,7 @@ const Header = ({navbar, location, createPanel, user, postPanel, projectPanel,se
                     <p>{btnDetails}</p></div>}
                   </button>
                   </span>
-                  <span className="header-btn-wrapper">
+                  <span className="header-btn-wrapper" >
                   <button 
                     className="header-btns"
                     onClick={() => openBurgerMenu()}
@@ -187,7 +187,7 @@ const Header = ({navbar, location, createPanel, user, postPanel, projectPanel,se
                   </span>
 
               </div>
-              <h3 className="logo-center">Space</h3>
+              <img src="/assets/icons/logo/logo-white.svg" alt="Foliotune Logo" className="header-logo"/>
               <div className="aligned-right">
               <span className="header-btn-wrapper"  id="create-project-btn" >
                 <button 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState, Fragment, useRef } from 'react'
 import { Link, withRouter} from "react-router-dom"
 // GraphQL
 import { useMutation, useQuery } from "@apollo/client";
@@ -32,10 +32,12 @@ const Register = ({history}: ComponentProps) => {
     })
     const [passwordType, setPasswordType] = useState("password")
     const [showOrHide, setShowOrHide] = useState("show")
+    const [passwordFocus, setPasswordFocus] = useState(false)
     const [register] = useMutation(REGISTER_USER);
     const [login] = useMutation(LOGIN_USER);
     const { data, loading } = useQuery(MY_ACCOUNT)
-
+    
+    
     useEffect(() => {
         // Checking if user is authenticated and that theyre not logging in 
         // To see whether to push user off the route
@@ -243,11 +245,16 @@ const Register = ({history}: ComponentProps) => {
                             value={formData.password} 
                             placeholder="Enter Password"
                             style={ passwordErrors ? {border: "2px solid #F84061"} : {border: "none"} }
+                            onFocus={() => setPasswordFocus(true)}
+                            onBlur={() => setPasswordFocus(true)}
                             onChange={e => onChange(e)}/>
                              { passwordErrors && <p className="input-error">{passwordErrors}</p>}
                              <button id="show-password" onClick={(e) => showPassword(e)}>
                                 <img src={`/assets/icons/validate/${showOrHide}-password.svg`} alt="Show/hide password"/>
                             </button>
+                            <div className="password-warning" style={passwordFocus === true ?{display: "block"} : {display: "none"}}>
+                                <p>Be cautious of the password you use, at this moment in time this is only a beta version of the application to demonstrate my development skills.</p>
+                            </div>
                     </span> 
                     <span>
                     <p className="label-p">Have you got a name?</p>

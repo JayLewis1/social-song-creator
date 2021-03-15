@@ -4,12 +4,14 @@ import {
   Mates, 
   MATES_OPTIONS,
   MATES_REMOVE,
-  MATES_ADD } from "../../actions/mates/types";
+  MATES_ADD,
+  MATES_SELECTED_ID } from "../../actions/mates/types";
 
   const initialState: Mates = {
     options: false,
     remove: false,
-    add: false
+    add: false,
+    id: 0
   }
 
   export const matesReducer = (state: Mates = initialState, action: MatesTypes ) => {
@@ -30,6 +32,11 @@ import {
           ...state,
           add: payload
         }
+      case MATES_SELECTED_ID :
+          return {
+            ...state,
+            id : payload
+          }
       default:  
       return state
     }

@@ -184,12 +184,12 @@ const Workspace = ({setAppLocation, storeProject, intialiseProject, initTabCreat
                 <button 
                   onClick={() => changeComponent("lyrics")} 
                   className={`active-${component[1].col}`}
-                  disabled={component[1].col === 1 || component[1].col === 2}
+                  disabled={component[1].col === 1}
                  >Lyrics</button>
                 <button 
                   onClick={() => changeComponent("tabs")} 
                   className={`active-${component[2].col}`}
-                  disabled={component[2].col === 1 || component[2].col === 2}
+                  disabled={component[2].col === 1}
                   >Tabs</button>
               </div>
             </div>
