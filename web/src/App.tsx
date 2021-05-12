@@ -9,7 +9,7 @@ export const App: React.FC<Props> = () => {
 
   useEffect(() => {
     // Sending refresh token to get new accessToken
-    fetch('http://localhost:4000/refresh_token', {
+    fetch('https://foliotune.herokuapp.com/refresh_token', {
       method: "POST",
       credentials: "include"
     }).then(async x => {

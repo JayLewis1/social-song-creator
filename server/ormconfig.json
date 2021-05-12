@@ -1,10 +1,11 @@
 {
+   "name" : "default",
    "type": "postgres",
    "host": "localhost",
-   "port": 5432,
+   "port": "5432",
    "username": "jay",
    "password": "password",
-   "database": "dbSS",
+   "database":"dbSS",
    "synchronize": true,
    "logging": false,
    "entities": [

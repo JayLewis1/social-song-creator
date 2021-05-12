@@ -16,6 +16,7 @@
     "apollo-link-token-refresh": "^0.3.2",
     "arraybuffer-to-string": "^1.0.2",
     "axios": "^0.21.1",
+    "caniuse-lite": "^1.0.30001228",
     "graphql": "^15.4.0",
     "mic-recorder-to-mp3": "^2.2.2",
     "react": "^17.0.1",
@@ -77,5 +78,5 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/uuidv4": "^5.0.0"
   },
-  "proxy": "http://localhost:3000"
+  "proxy": "http://localhost:3001"
 }

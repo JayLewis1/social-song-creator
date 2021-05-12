@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
+  <g id="Group_565" data-name="Group 565" transform="translate(-59 -623)">
+    <g id="Group_561" data-name="Group 561" transform="translate(-295 -94)">
+      <circle id="Ellipse_584" data-name="Ellipse 584" cx="17" cy="17" r="17" transform="translate(354 717)" fill="#f8333c"/>
+      <circle id="Ellipse_652" data-name="Ellipse 652" cx="7" cy="7" r="7" transform="translate(364 727)" fill="#f8333c"/>
+    </g>
+    <g id="microphone_1_" data-name="microphone (1)" transform="translate(70.102 631.702)">
+      <path id="Path_964" data-name="Path 964" d="M11.261,260.311a.495.495,0,0,0-.99,0,4.39,4.39,0,0,1-8.781,0,.495.495,0,0,0-.99,0,5.387,5.387,0,0,0,4.885,5.357V267H3.549a.495.495,0,1,0,0,.99H8.212a.495.495,0,0,0,0-.99H6.375v-1.332A5.387,5.387,0,0,0,11.261,260.311Zm0,0" transform="translate(0 -251.394)" fill="#fff"/>
+      <path id="Path_965" data-name="Path 965" d="M71.884,12.086a3.173,3.173,0,0,0,3.169-3.169V3.169a3.169,3.169,0,0,0-6.338,0V8.917A3.173,3.173,0,0,0,71.884,12.086Zm0,0" transform="translate(-66.004)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
